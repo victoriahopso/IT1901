@@ -1,2 +1,2 @@
 # about the app 
-Insert short info of app and how it works
+hva handler appen om, hva skal den gjøre. INKL skjermbilde. Må inneholde minst én brukerhistorie. 
