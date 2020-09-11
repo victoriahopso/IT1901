@@ -1,7 +1,12 @@
-tasks:
-  - init: echo sdk use java 14.0.2.j9-adpt
-    command: echo cd InsertAppNameHere
 image:
   file: .gitpod.Dockerfile
+
+tasks:
+  - init: echo sdk use java 14.0.2.j9-adpt
+    command: echo "Replace me with something that should run on every start, or just
+      remove me entirely."
+
 ports:
   - port: 6080
+
+
