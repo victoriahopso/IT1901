@@ -1,7 +1,7 @@
 package it1901;
 
 
-public class Film{
+public class Film extends MyMovies{
     private String name, genre, comment;
     private int rating;
 
@@ -10,6 +10,7 @@ public class Film{
         this.genre=genre;
         this.rating=rating;
         this.comment=comment;
+        getFilmer().add(this);
     }
 
     public String getName(){
