@@ -10,7 +10,6 @@ public class Film extends MyMovies{
         this.genre=genre;
         this.rating=rating;
         this.comment=comment;
-        getFilmer().add(this);
     }
 
     public String getName(){
@@ -42,9 +41,6 @@ public class Film extends MyMovies{
     }
 
     public String toString(){
-        return this.name + " " + this.genre + " " + Integer.toString(this.rating) + " " + this.comment;
+        return "Film: " + this.name + ", Genre: " + this.genre + ", Rating: " + Integer.toString(this.rating) + ", Comment: " + this.comment;
     }
-
-
-
 }
