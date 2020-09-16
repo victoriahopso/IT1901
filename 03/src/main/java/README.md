@@ -13,3 +13,7 @@ MyMovies er et prosjekt som skal utvikles i faget IT1901. Funksjonaliteten på d
 ![](https://scontent-arn2-1.xx.fbcdn.net/v/t1.15752-9/119684474_624892344896990_3202801797249048090_n.png?_nc_cat=111&_nc_sid=b96e70&_nc_ohc=BuEpv4J7G1sAX-2UZPZ&_nc_ht=scontent-arn2-1.xx&oh=b5432fe1ac159ef024d5e30d7bbb0890&oe=5F876DD4)
 
 ## Brukerhistorier
+- Jeg vil ha en app hvor jeg kan anmelde filmer
+- Jeg vil at det skal være intuitivt å bruke appen
+- Jeg vil kunne lagre filmene mine slik at alle ligger samme sted, og fortsette senere
+- Jeg vil kunne se en ryddig oversikt over hvilke filmer jeg har sett før, og hva jeg syntes om dem
