@@ -10,7 +10,7 @@ Prosjektet inneholder en enkel **JavaFX** applikasjon med tester.
 
 
 ### Organisering av koden 
-- Kildekode: **O3/src/main/java/it1901**
+- Kildekode: **03/src/main/java/it1901**
 - Testkode: **03/src/test/java/it1901**
 
 ---
