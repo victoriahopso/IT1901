@@ -1,5 +1,6 @@
 package it1901;
 
+
 import java.io.FileNotFoundException;
 
 import javafx.collections.FXCollections;
@@ -21,7 +22,6 @@ public class MyMoveisController {
 	
 	private ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5","6");
 	private ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action", "Thriller", "Sci-fi");
-	private MyMovies movs = new MyMovies();
 	private String heltekst = "";
 	
 	@FXML
@@ -45,16 +45,24 @@ public class MyMoveisController {
 	@FXML
 	private void handleSubmit() {
 		if (validTitle() && isRated() && genreChosen()) {
-			Film film = new Film (title.getText(), genre.getValue(), Integer.valueOf(rating.getValue()), comment.getText());
-			movs.getFilmer().add(film);
+            RWFile fil = new RWFile();
+            String streng =title.getText()+", "+genre.getValue()+", "+rating.getValue()+", "+comment.getText();
+            fil.save(streng);
             submitted();
-            //creates new film that automaticly adds it self to a container, MyMovies. 
-            //container content will be saved to file when program is exited. 
 		}
 		else {
 			message.setText("Please enter title, rating and genre before submitting");
 		}
     }
+
+    @FXML
+    private void resumeSession(){
+        RWFile fil = new RWFile();
+        heltekst = fil.load();
+        
+    }
+
+   
     
     //This method handles saving to file. 
     //At this iteration, loading from file is not yet implemented
@@ -62,8 +70,6 @@ public class MyMoveisController {
     //will later expand with loading.
     @FXML
     private void exitApp(ActionEvent event) throws FileNotFoundException {
-    	RWFile fil = new RWFile();
-    	fil.fileWriter("boardObject.txt", movs);
         System.exit(0);
     }
 	
@@ -80,9 +86,9 @@ public class MyMoveisController {
 	}
 	private void submitted() {
 		genre.setValue(null);
-		rating.setValue(null);
+        rating.setValue(null);
 		message.setText("Movie added");
-		title.setText(null);
+        title.setText(null);
 		comment.setText(null);
 	}
 	
@@ -90,14 +96,12 @@ public class MyMoveisController {
 	//every movie the user has seen and rated
 	@FXML
 	private void generateList(ActionEvent event) {
-		for (Film film : movs.getFilmer()) {
-			heltekst = heltekst + film.toString() + "\n";
-		}
-		
+        resumeSession();
 		Stage stage = new Stage();
 		Pane root = new Pane();
 		Button ok = new Button("Ok");
-		Label tekst = new Label();
+        Label tekst = new Label();
+        tekst.setText(null);
 		ok.setScaleX(2);
 		ok.setScaleY(2);
 		ok.setLayoutX(400);
@@ -111,7 +115,6 @@ public class MyMoveisController {
 		stage.show();
 		
 		ok.setOnMouseClicked((MouseEvent event1) -> {
-			heltekst = "";
 			stage.close();
 		});
 	}
