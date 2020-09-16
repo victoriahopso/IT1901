@@ -14,9 +14,6 @@ public class App extends Application{
 	    final Parent parent = FXMLLoader.load(getClass().getResource("MyMovies.fxml"));
 	    primaryStage.setScene(new Scene(parent));
 	    primaryStage.show();
-//        primaryStage.setTitle("MyMovies");
-//        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("MyMovies.fxml"))));
-//        primaryStage.show();
     }
 
     public static void main(final String[] args) {
