@@ -13,9 +13,9 @@ public void testFilm() {
     assertEquals("genre", test.getGenre());
     assertEquals(5, test.getRating());
     assertEquals("comment", test.getComment());
-    assertEquals("testname genre 5 comment" , test.toString());
+    assertEquals("Film: testname, Genre: genre, Rating: 5, Comment: comment" , test.toString());
     Film test2 = new Film("test","genre",1,"");
-    assertEquals("test genre 1 ", test2.toString());
+    assertEquals("Film: test, Genre: genre, Rating: 1, Comment: ", test2.toString());
 }
 
 }
