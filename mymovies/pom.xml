@@ -6,6 +6,7 @@
     <groupId>it1901</groupId>
     <artifactId>03</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>03</name>
     <!-- FIXME change it to the project's website -->
@@ -60,7 +61,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.4</version>
                 <configuration>
-                    <mainClass>it1901.App</mainClass>
+                    <mainClass>ui.App</mainClass>
                 </configuration>
             </plugin>
             <!-- Configure jacoco code coverage -->
@@ -87,4 +88,8 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>core</module>
+        <module>fxui</module>
+    </modules>
 </project>

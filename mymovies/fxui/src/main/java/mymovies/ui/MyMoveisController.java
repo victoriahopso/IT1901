@@ -1,6 +1,7 @@
-package it1901;
+package mymovies.ui;
 
 import java.io.FileNotFoundException;
+import core.RWFile;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

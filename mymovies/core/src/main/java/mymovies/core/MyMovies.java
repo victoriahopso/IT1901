@@ -1,4 +1,4 @@
-package it1901;
+package mymovies.core;
 
 import java.util.ArrayList;
 import java.util.Collection;

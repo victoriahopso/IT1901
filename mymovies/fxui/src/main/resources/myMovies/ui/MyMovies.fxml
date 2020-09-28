@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane ?>
 <?import javafx.scene.text.Font ?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it1901.MyMoveisController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MyMoveisController">
     <children>
         <Button fx:id="submit" layoutX="372.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
         <ComboBox fx:id="genre" layoutX="217.0" layoutY="170.0" prefHeight="27.0" prefWidth="161.0" promptText="Genre" />

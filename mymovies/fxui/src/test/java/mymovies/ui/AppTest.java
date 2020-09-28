@@ -1,4 +1,4 @@
-package it1901;
+package mymovies.ui;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
