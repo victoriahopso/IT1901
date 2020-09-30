@@ -1,8 +1,6 @@
 package mymovies.ui;
 
 import java.io.FileNotFoundException;
-import core.RWFile;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import mymovies.core.RWFile;
 
 public class MyMoveisController {
 
