@@ -1,4 +1,4 @@
-package it1901;
+package mymovies.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

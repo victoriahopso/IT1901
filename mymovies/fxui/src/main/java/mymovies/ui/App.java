@@ -1,5 +1,6 @@
-package it1901;
+package mymovies.ui;
 
+//importere fxml..?
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
