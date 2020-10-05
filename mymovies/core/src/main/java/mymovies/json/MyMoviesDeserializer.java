@@ -10,31 +10,31 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import mymovies.core.Film;
 import mymovies.core.MyMovies;
 
 public class MyMoviesDeserializer extends JsonDeserializer<MyMovies> {
 
-    private FilmDeserializer filmdeserializer = new FilmDeserializer();
+    private FilmDeserializer filmDeserializer = new FilmDeserializer();
 
-   @Override
+    @Override
     public MyMovies deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         TreeNode treeNode = p.getCodec().readTree(p);
         if (treeNode instanceof ObjectNode) {
-             ObjectNode objectNode = (ObjectNode) treeNode;
-             MyMovies myMovies = new MyMovies();
-             TreeNode itemsNode = objectNode.get("myMovies");
+            ObjectNode objectNode = (ObjectNode) treeNode;
+            MyMovies mymovies = new MyMovies();
+
+            TreeNode itemsNode = objectNode.get("myMovies");
             if (itemsNode instanceof ArrayNode) {
                 for (TreeNode elementNode : ((ArrayNode) itemsNode)) {
-                    Film film = filmdeserializer.deserialize(p, ctxt);
+                    Film film = filmDeserializer.deserialize((JsonNode) elementNode);
                     if (film != null) {
-                        myMovies.getFilmer().add(film);
+                        mymovies.getFilmer().add(film);
                     }
                 }
-                return myMovies;
+                return mymovies;
             }
         }
         return null;
-}
+    }
 }

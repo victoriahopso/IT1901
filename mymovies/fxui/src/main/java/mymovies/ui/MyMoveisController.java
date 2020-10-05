@@ -15,7 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import mymovies.core.RWFile;
+import mymovies.core.MyMovies;
+import mymovies.json.MoviesPersistence;
 
 public class MyMoveisController {
 
@@ -23,6 +24,7 @@ public class MyMoveisController {
     private ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
             "Thriller", "Sci-fi");
     private String heltekst = "";
+    private MoviesPersistence persistence = new MoviesPersistence();
 
     @FXML
     private Button submit;
@@ -44,10 +46,7 @@ public class MyMoveisController {
     @FXML
     private void handleSubmit() {
         if (validTitle() && isRated() && genreChosen()&&isCommented()) {
-            RWFile fil = new RWFile();
-            String streng = title.getText() + ", " + genre.getValue() + ", " + rating.getValue() + ", "
-                    + comment.getText();
-            fil.save(streng);
+            //Må bruke json til å lagre her
             submitted();
         } else {
             message.setText("Please enter title, rating, genre and comment before submitting");
