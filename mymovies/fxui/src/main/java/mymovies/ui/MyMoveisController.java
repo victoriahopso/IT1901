@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -40,8 +39,8 @@ public class MyMoveisController {
     private Label message;
     @FXML
     private TextField title;
-    @FXML
-    private TextArea comment;
+    @FXML 
+    private Button showMovies;
 
     @FXML
     public void initialize() {
@@ -96,20 +95,16 @@ public class MyMoveisController {
         return rating.getValue() != null;
     }
 
-    private boolean isCommented(){
-        return comment.getText()!=null;
-    }
-
     private boolean genreChosen() {
         return rating.getValue() != null;
     }
 
     private void submitted() {
-        genre.setValue(null);
-        rating.setValue(null);
+        genre.setPromptText("Genre");
+        rating.setPromptText("Rating");
         message.setText("Movie added");
         title.setText(null);
-        comment.setText(null);
+        
     }
 
     @FXML
