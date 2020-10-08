@@ -1,9 +1,15 @@
 package mymovies.ui;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,9 +57,11 @@ public class MyMoveisController {
     @FXML
     private void handleSubmit() {
         if (validTitle() && isRated() && genreChosen()) {
-            Film film = new Film(title.getText(), genre.getValue(), Integer.valueOf(rating.getValue()));
+            Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
             myMovies.addMovie(film);
-            try (FileWriter writer = new FileWriter("mymovies.json")) {
+            try  {
+                FileOutputStream fileStream = new FileOutputStream("mymovies.json");
+                OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
                 persistence.write(myMovies, writer);
                 submitted();
             }
@@ -68,8 +76,10 @@ public class MyMoveisController {
 
     @FXML
     private void resumeSession() {
-        try (FileReader reader = new FileReader("mymovies.json")){
-               myMovies = persistence.read(reader);
+        try {
+            InputStream inputStream = new FileInputStream("mymovies.json"); 				
+            Reader reader = new InputStreamReader(inputStream, "UTF-8");
+            myMovies = persistence.read(reader);
             }
             catch (IOException e){
                 e.printStackTrace();
