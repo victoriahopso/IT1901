@@ -23,7 +23,7 @@ public class FilmDeserializer extends JsonDeserializer<Film> {
         if (jsonNode instanceof ObjectNode) {
             ObjectNode objectNode = (ObjectNode) jsonNode;
             Film film = new Film(objectNode.get("name").asText(), objectNode.get("genre").asText(),
-                    objectNode.get("rating").asInt(), objectNode.get("comment").asText());
+                    objectNode.get("rating").asInt());
             return film;
         }
         return null;

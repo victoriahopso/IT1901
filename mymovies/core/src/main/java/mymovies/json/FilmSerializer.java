@@ -16,7 +16,6 @@ public class FilmSerializer extends JsonSerializer<Film> {
         gen.writeStringField("name", film.getName());
         gen.writeStringField("genre", film.getGenre());
         gen.writeNumberField("rating", film.getRating());
-        gen.writeStringField("comment", film.getComment());
         gen.writeEndObject();
     }
 

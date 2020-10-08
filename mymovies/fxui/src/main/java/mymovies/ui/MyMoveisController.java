@@ -50,10 +50,9 @@ public class MyMoveisController {
 
     @FXML
     private void handleSubmit() {
-        if (validTitle() && isRated() && genreChosen()&&isCommented()) {
-            Film film = new Film(title.getText(), genre.getValue(), Integer.valueOf(rating.getValue()), comment.getText());
+        if (validTitle() && isRated() && genreChosen()) {
+            Film film = new Film(title.getText(), genre.getValue(), Integer.valueOf(rating.getValue()));
             myMovies.addMovie(film);
-            System.out.println(myMovies.getFilmer().isEmpty());
             try (FileWriter writer = new FileWriter("mymovies.json")) {
                 persistence.write(myMovies, writer);
                 submitted();
@@ -63,7 +62,7 @@ public class MyMoveisController {
             }
         } 
         else {
-            message.setText("Please enter title, rating, genre and comment before submitting");
+            message.setText("Please enter title, rating and genre before submitting");
         }
     }
 
@@ -77,7 +76,7 @@ public class MyMoveisController {
             }
         if (!myMovies.getFilmer().isEmpty()){
             for (Film film: myMovies){
-                heltekst += film.toString();  
+                heltekst += film.toString()+"\n";  
             }
         }
     }
@@ -128,6 +127,7 @@ public class MyMoveisController {
         stage.show();
 
         ok.setOnMouseClicked((MouseEvent event1) -> {
+            heltekst ="";
             stage.close();
         });
     }
