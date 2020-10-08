@@ -1,6 +1,10 @@
 package mymovies.ui;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +18,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import mymovies.core.RWFile;
+import mymovies.core.Film;
+import mymovies.core.MyMovies;
+import mymovies.json.MoviesPersistence;
 
 public class MyMoveisController {
 
@@ -22,6 +28,8 @@ public class MyMoveisController {
     private ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
             "Thriller", "Sci-fi");
     private String heltekst = "";
+    private MoviesPersistence persistence = new MoviesPersistence();
+    private MyMovies myMovies = new MyMovies();
 
     @FXML
     private Button submit;
@@ -42,27 +50,38 @@ public class MyMoveisController {
 
     @FXML
     private void handleSubmit() {
-        if (validTitle() && isRated() && genreChosen()) {
-            RWFile fil = new RWFile();
-            String streng = title.getText() + ", " + genre.getValue() + ", " + rating.getValue();
-            fil.save(streng);
-            submitted();
-        } else {
-            message.setText("Please enter title, rating and genre before submitting");
+        if (validTitle() && isRated() && genreChosen()&&isCommented()) {
+            Film film = new Film(title.getText(), genre.getValue(), Integer.valueOf(rating.getValue()), comment.getText());
+            myMovies.addMovie(film);
+            System.out.println(myMovies.getFilmer().isEmpty());
+            try (FileWriter writer = new FileWriter("mymovies.json")) {
+                persistence.write(myMovies, writer);
+                submitted();
+            }
+            catch (IOException e){
+                System.out.println(e);
+            }
+        } 
+        else {
+            message.setText("Please enter title, rating, genre and comment before submitting");
         }
     }
 
     @FXML
     private void resumeSession() {
-        RWFile fil = new RWFile();
-        heltekst = fil.load();
-
+        try (FileReader reader = new FileReader("mymovies.json")){
+               myMovies = persistence.read(reader);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        if (!myMovies.getFilmer().isEmpty()){
+            for (Film film: myMovies){
+                heltekst += film.toString();  
+            }
+        }
     }
 
-    // This method handles saving to file.
-    // At this iteration, loading from file is not yet implemented
-    // so method might seem pointless.
-    // will later expand with loading.
     @FXML
     private void exitApp(ActionEvent event) throws FileNotFoundException {
         System.exit(0);
@@ -70,8 +89,6 @@ public class MyMoveisController {
 
     private boolean validTitle() {
         return (!title.getText().equals(""));
-        // this method should later include more sufficient
-        // validation for a valid movie title.
     }
 
     private boolean isRated() {
@@ -90,8 +107,6 @@ public class MyMoveisController {
         
     }
 
-    // This method generates a list with
-    // every movie the user has seen and rated
     @FXML
     private void generateList(ActionEvent event) {
         resumeSession();
