@@ -30,10 +30,10 @@ import mymovies.json.MoviesPersistence;
 
 public class MyMoveisController {
 
-    private ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
-    private ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
+    protected ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
+    protected ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
             "Thriller", "Sci-fi");
-    private String heltekst = "";
+    protected String heltekst = "";
     protected MoviesPersistence persistence = new MoviesPersistence();
     private MyMovies myMovies = new MyMovies();
 
@@ -105,7 +105,7 @@ public class MyMoveisController {
     }
 
     @FXML
-    private void generateList(ActionEvent event) {
+    public void generateList(ActionEvent event) {
         resumeSession();
         Stage stage = new Stage();
         Pane root = new Pane();
