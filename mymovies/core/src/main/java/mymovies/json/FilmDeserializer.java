@@ -19,6 +19,13 @@ public class FilmDeserializer extends JsonDeserializer<Film> {
         return deserialize((JsonNode) treeNode);
     }
 
+    /**
+     * 
+     * @param jsonNode jsonNode som brukes for å hente ut
+     * film-objekt informasjon
+     * @return film-objekt som er lagret i json-fil
+     * format: {"name": "...", "genre": "...", "rating": ... }
+     */
     public Film deserialize(JsonNode jsonNode) {
         if (jsonNode instanceof ObjectNode) {
             ObjectNode objectNode = (ObjectNode) jsonNode;

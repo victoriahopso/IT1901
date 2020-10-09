@@ -7,7 +7,9 @@ import mymovies.core.MyMovies;
 
 @SuppressWarnings("serial")
 class MoviesModule extends SimpleModule {
-
+    /**
+     * Legger til serializers og deserializers
+     */
     private static final String NAME = "MyMovies";
     public MoviesModule() {
         super(NAME, Version.unknownVersion());

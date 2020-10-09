@@ -11,6 +11,9 @@ import mymovies.core.MyMovies;
 
 public class MyMoviesSerializer extends JsonSerializer<MyMovies> {
 
+    /**
+    * format: {"myMovies": [...] }
+    */
     @Override
     public void serialize(MyMovies myMovies, JsonGenerator gen, SerializerProvider prov) throws IOException {
         gen.writeStartObject();

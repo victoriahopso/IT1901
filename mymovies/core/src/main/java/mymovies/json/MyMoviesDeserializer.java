@@ -17,6 +17,9 @@ public class MyMoviesDeserializer extends JsonDeserializer<MyMovies> {
 
     private FilmDeserializer filmDeserializer = new FilmDeserializer();
 
+    /*
+    * format: { "myMovies": [ ... ] }
+    */
     @Override
     public MyMovies deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         TreeNode treeNode = p.getCodec().readTree(p);
