@@ -34,7 +34,7 @@ public class MyMoveisController {
     private ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
             "Thriller", "Sci-fi");
     private String heltekst = "";
-    private MoviesPersistence persistence = new MoviesPersistence();
+    protected MoviesPersistence persistence = new MoviesPersistence();
     private MyMovies myMovies = new MyMovies();
 
     @FXML
