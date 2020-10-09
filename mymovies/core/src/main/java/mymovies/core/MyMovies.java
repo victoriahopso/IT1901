@@ -3,6 +3,7 @@ package mymovies.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 public class MyMovies implements Iterable<Film> {
 
@@ -17,11 +18,18 @@ public class MyMovies implements Iterable<Film> {
     }
 
     public void addMovie(Film film){
-        filmer.add(film);
+        if (!filmer.contains(film)){
+            filmer.add(film);
+        }
     }
 
     @Override
     public Iterator<Film> iterator() {
         return filmer.iterator();
     }
+    
+    public Collection<Film> getMyMovies(){
+        return filmer.stream().collect(Collectors.toList());
+    }
+
 }

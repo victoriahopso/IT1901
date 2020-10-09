@@ -3,13 +3,13 @@ package mymovies.ui;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,44 +38,46 @@ public class MyMoveisController {
     private MyMovies myMovies = new MyMovies();
 
     @FXML
-    private Button submit;
+    Button submit;
     @FXML
-    private ComboBox<String> rating, genre;
+    ComboBox<String> rating, genre;
     @FXML
-    private Label message;
+    Label message;
     @FXML
-    private TextField title;
+    TextField title;
     @FXML 
-    private Button showMovies;
+    Button showMovies;
 
     @FXML
     public void initialize() {
         genre.setItems(genres);
         rating.setItems(ratings);
+        submit.disableProperty().bind(
+        title.textProperty().isEmpty()
+        .or(
+        genre.valueProperty().isNull()
+        .or(
+        rating.valueProperty().isNull())
+        ));
     }
 
     @FXML
     private void handleSubmit() {
-        if (validTitle() && isRated() && genreChosen()) {
-            Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
-            myMovies.addMovie(film);
-            try  {
-                FileOutputStream fileStream = new FileOutputStream("mymovies.json");
-                OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
-                persistence.write(myMovies, writer);
-                submitted();
-            }
-            catch (IOException e){
-                System.out.println(e);
-            }
-        } 
-        else {
-            message.setText("Please enter title, rating and genre before submitting");
+        Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
+        myMovies.addMovie(film);
+        try  {
+            FileOutputStream fileStream = new FileOutputStream("mymovies.json");
+            OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
+            persistence.write(myMovies, writer);
+            submitted();
         }
+        catch (IOException e){
+            System.out.println(e);
+        } 
     }
 
     @FXML
-    private void resumeSession() {
+    protected void resumeSession() {
         try {
             InputStream inputStream = new FileInputStream("mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
@@ -96,24 +98,10 @@ public class MyMoveisController {
         System.exit(0);
     }
 
-    private boolean validTitle() {
-        return (!title.getText().equals(""));
-    }
-
-    private boolean isRated() {
-        return rating.getValue() != null;
-    }
-
-    private boolean genreChosen() {
-        return rating.getValue() != null;
-    }
-
-    private void submitted() {
-        genre.setPromptText("Genre");
-        rating.setPromptText("Rating");
-        message.setText("Movie added");
+    public void submitted() {
+        genre.setValue(null);
+        rating.setValue(null);
         title.setText(null);
-        
     }
 
     @FXML
@@ -134,11 +122,21 @@ public class MyMoveisController {
         tekst.setText(heltekst);
         root.getChildren().addAll(ok, tekst);
         stage.setScene(new Scene(root, 800, 600));
+        stage.setTitle("Watched movies");
         stage.show();
 
         ok.setOnMouseClicked((MouseEvent event1) -> {
             heltekst ="";
             stage.close();
         });
+    }
+
+    //For test purposes
+    protected Collection<Film> getMyMovies(){
+        Collection<Film> myMoviesCopy = new ArrayList<>();
+        for (Film film : myMovies){
+            myMoviesCopy.add(film);
+        }
+        return myMoviesCopy;
     }
 }
