@@ -3,6 +3,7 @@ package mymovies.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -74,7 +75,8 @@ public class ControllerTest extends ApplicationTest {
             myMovies1 = controller.persistence.read(reader);
             }
         catch (IOException e){
-                e.printStackTrace();
+                fail(e.getMessage());
+
         }
         assertEquals(controller.getMyMovies().iterator().next().getName(), myMovies1.getFilmer().iterator().next().getName());
         assertEquals(controller.getMyMovies().iterator().next().getGenre(), myMovies1.getFilmer().iterator().next().getGenre());
@@ -134,6 +136,7 @@ public class ControllerTest extends ApplicationTest {
         assertEquals(films.iterator().next().toString(), film.toString());
         //HVIS TID: Film implements comparable. sjekk at films.next lik film med assert equals
         //HVIS TID: lag en metode som "trykker, skriver og submitter" en film. 
+        //BUG: SHREK LIGGER IGEN I APPEN ETTER Å HA KJØRT INSTALL, RUN.
         //assertTrue(films.equals(controller.getMyMovies()));
         //objektene er ikke like, de har ulike adresser. hvordan fikse dette? 
     }

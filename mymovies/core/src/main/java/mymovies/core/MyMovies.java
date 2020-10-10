@@ -7,29 +7,25 @@ import java.util.stream.Collectors;
 
 public class MyMovies implements Iterable<Film> {
 
-    private Collection<Film> filmer = new ArrayList<Film>();
+    private Collection<Film> movies = new ArrayList<Film>();
 
     public Collection<Film> getFilmer() {
-        return this.filmer;
-    }
-
-    public void setFilmer(Collection<Film> filmer) {
-        this.filmer = filmer;
+        return this.movies;
     }
 
     public void addMovie(Film film){
-        if (!filmer.contains(film)){
-            filmer.add(film);
+        if (!movies.contains(film)){
+            movies.add(film);
         }
     }
 
     @Override
     public Iterator<Film> iterator() {
-        return filmer.iterator();
+        return movies.iterator();
     }
     
     public Collection<Film> getMyMovies(){
-        return filmer.stream().collect(Collectors.toList());
+        return movies.stream().collect(Collectors.toList());
     }
 
 }

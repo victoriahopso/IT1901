@@ -35,7 +35,7 @@ public class MyMoveisController {
             "Thriller", "Sci-fi");
     protected String heltekst = "";
     protected MoviesPersistence persistence = new MoviesPersistence();
-    private MyMovies myMovies = new MyMovies();
+    protected MyMovies myMovies = new MyMovies();
 
     @FXML
     Button submit;
