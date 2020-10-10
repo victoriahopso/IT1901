@@ -3,14 +3,11 @@ package mymovies.ui;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,11 +51,17 @@ public class MyMoveisController {
         rating.setItems(ratings);
     }
 
+    /**
+     * Funksjon som kjører når man legger til en film
+     */
     @FXML
     private void handleSubmit() {
         if (validTitle() && isRated() && genreChosen()) {
+            //lager et nytt film-objekt med input fra bruker
             Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
+            //legger filmen til i container-klassen
             myMovies.addMovie(film);
+            //skriver container-klassen "myMovies" til json.fil
             try  {
                 FileOutputStream fileStream = new FileOutputStream("mymovies.json");
                 OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
@@ -74,16 +77,22 @@ public class MyMoveisController {
         }
     }
 
+    /**
+     * Henter tidligere tilstand fra fil og endrer myMovies-objektet til dette
+     */
     @FXML
     private void resumeSession() {
         try {
             InputStream inputStream = new FileInputStream("mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
+            //Endrer myMovies-objektet til det som ligger i json-fil
             myMovies = persistence.read(reader);
             }
             catch (IOException e){
                 e.printStackTrace();
             }
+        //bruker toString til å lage en streng med alle filmene på fint
+        //format, om lista "myMovies" ikke er tom
         if (!myMovies.getFilmer().isEmpty()){
             for (Film film: myMovies){
                 heltekst += film.toString()+"\n";  
@@ -108,14 +117,20 @@ public class MyMoveisController {
         return rating.getValue() != null;
     }
 
+    /**
+     * Endrer tekst i begge combobokser og tekstfelt, etter
+     * man har lagt til film
+     */
     private void submitted() {
         genre.setPromptText("Genre");
         rating.setPromptText("Rating");
         message.setText("Movie added");
         title.setText(null);
-        
     }
 
+    /**
+     * Lager et nytt vindu som viser informasjonen om filmene
+     */
     @FXML
     private void generateList(ActionEvent event) {
         resumeSession();
@@ -136,6 +151,7 @@ public class MyMoveisController {
         stage.setScene(new Scene(root, 800, 600));
         stage.show();
 
+        //om man trykker på knappen "ok", forsvinner
         ok.setOnMouseClicked((MouseEvent event1) -> {
             heltekst ="";
             stage.close();
