@@ -23,9 +23,10 @@ public class MoviesModuleTest {
     mapper = new ObjectMapper();
     mapper.registerModule(new MoviesModule());
   }
-
+  //En final static streng brukes for å verifisere at testSerializers og test Deserializers
   private final static String myMoviesFilmer = "{\"myMovies\":[{\"name\":\"Test\",\"genre\":\"Horror\",\"rating\":3},{\"name\":\"Test2\",\"genre\":\"Action\",\"rating\":1}]}";
 
+  //Vi lager en myMovies med to Film objekt og sjekker at serializers stemmer overens med myMoviesFilmer.
   @Test
   public void testSerializers() {
     MyMovies myMovies = new MyMovies();
@@ -40,6 +41,7 @@ public class MoviesModuleTest {
     }
   }
 
+  //Hjelpemetoder som sjekker at navn, sjanger og rating til en film stemmer overns med det som er antatt
   static void checkFilmer(Film film, String name, String genre, int rating) {
     assertEquals(name, film.getName());
     assertEquals(genre, film.getGenre());
@@ -50,6 +52,7 @@ public class MoviesModuleTest {
     checkFilmer(film1, film2.getName(), film2.getGenre(), film2.getRating());
   }
 
+  //Vi bruker deserializers til å lese av myMoviesFilmer og lager en MyMovies klasse av verdiene og deretter itererer og sjekker at det stemmer overens
   @Test
   public void testDeserializers() {
     try {
@@ -67,6 +70,7 @@ public class MoviesModuleTest {
     }
   }
 
+  //Testen sjekker at dersom man serializer en myMovie klasse med to film objekt og deserializer den med en gang, at verdiene stemmer overens
   @Test
   public void testSerializersDeserializers() {
     MyMovies myMovies1 = new MyMovies();
