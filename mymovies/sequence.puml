@@ -1,0 +1,22 @@
+@startuml
+
+actor User
+User -> "~#submitButton: Button" as submitButton: click
+submitButton -> MyMoviesController: handleSubmit
+
+
+MyMoviesController -> "~#name: TextField" as name: getText
+MyMoviesController -> "~#rating: combobox" as rating: getValue
+MyMoviesController -> "~#genre: comboBox" as genre: getValue
+MyMoviesController -> MyMovies: addMovie
+
+
+genre -> MyMoviesController: handleSubmit
+rating -> MyMoviesController: handleSubmit
+name -> MyMoviesController: handleSubmit
+MyMoviesController -> MyMovies: getMyMovies
+showMyRegisteredMovies -> MyMoviesController: generateList
+
+
+
+@enduml
