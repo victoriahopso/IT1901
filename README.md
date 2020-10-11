@@ -5,7 +5,7 @@
 
 ## MyMovies prosjektet
 Projektet er bygget med **Maven**, og har støtte for direkte tilgang til **Gitpod**.
-Bygget er rigget for å rapportere testdekningsgrad ved kjøring av *mvn test*.
+Bygget er rigget for å rapportere testdekningsgrad ved kjøring av *mvn verify*.
 For å forsikre kodekvalitet benyttes **Checkstyle**, **Spotbugs**, og **JaCoCo**. 
 Vi implementerer fillagring med **JSON**.
 
