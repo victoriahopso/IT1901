@@ -9,6 +9,8 @@ Bygget er rigget for å rapportere testdekningsgrad ved kjøring av *mvn verify*
 For å forsikre kodekvalitet benyttes **Checkstyle**, **Spotbugs**, og **JaCoCo**. 
 Vi implementerer fillagring med **JSON**.
 
+Koden kjøres ved hjelp av kommandoen *mvn javafx:run -f fxui/pom.xml*
+
 
 ### Organisering av koden 
 - Kildekode: [mymovies/core/src/main/java/mymovies/core](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fcore)
