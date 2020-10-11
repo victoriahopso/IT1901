@@ -28,11 +28,13 @@ public class MoviesModuleTest {
 
   @Test
   public void testSerializers() {
-    Film film = new Film("Test", "Horror", 3);
     MyMovies myMovies = new MyMovies();
-    myMovies.addMovie(film);
+    Film film1 = new Film("Test", "Horror", 3);
+    Film film2 = new Film("Test2", "Action", 1);
+    myMovies.addMovie(film1);
+    myMovies.addMovie(film2);
     try {
-      assertEquals(myMoviesFilmer.replaceAll("\\s+", ""), mapper.writeValueAsString(film));
+      assertEquals(myMoviesFilmer.replaceAll("\\s+", ""), mapper.writeValueAsString(myMovies));
     } catch (JsonProcessingException e) {
       fail();
     }
@@ -52,14 +54,13 @@ public class MoviesModuleTest {
   public void testDeserializers() {
     try {
       MyMovies myMovies = mapper.readValue(myMoviesFilmer, MyMovies.class);
-      assertTrue(myMovies.iterator().hasNext());
-      Film film = myMovies.iterator().next();
-      assertEquals("Test", film.getName());
-      Iterator<Film> it = film.iterator();
+      Iterator<Film> it = myMovies.iterator();
       assertTrue(it.hasNext());
-      checkFilmer(it.next(), "Test", "Horror", 3);
+      Film film1 = it.next();
+      checkFilmer(film1, "Test", "Horror", 3);
       assertTrue(it.hasNext());
-      checkFilmer(it.next(), "Test2", "Action", 1);
+      Film film2 = it.next();
+      checkFilmer(film2, "Test2", "Action", 1);
       assertFalse(it.hasNext());
     } catch (JsonProcessingException e) {
       fail();
@@ -68,17 +69,15 @@ public class MoviesModuleTest {
 
   @Test
   public void testSerializersDeserializers() {
-    MyMovies myMovies = new MyMovies();
+    MyMovies myMovies1 = new MyMovies();
     Film film1 = new Film("Test", "Horror", 3);
     Film film2 = new Film("Test2", "Action", 1);
-    myMovies.addMovie(film1);
-    myMovies.addMovie(film2);
+    myMovies1.addMovie(film1);
+    myMovies1.addMovie(film2);
     try {
-      String json = mapper.writeValueAsString(myMovies);
-      MyMovies model2 = mapper.readValue(json, MyMovies.class);
-      assertTrue(model2.iterator().hasNext());
-      assertEquals("Test", film1.getName());
-      Iterator<Film> it = film2.iterator();
+      String json = mapper.writeValueAsString(myMovies1);
+      MyMovies myMovies2 = mapper.readValue(json, MyMovies.class);
+      Iterator<Film> it = myMovies2.iterator();
       assertTrue(it.hasNext());
       checkFilmer(it.next(), film1);
       assertTrue(it.hasNext());
