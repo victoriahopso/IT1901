@@ -1,6 +1,7 @@
 package mymovies.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -39,7 +40,18 @@ public class ControllerTest extends ApplicationTest {
         stage.setScene(new Scene(root));
         stage.show();
     }
+    @Test
+    public void testContructor() {
+        assertNotNull(this.controller);
+        assertNotNull(this.controller.myMovies);
+        assertNotNull(this.controller.persistence);
+    }
 
+    /**
+     * Fjerner "gamle tilstander" etter hver test, slik at ingenting henger
+     * ignen til neste test.
+     * @throws Exception
+     */
     @AfterEach
     public void tearDown () throws Exception {
         FxToolkit.hideStage();
@@ -47,6 +59,12 @@ public class ControllerTest extends ApplicationTest {
         release(new MouseButton[]{});
     }
 
+    /**
+     * FxRobot fyller inn input. Sjekker at disse stemmer med det controlleren mottar, 
+     * og at filmen legges til i container-klassen etter submit. 
+     * Lager en ny container og fyller den med innhold fra fil. Sjekker at dette innholdet
+     * er likt innholdet i controlleren sin myMovies. 
+     */
     @Test
     public void handleSubmitTest() {
         inputExampleMovie(false);
@@ -76,6 +94,10 @@ public class ControllerTest extends ApplicationTest {
         assertEquals(controller.getMyMovies().iterator().next().getRating(), myMovies1.getFilmer().iterator().next().getRating());
     }   
 
+    /**
+     * Sjekker at det leses korrekt fra fil til myMovies, og at innholdet som vises for 
+     * bruker er skrevet på riktig måte. 
+     */
     @Test
     public void testResumeSession(){
         inputExampleMovie(true);
@@ -87,12 +109,20 @@ public class ControllerTest extends ApplicationTest {
         assertEquals("Film: The boy, Genre: Horror, Rating: 2\n", controller.heltekst);
     }
 
+    /**
+     * Sjekker at kanppen submit er disabled med mindre alle input-felt er fyllt inn.
+     * Sjekker at Comboboxen fylles med verdiene fra ratings og genres. 
+     */
     @Test 
     public void testInitialize(){
         assertTrue(controller.submit.isDisabled());
         assertEquals(controller.ratings, controller.rating.getItems());
         assertEquals(controller.genres, controller.genre.getItems());
     }
+
+    /**
+     * Sjekker at alle input-felt settes til null etter en submit.
+     */
     @Test
     public void testSubmitted(){
         controller.submitted();
@@ -101,6 +131,11 @@ public class ControllerTest extends ApplicationTest {
         assertNull(controller.title.getText());
     }
 
+    /**
+     * Sjekker at teksten som vises for brukeren settes til 
+     * film.toString+\n for hver film i mymovies,
+     * og at den settes til tom streng etter vinduet lukkes
+     */
     @Test
     public void testGenerateList(){
         inputExampleMovie(true);
