@@ -13,25 +13,22 @@ import javafx.stage.Stage;
 public class AppTest extends ApplicationTest {
 
     private MyMoveisController controller; 
-    private App app = new App();
 
     @Override
     public void start(final Stage stage) throws Exception {
-        try{
-            //å kjøre appen
-        }
-        catch(Exception e){
-            //fail
-        }
+    final FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovies.fxml"));
+    final Parent root = loader.load();
+    this.controller = loader.getController();
+    stage.setScene(new Scene(root));
+    stage.show();
     }
 
-
-    //@Test
-    //public void shouldAnswerWithTrue() {
-     //   assertNotNull(this.controller);
-     //   assertNotNull(this.controller.myMovies);
-     //   assertNotNull(this.controller.persistence);
-     //}
+    @Test
+    public void testSetUpController() {
+        assertNotNull(this.controller);
+        assertNotNull(this.controller.myMovies);
+        assertNotNull(this.controller.persistence);
+    }
 
    
 }

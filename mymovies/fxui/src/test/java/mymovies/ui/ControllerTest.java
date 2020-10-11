@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -41,10 +40,6 @@ public class ControllerTest extends ApplicationTest {
         stage.show();
     }
 
-    @BeforeEach
-    public void setUp() throws Exception {
-    }
-
     @AfterEach
     public void tearDown () throws Exception {
         FxToolkit.hideStage();
@@ -54,9 +49,7 @@ public class ControllerTest extends ApplicationTest {
 
     @Test
     public void handleSubmitTest() {
-        clickOn("#title").write("The boy");
-        clickOn("#genre").clickOn("Horror");
-        clickOn("#rating").clickOn("2");
+        inputExampleMovie(false);
         assertEquals(controller.title.getText(), ("The boy"));
         assertEquals(controller.genre.getValue(), "Horror");
         assertEquals(controller.rating.getValue(), "2");
@@ -85,15 +78,13 @@ public class ControllerTest extends ApplicationTest {
 
     @Test
     public void testResumeSession(){
-        clickOn("#title").write("Shrek");
-        clickOn("#genre").clickOn("Comedy");
-        clickOn("#rating").clickOn("6");
-        clickOn("#submit");
+        inputExampleMovie(true);
         controller.resumeSession();
-        assertEquals("Shrek", controller.getMyMovies().iterator().next().getName());
-        assertEquals("Comedy", controller.getMyMovies().iterator().next().getGenre());
-        assertEquals(6, controller.getMyMovies().iterator().next().getRating()); 
-        assertEquals(("Film: Shrek, Genre: Comedy, Rating: 6"),controller.getMyMovies().iterator().next().toString());
+        assertEquals("The boy", controller.getMyMovies().iterator().next().getName());
+        assertEquals("Horror", controller.getMyMovies().iterator().next().getGenre());
+        assertEquals(2, controller.getMyMovies().iterator().next().getRating()); 
+        assertEquals(("Film: The boy, Genre: Horror, Rating: 2"),controller.getMyMovies().iterator().next().toString());
+        assertEquals("Film: The boy, Genre: Horror, Rating: 2\n", controller.heltekst);
     }
 
     @Test 
@@ -112,33 +103,35 @@ public class ControllerTest extends ApplicationTest {
 
     @Test
     public void testGenerateList(){
-        clickOn("#title").write("The boy");
-        clickOn("#genre").clickOn("Horror");
-        clickOn("#rating").clickOn("2"); 
-        clickOn("#submit");
+        inputExampleMovie(true);
         clickOn("#showMovies");
         Film film = new Film("The boy", "Horror", 2);
         assertEquals(film.toString()+"\n", controller.heltekst);
+        clickOn("#ok");
+        assertEquals("", controller.heltekst);
     }
-    @Test
-    public void testGenerateListLambda(){
 
-    }
     @Test
     public void testGetMyMovies(){
-        clickOn("#title").write("The boy");
-        clickOn("#genre").clickOn("Horror");
-        clickOn("#rating").clickOn("2"); 
-        clickOn("#submit");
+        inputExampleMovie(true);
         Film film = new Film("The boy", "Horror", 2);
         Collection<Film> films = new ArrayList<>();
         films.add(film);
         assertEquals(films.iterator().next().toString(), film.toString());
-        //HVIS TID: Film implements comparable. sjekk at films.next lik film med assert equals
-        //HVIS TID: lag en metode som "trykker, skriver og submitter" en film. 
-        //BUG: SHREK LIGGER IGEN I APPEN ETTER Å HA KJØRT INSTALL, RUN.
-        //assertTrue(films.equals(controller.getMyMovies()));
-        //objektene er ikke like, de har ulike adresser. hvordan fikse dette? 
+    }
+
+    /** 
+    * Hjelpemetode. 
+    * FxRobot fyller inn alle innput-felt.
+    * @param andSubmit avgjør om FxRobot skal trykke submit eller ikke. 
+    */
+    private void inputExampleMovie(boolean andSubmit) {
+        clickOn("#title").write("The boy");
+        clickOn("#genre").clickOn("Horror");
+        clickOn("#rating").clickOn("2"); 
+        if (andSubmit) {
+            clickOn("#submit");
+        }
     }
 
 }

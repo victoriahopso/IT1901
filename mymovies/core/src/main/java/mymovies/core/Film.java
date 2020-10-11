@@ -1,7 +1,7 @@
 package mymovies.core;
 
 
-public class Film {
+public class Film  {
 
     private String name, genre;
     private int rating;
@@ -24,4 +24,5 @@ public class Film {
     public String toString(){
         return "Film: " + this.name + ", Genre: " + this.genre + ", Rating: " + Integer.toString(this.rating);
     }
+
 }

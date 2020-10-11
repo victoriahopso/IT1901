@@ -48,6 +48,11 @@ public class MyMoveisController {
     @FXML 
     Button showMovies;
 
+    /**
+     * Fyller comboBoxene med verdiene fra ratings og genres.
+     * Sørger for at {@link #submit} er disabled 
+     * så lenge ikke alle 3 inputfeltene er fyllt ut.
+     */
     @FXML
     public void initialize() {
         genre.setItems(genres);
@@ -61,6 +66,11 @@ public class MyMoveisController {
         ));
     }
 
+    /**
+     * Henter verdiene fra inputfeltene,lager et Film-objekt, 
+     * og legger det til i container-objektet myMovies. 
+     * Skriver myMovies til jsonfil.
+     */
     @FXML
     private void handleSubmit() {
         Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
@@ -75,6 +85,7 @@ public class MyMoveisController {
             System.out.println(e);
         } 
     }
+
 
     @FXML
     protected void resumeSession() {
@@ -110,6 +121,7 @@ public class MyMoveisController {
         Stage stage = new Stage();
         Pane root = new Pane();
         Button ok = new Button("Ok");
+        ok.setId("ok");
         Label tekst = new Label();
         tekst.setText(null);
         ok.setScaleX(2);
