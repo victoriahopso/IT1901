@@ -92,11 +92,14 @@ public class MyMoveisController {
         try {
             InputStream inputStream = new FileInputStream("mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
+            //Endrer myMovies-objektet til det som ligger i json-fil
             myMovies = persistence.read(reader);
             }
             catch (IOException e){
                 e.printStackTrace();
             }
+        //bruker toString til å lage en streng med alle filmene på fint
+        //format, om lista "myMovies" ikke er tom
         if (!myMovies.getFilmer().isEmpty()){
             for (Film film: myMovies){
                 heltekst += film.toString()+"\n";  
@@ -115,6 +118,9 @@ public class MyMoveisController {
         title.setText(null);
     }
 
+    /**
+     * Lager et nytt vindu som viser informasjonen om filmene
+     */
     @FXML
     public void generateList(ActionEvent event) {
         resumeSession();
@@ -137,6 +143,7 @@ public class MyMoveisController {
         stage.setTitle("Watched movies");
         stage.show();
 
+        //om man trykker på knappen "ok", forsvinner
         ok.setOnMouseClicked((MouseEvent event1) -> {
             heltekst ="";
             stage.close();
