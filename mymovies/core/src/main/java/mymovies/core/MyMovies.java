@@ -3,6 +3,7 @@ package mymovies.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  * Klasse som har kontroll på opptill flere film-objekt
@@ -10,14 +11,10 @@ import java.util.Iterator;
 
 public class MyMovies implements Iterable<Film> {
 
-    private Collection<Film> filmer = new ArrayList<Film>();
+    private Collection<Film> movies = new ArrayList<Film>();
 
     public Collection<Film> getFilmer() {
-        return this.filmer;
-    }
-
-    public void setFilmer(Collection<Film> filmer) {
-        this.filmer = filmer;
+        return this.movies;
     }
 
     /**
@@ -25,7 +22,9 @@ public class MyMovies implements Iterable<Film> {
      * @param film Film-objekt
      */
     public void addMovie(Film film){
-        filmer.add(film);
+        if (!movies.contains(film)){
+            movies.add(film);
+        }
     }
 
     /**
@@ -34,6 +33,11 @@ public class MyMovies implements Iterable<Film> {
      */
     @Override
     public Iterator<Film> iterator() {
-        return filmer.iterator();
+        return movies.iterator();
     }
+    
+    public Collection<Film> getMyMovies(){
+        return movies.stream().collect(Collectors.toList());
+    }
+
 }

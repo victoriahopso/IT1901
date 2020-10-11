@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,61 +30,65 @@ import mymovies.json.MoviesPersistence;
 
 public class MyMoveisController {
 
-    private ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
-    private ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
+    protected ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
+    protected ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
             "Thriller", "Sci-fi");
-    private String heltekst = "";
-    private MoviesPersistence persistence = new MoviesPersistence();
-    private MyMovies myMovies = new MyMovies();
+    protected String heltekst = "";
+    protected MoviesPersistence persistence = new MoviesPersistence();
+    protected MyMovies myMovies = new MyMovies();
 
     @FXML
-    private Button submit;
+    Button submit;
     @FXML
-    private ComboBox<String> rating, genre;
+    ComboBox<String> rating, genre;
     @FXML
-    private Label message;
+    Label message;
     @FXML
-    private TextField title;
+    TextField title;
     @FXML 
-    private Button showMovies;
+    Button showMovies;
 
+    /**
+     * Fyller comboBoxene med verdiene fra ratings og genres.
+     * Sørger for at {@link #submit} er disabled 
+     * så lenge ikke alle 3 inputfeltene er fyllt ut.
+     */
     @FXML
     public void initialize() {
         genre.setItems(genres);
         rating.setItems(ratings);
+        submit.disableProperty().bind(
+        title.textProperty().isEmpty()
+        .or(
+        genre.valueProperty().isNull()
+        .or(
+        rating.valueProperty().isNull())
+        ));
     }
 
     /**
-     * Funksjon som kjører når man legger til en film
+     * Henter verdiene fra inputfeltene,lager et Film-objekt, 
+     * og legger det til i container-objektet myMovies. 
+     * Skriver myMovies til jsonfil.
      */
     @FXML
     private void handleSubmit() {
-        if (validTitle() && isRated() && genreChosen()) {
-            //lager et nytt film-objekt med input fra bruker
-            Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
-            //legger filmen til i container-klassen
-            myMovies.addMovie(film);
-            //skriver container-klassen "myMovies" til json.fil
-            try  {
-                FileOutputStream fileStream = new FileOutputStream("mymovies.json");
-                OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
-                persistence.write(myMovies, writer);
-                submitted();
-            }
-            catch (IOException e){
-                System.out.println(e);
-            }
-        } 
-        else {
-            message.setText("Please enter title, rating and genre before submitting");
+        Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
+        myMovies.addMovie(film);
+        try  {
+            FileOutputStream fileStream = new FileOutputStream("mymovies.json");
+            OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
+            persistence.write(myMovies, writer);
+            submitted();
         }
+        catch (IOException e){
+            System.out.println(e);
+        } 
     }
 
-    /**
-     * Henter tidligere tilstand fra fil og endrer myMovies-objektet til dette
-     */
+
     @FXML
-    private void resumeSession() {
+    protected void resumeSession() {
         try {
             InputStream inputStream = new FileInputStream("mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
@@ -105,26 +112,9 @@ public class MyMoveisController {
         System.exit(0);
     }
 
-    private boolean validTitle() {
-        return (!title.getText().equals(""));
-    }
-
-    private boolean isRated() {
-        return rating.getValue() != null;
-    }
-
-    private boolean genreChosen() {
-        return rating.getValue() != null;
-    }
-
-    /**
-     * Endrer tekst i begge combobokser og tekstfelt, etter
-     * man har lagt til film
-     */
-    private void submitted() {
-        genre.setPromptText("Genre");
-        rating.setPromptText("Rating");
-        message.setText("Movie added");
+    public void submitted() {
+        genre.setValue(null);
+        rating.setValue(null);
         title.setText(null);
     }
 
@@ -132,11 +122,12 @@ public class MyMoveisController {
      * Lager et nytt vindu som viser informasjonen om filmene
      */
     @FXML
-    private void generateList(ActionEvent event) {
+    public void generateList(ActionEvent event) {
         resumeSession();
         Stage stage = new Stage();
         Pane root = new Pane();
         Button ok = new Button("Ok");
+        ok.setId("ok");
         Label tekst = new Label();
         tekst.setText(null);
         ok.setScaleX(2);
@@ -149,6 +140,7 @@ public class MyMoveisController {
         tekst.setText(heltekst);
         root.getChildren().addAll(ok, tekst);
         stage.setScene(new Scene(root, 800, 600));
+        stage.setTitle("Watched movies");
         stage.show();
 
         //om man trykker på knappen "ok", forsvinner
@@ -156,5 +148,14 @@ public class MyMoveisController {
             heltekst ="";
             stage.close();
         });
+    }
+
+    //For test purposes
+    protected Collection<Film> getMyMovies(){
+        Collection<Film> myMoviesCopy = new ArrayList<>();
+        for (Film film : myMovies){
+            myMoviesCopy.add(film);
+        }
+        return myMoviesCopy;
     }
 }
