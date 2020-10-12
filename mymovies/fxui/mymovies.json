@@ -1,0 +1,11 @@
+{
+  "myMovies" : [ {
+    "name" : "Test",
+    "genre" : "Horror",
+    "rating" : 3
+  }, {
+    "name" : "Test2",
+    "genre" : "Action",
+    "rating" : 1
+  } ]
+}
