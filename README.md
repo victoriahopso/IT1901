@@ -23,4 +23,4 @@ Koden kjøres ved hjelp av kommandoen *mvn javafx:run -f fxui/pom.xml*
 
 #### Arbeidet 
 Prosjektet deles inn i brukerhistorier, som deretter deles inn i mindre utviklingsoppgaver  
-og tilordnes et gruppemedlem. Det benyttes parprogrammering hvor man bytter på å programmere.
+og tilordnes et gruppemedlem. Det opprettes en egen branch for hver utviklingsoppgave, og det benyttes parprogrammering hvor man bytter på å programmere.

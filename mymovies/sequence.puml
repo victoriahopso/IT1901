@@ -2,21 +2,21 @@
 
 actor User
 User -> "~#submitButton: Button" as submitButton: click
-submitButton -> MyMoviesController: handleSubmit
+submitButton -> MyMoviesController: handleSubmit()
 
 
-MyMoviesController -> "~#name: TextField" as name: getText
-MyMoviesController -> "~#rating: combobox" as rating: getValue
-MyMoviesController -> "~#genre: comboBox" as genre: getValue
-MyMoviesController -> MyMovies: addMovie
+MyMoviesController -> "~#name: TextField" as name: getText()
+MyMoviesController -> "~#rating: combobox" as rating: getValue()
+MyMoviesController -> "~#genre: comboBox" as genre: getValue()
+MyMoviesController -> MyMovies: addMovie(Film)
 
 
-genre -> MyMoviesController: handleSubmit
-rating -> MyMoviesController: handleSubmit
-name -> MyMoviesController: handleSubmit
-MyMoviesController -> MyMovies: getMyMovies
-"~#showMyRegisteredMovies: Button" -> MyMoviesController: generateList
-
-
+genre -> MyMoviesController: handleSubmit()
+rating -> MyMoviesController: handleSubmit()
+name -> MyMoviesController: handleSubmit()
+MyMoviesController -> MyMovies: getMyMovies()
+"~#showMyRegisteredMovies: Button" -> MyMoviesController: generateList(ActionEvent)
+"~#ok: Button" as ok -> MyMoviesController: generateList(ActionEvent)
+User -> ok: click
 
 @enduml
