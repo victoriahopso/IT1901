@@ -41,8 +41,4 @@ public class MoviesPersistence {
         mapper.writerWithDefaultPrettyPrinter().writeValue(writer, myMovies);
     }
 
-    public void removeAll(Writer writer) throws IOException {
-        mapper.writerWithDefaultPrettyPrinter().writeValue(writer, null);
-    }
-
 }

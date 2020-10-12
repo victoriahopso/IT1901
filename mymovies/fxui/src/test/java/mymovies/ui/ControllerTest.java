@@ -56,9 +56,10 @@ public class ControllerTest extends ApplicationTest {
      */
     @AfterEach
     public void tearDown () throws Exception {
+        MyMovies movies = new MyMovies();
         FileOutputStream fileStream = new FileOutputStream("./mymovies.json");
         OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
-        controller.persistence.removeAll(writer);
+        controller.persistence.write(movies, writer);
         FxToolkit.hideStage();
         release(new KeyCode[]{});
         release(new MouseButton[]{});
