@@ -21,6 +21,7 @@ public class MoviesPersistence {
 
     /**
      * Metode som leser myMovies-objekt fra json-fil
+     * 
      * @param reader Tar inn en reader
      * @return Returnerer ett myMovies-objekt
      * @throws IOException
@@ -31,12 +32,17 @@ public class MoviesPersistence {
 
     /**
      * Metode som skriver myMovies-objekt til json-fil
+     * 
      * @param myMovies myMovies-objekt
-     * @param writer Tar inn en writer
+     * @param writer   Tar inn en writer
      * @throws IOException
      */
     public void write(MyMovies myMovies, Writer writer) throws IOException {
         mapper.writerWithDefaultPrettyPrinter().writeValue(writer, myMovies);
+    }
+
+    public void removeAll(Writer writer) throws IOException {
+        mapper.writerWithDefaultPrettyPrinter().writeValue(writer, null);
     }
 
 }

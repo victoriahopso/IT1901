@@ -76,7 +76,7 @@ public class MyMoveisController {
         Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
         myMovies.addMovie(film);
         try  {
-            FileOutputStream fileStream = new FileOutputStream("mymovies.json");
+            FileOutputStream fileStream = new FileOutputStream("./mymovies.json");
             OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
             persistence.write(myMovies, writer);
             submitted();
@@ -90,7 +90,7 @@ public class MyMoveisController {
     @FXML
     protected void resumeSession() {
         try {
-            InputStream inputStream = new FileInputStream("mymovies.json"); 				
+            InputStream inputStream = new FileInputStream("./mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
             //Endrer myMovies-objektet til det som ligger i json-fil
             myMovies = persistence.read(reader);

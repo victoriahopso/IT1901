@@ -25,10 +25,10 @@ public class MoviesPersistenceTest {
         myMovies.addMovie(film1);
         myMovies.addMovie(film2);
         try {
-            FileOutputStream fileStream = new FileOutputStream("mymovies.json");
+            FileOutputStream fileStream = new FileOutputStream("./mymovies.json");
             OutputStreamWriter writer = new OutputStreamWriter(fileStream, "UTF-8");
             moviesPersistence.write(myMovies, writer);
-            InputStream inputStream = new FileInputStream("mymovies.json"); 				
+            InputStream inputStream = new FileInputStream("./mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
             myMovies2 = moviesPersistence.read(reader);
             assertTrue(myMovies.getFilmer().iterator().hasNext());

@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +56,9 @@ public class ControllerTest extends ApplicationTest {
      */
     @AfterEach
     public void tearDown () throws Exception {
+        FileOutputStream fileStream = new FileOutputStream("./mymovies.json");
+        OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
+        controller.persistence.removeAll(writer);
         FxToolkit.hideStage();
         release(new KeyCode[]{});
         release(new MouseButton[]{});
@@ -81,7 +86,7 @@ public class ControllerTest extends ApplicationTest {
 
         MyMovies myMovies1 = new MyMovies();
         try {
-            InputStream inputStream = new FileInputStream("mymovies.json"); 				
+            InputStream inputStream = new FileInputStream("./mymovies.json"); 				
             Reader reader = new InputStreamReader(inputStream, "UTF-8");
             myMovies1 = controller.persistence.read(reader);
             }
