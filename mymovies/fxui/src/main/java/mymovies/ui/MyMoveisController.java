@@ -1,13 +1,6 @@
 package mymovies.ui;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,6 +20,7 @@ import javafx.stage.Stage;
 import mymovies.core.Film;
 import mymovies.core.MyMovies;
 import mymovies.json.MoviesPersistence;
+import mymovies.core.RW;
 
 public class MyMoveisController {
 
@@ -36,6 +30,7 @@ public class MyMoveisController {
     protected String heltekst = "";
     protected MoviesPersistence persistence = new MoviesPersistence();
     protected MyMovies myMovies = new MyMovies();
+    protected RW rw = new RW();
 
     @FXML
     Button submit;
@@ -75,29 +70,15 @@ public class MyMoveisController {
     private void handleSubmit() {
         Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
         myMovies.addMovie(film);
-        try  {
-            FileOutputStream fileStream = new FileOutputStream("./mymovies.json");
-            OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
-            persistence.write(myMovies, writer);
-            submitted();
-        }
-        catch (IOException e){
-            System.out.println(e);
-        } 
+        persistence.write(myMovies, rw.createWriter("./mymovies.json"));
+        submitted();
     }
 
 
     @FXML
     protected void resumeSession() {
-        try {
-            InputStream inputStream = new FileInputStream("./mymovies.json"); 				
-            Reader reader = new InputStreamReader(inputStream, "UTF-8");
-            //Endrer myMovies-objektet til det som ligger i json-fil
-            myMovies = persistence.read(reader);
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+        //Endrer myMovies-objektet til det som ligger i json-fil
+        myMovies = persistence.read(rw.createReader("./mymovies.json"));
         //bruker toString til å lage en streng med alle filmene på fint
         //format, om lista "myMovies" ikke er tom
         if (!myMovies.getFilmer().isEmpty()){

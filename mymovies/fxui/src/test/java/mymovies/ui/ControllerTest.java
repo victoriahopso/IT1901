@@ -4,15 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -57,9 +49,7 @@ public class ControllerTest extends ApplicationTest {
     @AfterEach
     public void tearDown () throws Exception {
         MyMovies movies = new MyMovies();
-        FileOutputStream fileStream = new FileOutputStream("./mymovies.json");
-        OutputStreamWriter writer = new OutputStreamWriter(fileStream,"UTF-8");
-        controller.persistence.write(movies, writer);
+        controller.persistence.write(movies, controller.rw.createWriter("./mymovies.json"));
         FxToolkit.hideStage();
         release(new KeyCode[]{});
         release(new MouseButton[]{});
@@ -86,15 +76,7 @@ public class ControllerTest extends ApplicationTest {
         assertEquals(controller.title.getText(), null);
 
         MyMovies myMovies1 = new MyMovies();
-        try {
-            InputStream inputStream = new FileInputStream("./mymovies.json"); 				
-            Reader reader = new InputStreamReader(inputStream, "UTF-8");
-            myMovies1 = controller.persistence.read(reader);
-            }
-        catch (IOException e){
-                fail(e.getMessage());
-
-        }
+        myMovies1 = controller.persistence.read(controller.rw.createReader("./mymovies.json"));
         assertEquals(controller.getMyMovies().iterator().next().getName(), myMovies1.getFilmer().iterator().next().getName());
         assertEquals(controller.getMyMovies().iterator().next().getGenre(), myMovies1.getFilmer().iterator().next().getGenre());
         assertEquals(controller.getMyMovies().iterator().next().getRating(), myMovies1.getFilmer().iterator().next().getRating());
