@@ -11,6 +11,7 @@ import java.util.Iterator;
 public class MyMovies implements Iterable<Film> {
 
     private Collection<Film> movies = new ArrayList<Film>();
+    User owner; 
 
     public Collection<Film> getFilmer() {
         return this.movies;
