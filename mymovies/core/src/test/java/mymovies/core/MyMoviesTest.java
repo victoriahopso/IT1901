@@ -28,9 +28,9 @@ public class MyMoviesTest {
 
     @Test
     public void testAddMovie(){
-        assertEquals(2, mymovs.getMyMovies().size());
+        assertEquals(2, mymovs.getFilmer().size());
         mymovs.addMovie(film2);
-        assertEquals(2, mymovs.getMyMovies().size());
+        assertEquals(2, mymovs.getFilmer().size());
     }
 
 }

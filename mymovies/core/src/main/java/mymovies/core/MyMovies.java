@@ -3,7 +3,6 @@ package mymovies.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
 /**
  * Klasse som har kontroll på opptill flere film-objekt
@@ -34,10 +33,6 @@ public class MyMovies implements Iterable<Film> {
     @Override
     public Iterator<Film> iterator() {
         return movies.iterator();
-    }
-    
-    public Collection<Film> getMyMovies(){
-        return movies.stream().collect(Collectors.toList());
     }
 
 }
