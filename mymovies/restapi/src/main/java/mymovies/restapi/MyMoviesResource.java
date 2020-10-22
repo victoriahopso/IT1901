@@ -13,26 +13,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import mymovies.core.MyMovies;
 /**
- * Used for all requests referring to TodoLists by name.
+ * Used for all requests referring to MyMovies by name.
  */
 public class MyMoviesResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(MyMoviesResource.class);
 
   private final MyMovies mymovie;
-  private final String name;
 
   /**
    * Initializes this TodoListResource with appropriate context information.
    * Each method will check and use what it needs.
    *
-   * @param mymovie the TodoModel, needed for DELETE and rename
-   * @param name the todo list name, needed for most requests
-   *  the TodoList, or null, needed for PUT
+   * @param mymovie the MyMovies, needed for 
    */
-  public MyMoviesResource(MyMovies mymovie, String name) {
+  public MyMoviesResource(MyMovies mymovie) {
     this.mymovie = mymovie;
-    this.name = name;
   }
 
   private void checkMyMovies() {
@@ -42,22 +38,18 @@ public class MyMoviesResource {
   }
 
   /**
-   * Gets the corresponding MyMovie.
+   * Gets the corresponding MyMovies.
    *
-   * @return the corresponding MyMovie
+   * @return the corresponding MyMovies
    */
 
-   /** 
-  * @GET
-  * @Produces(MediaType.APPLICATION_JSON)
-  * public AbstractTodoList getTodoList() {
-  * checkMyMovies();
-  * LOG.debug("getMyMovies({})", name);
-  * return this.mymovie;
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public MyMovies getMyMovies() {
+  checkMyMovies();
+  LOG.debug("getMyMovies({})");
+  return this.mymovie;
   }
- */
-
-
   /**
    * Replaces or adds a MyMovies.
    *
@@ -83,32 +75,3 @@ public class MyMoviesResource {
   public boolean putMyMovies() {
     return putMyMovies(null);
   }
-
-  /**
-   * Renames MyMovies.
-   *
-   * @param newName the newName
-   */
-  @POST
-  @Path("/rename")
-  @Produces(MediaType.APPLICATION_JSON)
-  public boolean renameTodoList(@QueryParam("newName") String newName) {
-    checkMyMovies();
-    if (this.mymovie.getTodoList(newName) != null) {
-      throw new IllegalArgumentException("A TodoList named \"" + newName + "\" already exists");
-    }
-    this.mymovie.setName(newName);
-    return true;
-  }
-
-  /**
-   * Removes the TodoList.
-   */
-  @DELETE
-  @Produces(MediaType.APPLICATION_JSON)
-  public boolean removeTodoList() {
-    checkTodoList();
-    this.todoModel.removeTodoList(this.todoList);
-    return true;
-  }
-}
