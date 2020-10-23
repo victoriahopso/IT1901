@@ -21,7 +21,7 @@ public class MoviesModuleTest {
   @BeforeAll
   public static void setUp() {
     mapper = new ObjectMapper();
-    mapper.registerModule(new MoviesModule());
+    mapper.registerModule(new UsersModule());
   }
   //En final static streng brukes for å verifisere at testSerializers og test Deserializers
   private final static String myMoviesFilmer = "{\"myMovies\":[{\"name\":\"Test\",\"genre\":\"Horror\",\"rating\":3},{\"name\":\"Test2\",\"genre\":\"Action\",\"rating\":1}]}";

@@ -7,13 +7,18 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import mymovies.core.AllUsers;
+import mymovies.core.User;
 
 public class AllUsersSerializer extends JsonSerializer<AllUsers> {
 
     @Override
-    public void serialize(AllUsers value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        // TODO Auto-generated method stub
-
+    public void serialize(AllUsers allUsers, JsonGenerator gen, SerializerProvider prov) throws IOException {
+        gen.writeStartObject();
+        gen.writeArrayFieldStart("allUsers");
+        for (User us : allUsers.getUsers()) {
+            gen.writeObject(us);
+        }
+        gen.writeEndArray();
+        gen.writeEndObject();
     }
-    
 }
