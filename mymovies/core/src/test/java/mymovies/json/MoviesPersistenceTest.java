@@ -9,7 +9,7 @@ import mymovies.core.RW;
 
 public class MoviesPersistenceTest {
 
-    private MoviesPersistence moviesPersistence = new MoviesPersistence();
+    private UsersPersistence moviesPersistence = new UsersPersistence();
     private RW rw = new RW();
 
     @Test

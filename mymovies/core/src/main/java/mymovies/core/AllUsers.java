@@ -1,6 +1,7 @@
 package mymovies.core;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class AllUsers {
 
@@ -13,24 +14,30 @@ public class AllUsers {
      */
 
      
-    private HashMap<String, String> users = new HashMap<>();
+    private Collection<User> users = new ArrayList<User>();
 
     public boolean containsUser(User user){
-        return users.containsKey(user.getUserName());
+        return users.contains(user);
     }
 
     public boolean correctLogin(String name, String pass){
-        if (users.containsKey(name)){
-            return users.get(name).equals(pass);
+        for (User us : users) {
+            if (us.getUserName() == name) {
+                if (us.getPassword() == pass) {
+                    return true;
+                }
+            }
         }
-        return false; 
+        return false;
     }
 
     public void add(User user){
-        users.put(user.getUserName(), user.getPassword());
+        users.add(user);
     }
 
-
+    public Collection<User> getUsers() {
+        return this.users;
+    }
 
 
 }
