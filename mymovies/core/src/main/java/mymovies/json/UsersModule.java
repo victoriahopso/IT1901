@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import mymovies.core.AllUsers;
+import mymovies.core.Film;
 import mymovies.core.User;
 
 @SuppressWarnings("serial")
@@ -21,6 +22,9 @@ public class UsersModule extends SimpleModule {
 
         addSerializer(AllUsers.class, new AllUsersSerializer());
         addDeserializer(AllUsers.class, new AllUsersDeserializer());
+
+        addSerializer(Film.class, new FilmSerializer());
+        addDeserializer(Film.class, new FilmDeserializer());
     }
 
     //NY LOGIKK: En AllUsers inneholder mange User.
