@@ -44,9 +44,10 @@ public class LogInController {
     public void handleSignUp(ActionEvent event) throws IOException {
         if (suPassword.getText().equals(confPassword.getText())) {
             User user = new User(suUsername.getText(), suPassword.getText());
-            if (!all.containsUser(user)) {
-                all.add(user);
-                logIn(event);
+            User user2 = all.getUser(suUsername.getText(), suPassword.getText());
+            if (user2.equals(null)) {
+                all.addUser(user);
+                logIn(event, user);
             }
             else {
                 logInFailour("Username is taken. Choose another username.");
@@ -61,8 +62,9 @@ public class LogInController {
     }
     @FXML
     public void handleSignIn(ActionEvent event) throws IOException {
-        if (all.correctLogin(siUsername.getText(), siPassword.getText())) {
-            logIn(event);
+        User user = all.getUser(siUsername.getText(), siPassword.getText());
+        if (!user.equals(null)) {
+            logIn(event, user);
         }
         else {
             logInFailour("Username or password is incorrect");
@@ -76,10 +78,15 @@ public class LogInController {
      * @throws IOException
      */
     @FXML
-    public void logIn(ActionEvent event) throws IOException {
+    public void logIn(ActionEvent event, User user) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
         Parent myMoviesParent = FXMLLoader.load(getClass().getResource("MyMovies.fxml"));
         Scene myMoviesScene = new Scene(myMoviesParent);
         Stage myMoviesWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        MyMoveisController mmc = loader.getController(); 
+        mmc.setUser(user); 
+
         myMoviesWindow.setScene(myMoviesScene);
         myMoviesWindow.show();
     }

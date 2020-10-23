@@ -3,7 +3,7 @@ package mymovies.core;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class AllUsers {
+public class AllUsers{
 
     /**
      * Det skal kun eksistere én av denne klassen. 
@@ -14,30 +14,33 @@ public class AllUsers {
      */
 
      
-    private Collection<User> users = new ArrayList<User>();
+    private Collection<User> users = new ArrayList<>();
 
-    public boolean containsUser(User user){
-        return users.contains(user);
-    }
-
-    public boolean correctLogin(String name, String pass){
-        for (User us : users) {
-            if (us.getUserName() == name) {
-                if (us.getPassword() == pass) {
-                    return true;
+    public void addUser(User user){
+        if (!users.contains(user)){
+            int counter = 0;
+            for (User us : users){
+                if (!us.equals(user)){
+                    counter++;
                 }
             }
+            if (counter == users.size()){
+                users.add(user);
+            }
         }
-        return false;
     }
 
-    public void add(User user){
-        users.add(user);
+    public Collection<User> getAllUsers(){
+        return users; 
     }
 
-    public Collection<User> getUsers() {
-        return this.users;
+    public User getUser(String name, String pass){
+        for (User user : users){
+            if (user.getUserName().equals(name) && user.getPassword().equals(pass)){
+                return user;
+            }
+        }
+        return null;
     }
-
 
 }
