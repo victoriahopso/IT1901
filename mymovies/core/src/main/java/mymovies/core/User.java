@@ -1,7 +1,7 @@
 package mymovies.core;
 
 
-public class User implements Comparable<User> {
+public class User {
 
     String userName; 
     String password;
@@ -22,7 +22,10 @@ public class User implements Comparable<User> {
     public MyMovies getUsersMyMovies(){ 
         return this.myMovs;
     }
-
+    public String getPassword(){
+        return this.password;
+    }
+    //ha validering i kontrolleren??
     private boolean validUserName(String userName){
        return userName.length()>=2;
     }
@@ -35,10 +38,7 @@ public class User implements Comparable<User> {
         return this.userName;
     }
 
-    @Override
-    public int compareTo(User o) {
-        return this.getUserName().compareTo(o.getUserName());
-    }
+
 
 
 

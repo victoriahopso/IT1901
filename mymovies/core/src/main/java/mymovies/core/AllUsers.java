@@ -1,10 +1,8 @@
 package mymovies.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.HashMap;
 
-public class AllUsers implements Iterable<User> {
+public class AllUsers {
 
     /**
      * Det skal kun eksistere én av denne klassen. 
@@ -15,30 +13,24 @@ public class AllUsers implements Iterable<User> {
      */
 
      
-    private Collection<User> users = new ArrayList<User>();
+    private HashMap<String, String> users = new HashMap<>();
 
-    public void addUser(User user){
-        if (!users.contains(user)){
-            int counter = 0;
-            for (User us : users){
-                if (!us.equals(user)){
-                    counter++;
-                }
-            }
-            if (counter == users.size()){
-                users.add(user);
-            }
+    public boolean containsUser(User user){
+        return users.containsKey(user.getUserName());
+    }
+
+    public boolean correctLogin(String name, String pass){
+        if (users.containsKey(name)){
+            return users.get(name).equals(pass);
         }
+        return false; 
     }
 
-    public boolean contains(User user){
-        return users.contains(user);
+    public void add(User user){
+        users.put(user.getUserName(), user.getPassword());
     }
 
-    @Override
-    public Iterator<User> iterator() {
-        return users.iterator();
-    }
+
 
 
 }
