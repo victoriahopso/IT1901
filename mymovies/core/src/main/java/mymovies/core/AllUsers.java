@@ -1,8 +1,9 @@
 package mymovies.core;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class AllUsers {
+public class AllUsers{
 
     /**
      * Det skal kun eksistere én av denne klassen. 
@@ -13,24 +14,33 @@ public class AllUsers {
      */
 
      
-    private HashMap<String, String> users = new HashMap<>();
+    private Collection<User> users = new ArrayList<>();
 
-    public boolean containsUser(User user){
-        return users.containsKey(user.getUserName());
-    }
-
-    public boolean correctLogin(String name, String pass){
-        if (users.containsKey(name)){
-            return users.get(name).equals(pass);
+    public void addUser(User user){
+        if (!users.contains(user)){
+            int counter = 0;
+            for (User us : users){
+                if (!us.equals(user)){
+                    counter++;
+                }
+            }
+            if (counter == users.size()){
+                users.add(user);
+            }
         }
-        return false; 
     }
 
-    public void add(User user){
-        users.put(user.getUserName(), user.getPassword());
+    public Collection<User> getAllUsers(){
+        return users; 
     }
 
-
-
+    public User getUser(String name, String pass){
+        for (User user : users){
+            if (user.getUserName().equals(name) && user.getPassword().equals(pass)){
+                return user;
+            }
+        }
+        return null;
+    }
 
 }
