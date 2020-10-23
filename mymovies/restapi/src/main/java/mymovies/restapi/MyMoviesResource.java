@@ -19,7 +19,9 @@ public class MyMoviesResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(MyMoviesResource.class);
 
-  private final MyMovies mymovie;
+  private final AllUsers allUsers;
+  private final String name;
+  private final User user;
 
   /**
    * Initializes this TodoListResource with appropriate context information.
@@ -27,13 +29,15 @@ public class MyMoviesResource {
    *
    * @param mymovie the MyMovies, needed for 
    */
-  public MyMoviesResource(MyMovies mymovie) {
-    this.mymovie = mymovie;
+  public MyMoviesResource(AllUsers allUsers, String name, User user) {
+    this.allUsers = allUsers;
+    this.name = name;
+    this.user = user;
   }
 
-  private void checkMyMovies() {
-    if (this.MyMovies == null) {
-      throw new IllegalArgumentException("No MyMovies named \"" + name + "\"");
+  private void checkAllUsers() {
+    if (this.allUsers == null) {
+      throw new IllegalArgumentException("No User named \"" + this.name + "\"");
     }
   }
 
@@ -45,10 +49,10 @@ public class MyMoviesResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public MyMovies getMyMovies() {
-  checkMyMovies();
-  LOG.debug("getMyMovies({})");
-  return this.mymovie;
+  public User getUser() {
+  checkAllUsers();
+  LOG.debug("getAllUsers({})");
+  return this.user;
   }
   /**
    * Replaces or adds a MyMovies.
@@ -72,6 +76,6 @@ public class MyMoviesResource {
    */
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean putMyMovies() {
-    return putMyMovies(null);
+  public boolean putUser() {
+    return putUser(null);
   }

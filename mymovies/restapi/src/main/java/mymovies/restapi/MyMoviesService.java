@@ -7,28 +7,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import todolist.core.AbstractTodoList;
-import todolist.core.TodoModel;
 
 @Path(MyMoviesService.MY_MOVIES_SERVICE_PATH)
 public class MyMoviesService {
 
   public static final String MY_MOVIES_SERVICE_PATH = "my";
 
-  private static final Logger LOG = LoggerFactory.getLogger(MyMoviesService.class);
+  //private static final Logger LOG = LoggerFactory.getLogger(MyMoviesService.class);
 
   @Inject
-  private MyMovies mymovies;
+  private AllUsers allUsers;
 
   /**
-   * The root resource, i.e. /todo
+   * The root resource,
    *
-   * @return the TodoModel
+   * @return the AllUsers
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public MyMovies getMyMovies() {
-    return todoModel;
+  public AllUsers getAllUsers() {
+    return this.allUsers;
   }
 
   /**
@@ -40,9 +38,9 @@ public class MyMoviesService {
    * @param name the name of the todo list
    */
   @Path("/{name}")
-  public TodoListResource getTodoList(@PathParam("name") String name) {
-    AbstractTodoList todoList = getTodoModel().getTodoList(name);
-    LOG.debug("Sub-resource for TodoList " + name + ": " + todoList);
-    return new TodoListResource(todoModel, name, todoList);
+  public MyMoviesResource getAllUsers(@PathParam("name") String name) {
+    User user = getAllUsers().getUser(name);
+    LOG.debug("Sub-resource for AllUsers " + name + ": " + this.allUsers);
+    return new MyMoviesResource(this.allUsers, name, user);
   }
 }
