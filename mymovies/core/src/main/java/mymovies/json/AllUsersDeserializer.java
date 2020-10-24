@@ -34,7 +34,7 @@ public class AllUsersDeserializer extends JsonDeserializer<AllUsers> {
                 for (TreeNode elementNode : ((ArrayNode) itemsNode)) {
                     User user = userDeserializer.deserialize((JsonNode) elementNode);
                     if (user != null) {
-                        allUsers.getUsers().add(user);
+                        allUsers.addUser(user);
                     }
                 }
                 return allUsers;

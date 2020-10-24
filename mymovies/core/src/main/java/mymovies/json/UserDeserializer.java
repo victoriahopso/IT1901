@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import mymovies.core.Film;
-import mymovies.core.MyMovies;
 import mymovies.core.User;
 
 public class UserDeserializer extends JsonDeserializer<User> {
@@ -38,7 +37,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
                 for (TreeNode elementNode : ((ArrayNode) itemsNode)) {
                     Film film = filmDeserializer.deserialize((JsonNode) elementNode);
                     if (film != null) {
-                        user.getMyMovies.add(film);
+                        user.addMovie(film);
                     }
                 }
                 return user;

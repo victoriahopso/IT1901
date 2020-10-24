@@ -17,7 +17,7 @@ public class UserSerializer extends JsonSerializer<User> {
         gen.writeStringField("username", user.getUserName());
         gen.writeStringField("password", user.getPassword());
         gen.writeArrayFieldStart("myMovies");
-        for (Film film : User.getMyMovies) {
+        for (Film film : user.getMyMovies()) {
             gen.writeObject(film);
         }
         gen.writeEndArray();

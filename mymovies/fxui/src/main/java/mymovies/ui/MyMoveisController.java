@@ -19,7 +19,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import mymovies.core.AllUsers;
 import mymovies.core.Film;
-import mymovies.core.MyMovies;
 import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersPersistence;

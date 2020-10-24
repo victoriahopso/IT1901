@@ -15,7 +15,7 @@ public class AllUsersSerializer extends JsonSerializer<AllUsers> {
     public void serialize(AllUsers allUsers, JsonGenerator gen, SerializerProvider prov) throws IOException {
         gen.writeStartObject();
         gen.writeArrayFieldStart("allUsers");
-        for (User us : allUsers.getUsers()) {
+        for (User us : allUsers.getAllUsers()) {
             gen.writeObject(us);
         }
         gen.writeEndArray();
