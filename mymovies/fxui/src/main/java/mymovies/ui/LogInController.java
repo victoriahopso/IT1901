@@ -28,6 +28,8 @@ public class LogInController {
     @FXML
     PasswordField siPassword, suPassword, confPassword;
 
+    protected Boolean check = true;
+
     private AllUsers all = new AllUsers(); // DENNE MÅ LASTES INN FRA SKYEN SLIK AT DEN ER STATISK!!
 
     @FXML
@@ -44,8 +46,13 @@ public class LogInController {
     public void handleSignUp(ActionEvent event) throws IOException {
         if (suPassword.getText().equals(confPassword.getText())) {
             User user = new User(suUsername.getText(), suPassword.getText());
-            User user2 = all.getUser(suUsername.getText(), suPassword.getText());
-            if (user2.equals(null)) {
+            //User user2 = all.getUser(suUsername.getText(), suPassword.getText());
+            for (User users : all.getAllUsers()) {
+                if (user.getUserName().equals(users.getUserName())) {
+                    check = false;
+                }
+            }
+            if (check) {
                 all.addUser(user);
                 logIn(event, user);
             }
@@ -63,7 +70,7 @@ public class LogInController {
     @FXML
     public void handleSignIn(ActionEvent event) throws IOException {
         User user = all.getUser(siUsername.getText(), siPassword.getText());
-        if (!user.equals(null)) {
+        if (!((user.getUserName().equals("")) && (user.getPassword().equals("")))) {
             logIn(event, user);
         }
         else {

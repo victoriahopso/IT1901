@@ -3,6 +3,9 @@ package mymovies.json;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Iterator;
+
 import org.junit.jupiter.api.Test;
 
 import mymovies.core.AllUsers;
@@ -35,27 +38,30 @@ public class MoviesPersistenceTest {
         userPersistence.write(allUsers, rw.createWriter("./mymovies.json"));
         allUsersComparison = userPersistence.read(rw.createReader("./mymovies.json"));
 
-        assertTrue(allUsers.iterator().hasNext());
+        Iterator<User> it = allUsers.iterator();
+        Iterator<User> it1 = allUsersComparison.iterator();
+        assertTrue(it.hasNext());
         assertTrue(allUsersComparison.iterator().hasNext());
+        User user3 = it.next();
+        User user4 = it.next();
+        Iterator<Film> it2 = user3.getMyMovies().iterator();
+        Iterator<Film> it3 = user4.getMyMovies().iterator();
+        
+        assertTrue(it1.hasNext());
+        assertEquals(user3.getUserName(), it1.next().getUserName());
+        assertEquals(user4.getUserName(), "username2"); //allUsersComparison.getUser("username2", "password2").getUserName()
 
-        User user3 = allUsers.iterator().next();
-        assertEquals(user3.getUserName(), allUsersComparison.getUser("username1", "password1").getUserName());
-        assertTrue(allUsersComparison.iterator().hasNext());
-        allUsers.iterator().next();
-        User user4 = allUsers.iterator().next();
-        assertEquals(user4.getUserName(), allUsersComparison.getUser("username2", "password2").getUserName());
-
-        Film film3 = user3.getMyMovies().iterator().next();
+        Film film3 = it2.next();
         assertEquals(film3.getName(), "Test");
         assertEquals(film3.getGenre(), "Horror");
         assertEquals(film3.getRating(), 3);
-        assertFalse(user3.getMyMovies().iterator().hasNext());
+        assertFalse(it2.hasNext());
 
-        Film film4 = user4.getMyMovies().iterator().next();
+        Film film4 = it3.next();
         assertEquals(film4.getName(), "Test2");
         assertEquals(film4.getGenre(), "Action");
         assertEquals(film4.getRating(), 1);
-        assertFalse(user4.getMyMovies().iterator().hasNext());
+        assertFalse(it3.hasNext());
 
 
 
