@@ -36,12 +36,12 @@ public class MyMoviesConfig extends ResourceConfig {
   }
 
   /**
-   * Initialize this TodoConfig with a default TodoModel.
+   * Initialize this MyMoviesConfig with a default TodoModel.
    */
   public MyMoviesConfig() {
     this(createDefaultAllUsers());
   }
-
+//model
   public TodoModel getAllUsers() {
     return this.AllUsers;
   }
