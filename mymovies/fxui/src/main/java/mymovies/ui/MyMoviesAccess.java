@@ -22,6 +22,15 @@ public interface MyMoviesAccess {
    *
    * @return every MyMovies
    */
+
+   public boolean hasMovies(String name);
+
+  /**
+   * Gets the names of the movies.
+   *
+   * @return the names of the movies.
+   */
+
   Collection<String> getAllMyMovies();
 
   /**
