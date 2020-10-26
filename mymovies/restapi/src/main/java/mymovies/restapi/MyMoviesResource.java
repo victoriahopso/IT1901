@@ -11,7 +11,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import mymovies.core.MyMovies;
 /**
  * Used for all requests referring to MyMovies by name.
  */
@@ -19,16 +18,9 @@ public class MyMoviesResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(MyMoviesResource.class);
 
-  private final AllUsers allUsers;
-  private final String name;
-  private final User user;
+  private Film film;
+  private Collection<Film> movies = new ArrayList<Film>();
 
-  /**
-   * Initializes this TodoListResource with appropriate context information.
-   * Each method will check and use what it needs.
-   *
-   * @param mymovie the MyMovies, needed for 
-   */
   public MyMoviesResource(AllUsers allUsers, String name, User user) {
     this.allUsers = allUsers;
     this.name = name;
@@ -49,10 +41,10 @@ public class MyMoviesResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public User getUser() {
+  public Film getMovies() {
   checkAllUsers();
   LOG.debug("getAllUsers({})");
-  return this.user;
+  return this.film;
   }
   /**
    * Replaces or adds a MyMovies.

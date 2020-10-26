@@ -1,4 +1,5 @@
 package mymovies.restapi
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,36 +12,31 @@ import org.slf4j.LoggerFactory;
 @Path(MyMoviesService.MY_MOVIES_SERVICE_PATH)
 public class MyMoviesService {
 
-  public static final String MY_MOVIES_SERVICE_PATH = "my";
+    public static final String MY_MOVIES_SERVICE_PATH = "movies";
 
-  //private static final Logger LOG = LoggerFactory.getLogger(MyMoviesService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MyMoviesService.class);
 
-  @Inject
-  private AllUsers allUsers;
+    @Inject
+    private User user;
 
-  /**
-   * The root resource,
-   *
-   * @return the AllUsers
-   */
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public AllUsers getAllUsers() {
-    return this.allUsers;
-  }
+    /**
+    * The root resource,
+    *
+    * @return the AllUsers
+    */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public User getUser() {
+    return this.user;
+    }
 
-  /**
-   * Returns the TodoList with the provided name
-   * (as a resource to support chaining path elements).
-   * This supports all requests referring to TodoLists by name.
-   * Note that the TodoList needn't exist, since it can be a PUT.
-   *
-   * @param name the name of the todo list
-   */
-  @Path("/{name}")
-  public MyMoviesResource getAllUsers(@PathParam("name") String name) {
-    User user = getAllUsers().getUser(name);
-    LOG.debug("Sub-resource for AllUsers " + name + ": " + this.allUsers);
-    return new MyMoviesResource(this.allUsers, name, user);
-  }
+
+    //Prøver å legge til/ bytte ut en collection med filmer som hører til en user
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void putMovies(Collection<Film> col) {
+        LOG.debug("putMovies({})",col);
+        this.user.setMyMovies(col);
+    }
 }

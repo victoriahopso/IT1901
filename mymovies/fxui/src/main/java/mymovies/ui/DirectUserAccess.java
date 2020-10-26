@@ -2,7 +2,11 @@ package mymovies.ui;
 
 import mymovies.core.User;
 
-public class RemoteMyMoviesAccess implements MyMoviesAccess {
+/**
+ * Class that centralizes access to a Mymovies. Makes it easier to support
+ * transparent use of a REST API.
+ */
+public class DirectUserAccess implements MyMoviesAccess {
 
     @Override
     public boolean isUser(String username, String password) {
@@ -33,5 +37,6 @@ public class RemoteMyMoviesAccess implements MyMoviesAccess {
         // TODO Auto-generated method stub
 
     }
+    
 
 }

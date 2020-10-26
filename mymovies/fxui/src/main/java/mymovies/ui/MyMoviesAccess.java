@@ -1,39 +1,27 @@
 package mymovies.ui;
 
-import java.util.Collection;
+import mymovies.core.User;
 
 /**
- * Class that centralizes access to a TodoModel.
- * Makes it easier to support transparent use of a REST API.
+ * Class that centralizes access to a User. Makes it easier to support
+ * transparent use of a REST API.
  */
 public interface MyMoviesAccess {
 
+    boolean isUser(String username, String password);
+    // Metoden returnerer True dersom User(username, password) eksisterer på
+    // serveren
 
-  /**
-   * Checks if there exists a MyMovies object
-   *
-   * @param mymovies the (new) name
-   * @return true if it exists, false otherwise
-   */
-  public boolean isMyMovies(String mymovies);
+    boolean userNameTaken(String username);
+    // Metoden returnerer True dersom brukernavnet eksisterer på serveren
 
-  /**
-   * Gets MyMovies
-   *
-   * @return every MyMovies
-   */
+    User getUser(String name, String password);
+    // Metoden returnerer User(name, password)-objektet fra serveren.
 
-   public boolean hasMovies(String name);
+    void addNewUser(User user);
+    // Metoden legger til denne brukeren på serveren
 
-  /**
-   * Gets the names of the movies.
-   *
-   * @return the names of the movies.
-   */
-
-  Collection<String> getAllMyMovies();
-
-  /**
-   * Adds a MyMovies or Film object to the underlying Model.
-   */
+    void updateUsersMovies(User user);
+    // Når bruker registrerer en film må skyen oppdateres. Kalles ved #onAction
+    // handle submit i hoved-GUI.
 }

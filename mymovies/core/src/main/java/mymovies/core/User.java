@@ -23,6 +23,10 @@ public class User {
         return copy;
     }
 
+    public void setMyMovies(Collection<Film> col) {
+        this.myMovies = col;
+    }
+
     public void addMovie(Film film){
         if (!myMovies.contains(film)){
             myMovies.add(film);
