@@ -10,32 +10,37 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import mymovies.core.Film;
-import mymovies.core.MyMovies;
 
-public class MyMoviesDeserializer extends JsonDeserializer<MyMovies> {
+import mymovies.core.Film;
+import mymovies.core.User;
+
+public class UserDeserializer extends JsonDeserializer<User> {
 
     private FilmDeserializer filmDeserializer = new FilmDeserializer();
 
     /*
-    * format: { "myMovies": [ ... ] }
-    */
+     * format: { "myMovies": [ ... ] }
+     */
     @Override
-    public MyMovies deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public User deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         TreeNode treeNode = p.getCodec().readTree(p);
-        if (treeNode instanceof ObjectNode) {
-            ObjectNode objectNode = (ObjectNode) treeNode;
-            MyMovies mymovies = new MyMovies();
+        return deserialize((JsonNode) treeNode);
+    }
+
+    public User deserialize(JsonNode jsonNode) {
+        if (jsonNode instanceof ObjectNode) {
+            ObjectNode objectNode = (ObjectNode) jsonNode;
+            User user = new User(objectNode.get("username").asText(), objectNode.get("password").asText());
 
             TreeNode itemsNode = objectNode.get("myMovies");
             if (itemsNode instanceof ArrayNode) {
                 for (TreeNode elementNode : ((ArrayNode) itemsNode)) {
                     Film film = filmDeserializer.deserialize((JsonNode) elementNode);
                     if (film != null) {
-                        mymovies.getFilmer().add(film);
+                        user.addMovie(film);
                     }
                 }
-                return mymovies;
+                return user;
             }
         }
         return null;

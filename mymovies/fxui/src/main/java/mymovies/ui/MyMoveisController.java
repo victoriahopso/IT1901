@@ -17,10 +17,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import mymovies.core.AllUsers;
 import mymovies.core.Film;
-import mymovies.core.MyMovies;
-import mymovies.json.MoviesPersistence;
 import mymovies.core.RW;
+import mymovies.core.User;
+import mymovies.json.UsersPersistence;
 
 public class MyMoveisController {
 
@@ -28,9 +29,10 @@ public class MyMoveisController {
     protected ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
             "Thriller", "Sci-fi");
     protected String heltekst = "";
-    protected MoviesPersistence persistence = new MoviesPersistence();
-    protected MyMovies myMovies = new MyMovies();
+    protected UsersPersistence persistence = new UsersPersistence();
     protected RW rw = new RW();
+    User user;
+    AllUsers allUsers;
 
     @FXML
     Button submit;
@@ -61,6 +63,10 @@ public class MyMoveisController {
         ));
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     /**
      * Henter verdiene fra inputfeltene,lager et Film-objekt, 
      * og legger det til i container-objektet myMovies. 
@@ -69,8 +75,8 @@ public class MyMoveisController {
     @FXML
     private void handleSubmit() {
         Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
-        myMovies.addMovie(film);
-        persistence.write(myMovies, rw.createWriter("./mymovies.json"));
+        user.addMovie(film);
+        persistence.write(allUsers, rw.createWriter("./mymovies.json"));
         submitted();
     }
 
@@ -78,11 +84,11 @@ public class MyMoveisController {
     @FXML
     protected void resumeSession() {
         //Endrer myMovies-objektet til det som ligger i json-fil
-        myMovies = persistence.read(rw.createReader("./mymovies.json"));
+        allUsers = persistence.read(rw.createReader("./mymovies.json"));
         //bruker toString til å lage en streng med alle filmene på fint
         //format, om lista "myMovies" ikke er tom
-        if (!myMovies.getFilmer().isEmpty()){
-            for (Film film: myMovies){
+        if (!user.getMyMovies().isEmpty()){
+            for (Film film: user.getMyMovies()){
                 heltekst += film.toString()+"\n";  
             }
         }
@@ -134,7 +140,7 @@ public class MyMoveisController {
     //For test purposes
     protected Collection<Film> getMyMovies(){
         Collection<Film> myMoviesCopy = new ArrayList<>();
-        for (Film film : myMovies){
+        for (Film film : user.getMyMovies()){
             myMoviesCopy.add(film);
         }
         return myMoviesCopy;

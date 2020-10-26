@@ -1,26 +1,32 @@
 package mymovies.core;
 
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class User implements Comparable<User> {
+public class User {
 
-    String userName; 
-    String password;
-    MyMovies myMovs; 
+    protected String userName; 
+    protected String password;
+    protected Collection<Film> myMovies; 
 
     public User(String userName, String password){
         if (validUserName(userName) && validPassword(password)){
             this.userName = userName;
             this.password = password; 
-            myMovs = new MyMovies();
+            myMovies = new ArrayList<>();
         }
     }
     
-    /**
-     * brukes av konstruktør til å hente ut riktig mymoviesObjekt
-     * @return MyMovies-objekt eid av this.user. 
-     */
-    public MyMovies getUsersMyMovies(){ 
-        return this.myMovs;
+    public Collection<Film> getMyMovies(){ 
+        Collection<Film> copy = new ArrayList<>();
+        myMovies.forEach(p -> copy.add(p));
+        return copy;
+    }
+
+    public void addMovie(Film film){
+        if (!myMovies.contains(film)){
+            myMovies.add(film);
+        }
     }
 
     private boolean validUserName(String userName){
@@ -35,10 +41,11 @@ public class User implements Comparable<User> {
         return this.userName;
     }
 
-    @Override
-    public int compareTo(User o) {
-        return this.getUserName().compareTo(o.getUserName());
+    public String getPassword(){
+        return this.password;
     }
+
+
 
 
 

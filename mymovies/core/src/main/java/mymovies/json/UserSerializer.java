@@ -7,22 +7,21 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import mymovies.core.Film;
-import mymovies.core.MyMovies;
+import mymovies.core.User;
 
-public class MyMoviesSerializer extends JsonSerializer<MyMovies> {
+public class UserSerializer extends JsonSerializer<User> {
 
-    /**
-    * format: {"myMovies": [...] }
-    */
     @Override
-    public void serialize(MyMovies myMovies, JsonGenerator gen, SerializerProvider prov) throws IOException {
+    public void serialize(User user, JsonGenerator gen, SerializerProvider prov) throws IOException {
         gen.writeStartObject();
+        gen.writeStringField("username", user.getUserName());
+        gen.writeStringField("password", user.getPassword());
         gen.writeArrayFieldStart("myMovies");
-        for (Film film : myMovies.getFilmer()){
+        for (Film film : user.getMyMovies()) {
             gen.writeObject(film);
         }
         gen.writeEndArray();
         gen.writeEndObject();
-    }
 
+    }
 }

@@ -9,18 +9,18 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import mymovies.core.MyMovies;
+import mymovies.core.AllUsers;
 
-public class MoviesPersistence {
+public class UsersPersistence {
 
     private ObjectMapper mapper;
 
     /**
      * kontroller som initialiserer en ny mapper
      */
-    public MoviesPersistence() {
+    public UsersPersistence() {
         mapper = new ObjectMapper();
-        mapper.registerModule(new MoviesModule());
+        mapper.registerModule(new UsersModule());
     }
 
     /**
@@ -30,9 +30,9 @@ public class MoviesPersistence {
      * @return Returnerer ett myMovies-objekt
      * @throws IOException
      */
-    public MyMovies read(Reader reader) {
+    public AllUsers read(Reader reader) {
         try {
-            return mapper.readValue(reader, MyMovies.class);
+            return mapper.readValue(reader, AllUsers.class);
         } catch (JsonParseException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
@@ -50,9 +50,9 @@ public class MoviesPersistence {
      * @param writer   Tar inn en writer
      * @throws IOException
      */
-    public void write(MyMovies myMovies, Writer writer) {
+    public void write(AllUsers allUsers, Writer writer) {
         try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(writer, myMovies);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(writer, allUsers);
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
