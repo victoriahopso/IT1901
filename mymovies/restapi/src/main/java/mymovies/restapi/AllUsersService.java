@@ -26,16 +26,6 @@ public class AllUsersService {
     return this.allUsers;
     }
 
-
-    //Prøver å legge til/ bytte ut en collection med filmer som hører til en user
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public void putMovies(Collection<Film> col) {
-        LOG.debug("putMovies({})",col);
-        this.user.setMyMovies(col);
-    }
-
     @Path("/{username}")
     public UserResources getUsers(@PathParam("username") String username) {
         User user = getAllUsers().getUser(user);
