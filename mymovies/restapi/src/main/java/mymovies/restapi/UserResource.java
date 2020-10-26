@@ -35,9 +35,18 @@ public class UserResource {
         }
     }
 
+    public boolean usernameTaken(String username) {
+        for (User user : getUser()) {
+            if (user.getUserName().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public User getUser {
+    public User getUser() {
         checkUser();
         LOG.debug("getUser({})");
         return this.user;

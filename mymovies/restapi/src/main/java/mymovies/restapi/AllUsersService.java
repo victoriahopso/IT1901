@@ -26,6 +26,18 @@ public class AllUsersService {
     return this.allUsers;
     }
 
+    //Litt usikker på denne, mulig man må ha et annet argument
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean isUser(String username) {
+        for (User user : allUsers.getAllUsers()) {
+            if (user.getUserName() == username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Path("/{username}")
     public UserResources getUsers(@PathParam("username") String username) {
         User user = getAllUsers().getUser(user);
