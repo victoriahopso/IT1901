@@ -44,6 +44,8 @@ public class MyMoveisController {
     TextField title;
     @FXML 
     Button showMovies;
+    @FXML
+    String endpointUri;
 
     /**
      * Fyller comboBoxene med verdiene fra ratings og genres.
@@ -61,6 +63,8 @@ public class MyMoveisController {
         .or(
         rating.valueProperty().isNull())
         ));
+
+        //sett endpointUri, og koble til interface
     }
 
     public void setUser(User user) {
