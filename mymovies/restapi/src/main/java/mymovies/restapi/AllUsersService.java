@@ -8,26 +8,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import mymovies.core.AllUsers;
 
 @Path(MyMoviesService.MY_MOVIES_SERVICE_PATH)
-public class MyMoviesService {
+public class AllUsersService {
 
-    public static final String MY_MOVIES_SERVICE_PATH = "movies";
+    public static final String MY_MOVIES_SERVICE_PATH = "allUsers";
 
-    private static final Logger LOG = LoggerFactory.getLogger(MyMoviesService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AllUsersService.class);
 
     @Inject
-    private User user;
+    private AllUsers allUsers;
 
-    /**
-    * The root resource,
-    *
-    * @return the AllUsers
-    */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public User getUser() {
-    return this.user;
+    public AllUsers getAllUsers() {
+    return this.allUsers;
     }
 
 
@@ -39,4 +35,12 @@ public class MyMoviesService {
         LOG.debug("putMovies({})",col);
         this.user.setMyMovies(col);
     }
+
+    @Path("/{username}")
+    public UserResources getUsers(@PathParam("username") String username) {
+        User user = getAllUsers().getUser(user);
+        LOG.debug("Sub-resource for User " + username + ": " + user);
+        return new UserResources(allUsers, username, user);
+    }
+
 }

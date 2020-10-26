@@ -45,6 +45,15 @@ public class AllUsers implements Iterable<User> {
         return null;
     }
 
+    public User getUser(String name) {
+        for (User user : users) {
+            if (user.getUserName().equals(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     @Override
     public Iterator<User> iterator() {
         return users.iterator();
