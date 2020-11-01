@@ -50,4 +50,5 @@ public class MyMoviesConfig extends ResourceConfig {
     allUsers.addAllUsers(new AllUsers("user2"));
     return allUsers;
   }
+  //Har noen redigert på dette i etterkant? Var litt usikker på om jeg skulle endre på noe her hvis det allerede er fullført?
 }
