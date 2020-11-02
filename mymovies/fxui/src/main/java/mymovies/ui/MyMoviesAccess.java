@@ -12,16 +12,12 @@ public interface MyMoviesAccess {
     // Metoden returnerer True dersom User(username, password) eksisterer på
     // serveren
 
-    boolean userNameTaken(String username);
-    // Metoden returnerer True dersom brukernavnet eksisterer på serveren
-
-    User getUser(String name, String password);
+    User getUser(String username);
     // Metoden returnerer User(name, password)-objektet fra serveren.
 
     void addNewUser(User user);
     // Metoden legger til denne brukeren på serveren
 
-    void updateUsersMovies(User user);
-    // Når bruker registrerer en film må skyen oppdateres. Kalles ved #onAction
-    // handle submit i hoved-GUI.
+    void notify(User user);
+    //Oppdaterer brukerne dersom allUsers er endret
 }

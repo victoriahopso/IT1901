@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
- * Used for all requests referring to MyMovies by name.
+ * Used for all requests referring to Users by name.
  */
 public class UserResource {
 
@@ -36,7 +36,7 @@ public class UserResource {
     }
 
     public boolean usernameTaken(String username) {
-        for (User user : getUser()) {
+        for (User user : getUser().getMyMovies()) {
             if (user.getUserName().equals(username)) {
                 return true;
             }
@@ -55,9 +55,9 @@ public class UserResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void putUser(User user) {
+    public boolean putUser(User user) {
         LOG.debug("putUser({})", user);
-
+        return this.allUsers.addUser(user) == null;
     }
 
     @PUT

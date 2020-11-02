@@ -45,9 +45,9 @@ public class AllUsers implements Iterable<User> {
         return null;
     }
 
-    public User getUser(String name) {
+    public User getUser(String username) {
         for (User user : users) {
-            if (user.getUserName().equals(name)) {
+            if (user.getUserName().equals(username)) {
                 return user;
             }
         }
@@ -57,6 +57,15 @@ public class AllUsers implements Iterable<User> {
     @Override
     public Iterator<User> iterator() {
         return users.iterator();
+    }
+
+    public boolean isUser(String username, String password) {
+        for (User user : users) {
+            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

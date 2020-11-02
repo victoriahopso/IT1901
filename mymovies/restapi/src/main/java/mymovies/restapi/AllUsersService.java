@@ -1,4 +1,4 @@
-package mymovies.restapi
+package mymovies.restapi;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -26,9 +26,6 @@ public class AllUsersService {
     return this.allUsers;
     }
 
-    //Litt usikker på denne, mulig man må ha et annet argument
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     public boolean isUser(String username) {
         for (User user : allUsers.getAllUsers()) {
             if (user.getUserName() == username) {
