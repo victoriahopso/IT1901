@@ -5,10 +5,6 @@ import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersPersistence;
 
-/**
- * Class that centralizes access to a Mymovies. Makes it easier to support
- * transparent use of a REST API.
- */
 public class DirectUserAccess implements MyMoviesAccess {
 
     private final AllUsers allUsers;

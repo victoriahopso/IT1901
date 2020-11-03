@@ -14,7 +14,7 @@ public class AllUsers implements Iterable<User> {
 
     private Collection<User> users = new ArrayList<>();
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         if (!users.contains(user)) {
             int counter = 0;
             for (User us : users) {
@@ -24,8 +24,10 @@ public class AllUsers implements Iterable<User> {
             }
             if (counter == users.size()) {
                 users.add(user);
+                return user;
             }
         }
+        return null;
     }
 
     public Collection<User> getAllUsers() {

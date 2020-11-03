@@ -1,16 +1,15 @@
 package mymovies.restapi;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import mymovies.core.AllUsers;
+import mymovies.core.User;
 /**
  * Used for all requests referring to Users by name.
  */
@@ -23,7 +22,7 @@ public class UserResource {
     public User user;
 
 
-    public MyMoviesResource(AllUsers allUsers, String username, User user) {
+    public UserResource(AllUsers allUsers, String username, User user) {
         this.allUsers = allUsers;
         this.username = username;
         this.user = user;
@@ -36,7 +35,7 @@ public class UserResource {
     }
 
     public boolean usernameTaken(String username) {
-        for (User user : getUser().getMyMovies()) {
+        for (User user : allUsers.getAllUsers()){
             if (user.getUserName().equals(username)) {
                 return true;
             }
@@ -55,14 +54,14 @@ public class UserResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean putUser(User user) {
-        LOG.debug("putUser({})", user);
+    public boolean addUser(User user) {
+        LOG.debug("addUser({})", user);
         return this.allUsers.addUser(user) == null;
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean putUser() {
-        return putUser(null);
+    public boolean addUser() {
+        return addUser(null);
     }
 }

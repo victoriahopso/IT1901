@@ -9,8 +9,9 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import mymovies.core.AllUsers;
+import mymovies.core.User;
 
-@Path(MyMoviesService.MY_MOVIES_SERVICE_PATH)
+@Path(AllUsersService.MY_MOVIES_SERVICE_PATH)
 public class AllUsersService {
 
     public static final String MY_MOVIES_SERVICE_PATH = "allUsers";
@@ -23,7 +24,7 @@ public class AllUsersService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public AllUsers getAllUsers() {
-    return this.allUsers;
+        return this.allUsers;
     }
 
     public boolean isUser(String username) {
@@ -36,10 +37,10 @@ public class AllUsersService {
     }
 
     @Path("/{username}")
-    public UserResources getUsers(@PathParam("username") String username) {
-        User user = getAllUsers().getUser(user);
+    public UserResource getUsers(@PathParam("username") String username) {
+        User user = getAllUsers().getUser(username);
         LOG.debug("Sub-resource for User " + username + ": " + user);
-        return new UserResources(allUsers, username, user);
+        return new UserResource(allUsers, username, user);
     }
 
 }

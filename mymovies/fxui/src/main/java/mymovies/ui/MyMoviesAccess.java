@@ -2,10 +2,6 @@ package mymovies.ui;
 
 import mymovies.core.User;
 
-/**
- * Class that centralizes access to a User. Makes it easier to support
- * transparent use of a REST API.
- */
 public interface MyMoviesAccess {
 
     boolean isUser(String username, String password);
