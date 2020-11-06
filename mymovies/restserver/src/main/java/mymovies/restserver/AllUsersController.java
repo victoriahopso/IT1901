@@ -22,7 +22,6 @@ public class AllUsersController {
 
     @Autowired
     private AllUsersService allUsersService;
-    //Hvor blir denne satt?
 
     @GetMapping
     public AllUsers getAllUsers() {
@@ -36,22 +35,22 @@ public class AllUsersController {
     }
 
     // Hente ut bruker med "username"
-    @GetMapping(path = "/username")
-    public User getUser(@PathVariable("username") String username) {
+    @GetMapping(path = "/{username}")
+    public ResponseEntity<Object> getUser(@PathVariable("username") String username) {
         User user = getAllUsers().getUser(username);
         checkUser(user, username);
-        return user;
+        return new ResponseEntity<>("Bruker hentet", HttpStatus.OK);
     }
 
     // Oppdaterer en allerede eksisterende bruker
-    @PutMapping(path = "/username/{update}")
+    @PutMapping(path = "/{username}")
     public ResponseEntity<Object> updateUser(@PathVariable("username/update") String username, @RequestBody User user) {
         getAllUsers().getUser(username).updateUser(user);
         return new ResponseEntity<>("Bruker endret", HttpStatus.OK);
     }
 
     //Legger til en ny bruker
-    @PostMapping(path = "/username")
+    @PostMapping(path = "/{username}")
     public ResponseEntity<Object> addUser(@PathVariable("username") String username, @RequestBody User user) {
         getAllUsers().addUser(user);
         return new ResponseEntity<>("Bruker lagt til", HttpStatus.CREATED);

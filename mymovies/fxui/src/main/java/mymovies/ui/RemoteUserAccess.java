@@ -15,18 +15,16 @@ import mymovies.core.AllUsers;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
 
-public class RemoteUserAccess implements MyMoviesAccess {
+public class RemoteUserAccess {
 
     private AllUsers allUsers;
-    private final URI uri;
+    private static final URI uri = URI.create("http://localhost:8080/");
     private ObjectMapper objectMapper;
 
-    public RemoteUserAccess(URI uri) {
-        this.uri = uri;
+    public RemoteUserAccess() {
         this.objectMapper = new ObjectMapper().registerModule(new UsersModule());
     }
 
-    @Override
     public boolean isUser(String username, String password) {
         return getAllUsers().isUser(username, password);
     }
@@ -55,7 +53,6 @@ public class RemoteUserAccess implements MyMoviesAccess {
         return allUsers;
     }
 
-    @Override
     public User getUser(String username) {
         User user = this.allUsers.getUser(username);
         if (user == null || (!(user instanceof User))) {
@@ -80,7 +77,6 @@ public class RemoteUserAccess implements MyMoviesAccess {
         return user;
     }
 
-    @Override
     public void addUser(User user) {
         try {
             String string = objectMapper.writeValueAsString(user);
@@ -98,7 +94,6 @@ public class RemoteUserAccess implements MyMoviesAccess {
         }
     }
 
-    @Override
     public void updateUser(User user) {
         try {
             String string = objectMapper.writeValueAsString(user);
@@ -116,7 +111,6 @@ public class RemoteUserAccess implements MyMoviesAccess {
         }
     }
 
-    @Override
     public boolean usernameTaken(String username) {
         if (getAllUsers().getUser(username) == null) {
             return true;
