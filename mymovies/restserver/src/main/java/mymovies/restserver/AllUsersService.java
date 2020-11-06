@@ -41,6 +41,7 @@ public class AllUsersService {
                 System.out.println("Klarte ikke å åpne allusers.json, dermed skjer dette manuelt(" + e + ")");
             }
         }
+        //Lag fil
         AllUsers allUsers = new AllUsers();
         return allUsers;
     }
