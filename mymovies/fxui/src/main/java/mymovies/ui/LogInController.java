@@ -28,9 +28,8 @@ public class LogInController {
     @FXML
     PasswordField siPassword, suPassword, confPassword;
 
-    protected Boolean check = true;
-
-    private AllUsers all = new AllUsers(); // DENNE MÅ LASTES INN FRA SKYEN SLIK AT DEN ER STATISK!!
+    private RemoteUserAccess access = new RemoteUserAccess();
+    
 
     @FXML
     public void initialize() {
@@ -40,20 +39,27 @@ public class LogInController {
         signUp.disableProperty().bind(suUsername.textProperty().isEmpty()
                 .or(suPassword.textProperty().isEmpty()
                 .or(confPassword.textProperty().isEmpty())));
+        setAccess();
     }
 
+    private void setAccess(){ //se todoappcontroller
+        //SETT ACCESS TIL REMOTE/DIRECT
+    }
+
+    /**
+     * Hvis passordet er korrekt bekreftet, og brukernavnet ikke eksisterer fra før
+     * opprettes en ny bruker.
+     * Metoden gir beskjed til API om å legge til en ny bruker på serveren.
+     * @param event Tar i mot event (fra #onAction), og sender dette videre til login() slik at 
+     * ny fxml fil kan opperere på samme stage.
+     * @throws IOException
+     */
     @FXML
     public void handleSignUp(ActionEvent event) throws IOException {
-        if (suPassword.getText().equals(confPassword.getText())) {
-            User user = new User(suUsername.getText(), suPassword.getText());
-            //User user2 = all.getUser(suUsername.getText(), suPassword.getText());
-            for (User users : all.getAllUsers()) {
-                if (user.getUserName().equals(users.getUserName())) {
-                    check = false;
-                }
-            }
-            if (check) {
-                all.addUser(user);
+        if (suPassword.getText() == confPassword.getText()) {
+            if (!access.userNameTaken(suUsername.getText())){ //LEGG TIL METODE I ACCESS
+                User user = new User(suUsername.getText(), suPassword.getText());
+                access.addNewUser(user);
                 logIn(event, user);
             }
             else {
@@ -67,11 +73,18 @@ public class LogInController {
             confPassword.setText(null);
         }
     }
+
+    /**
+     * Hvis inputtet brukernavn og passord matcher en eksisterende bruker
+     * logges brukeren inn. Hvis ikke: feedback om ugyldig login
+     * @param event Tar i mot event (fra #onAction), og sender dette videre til login() slik at 
+     * ny fxml fil kan opperere på samme stage. 
+     * @throws IOException
+     */
     @FXML
     public void handleSignIn(ActionEvent event) throws IOException {
-        User user = all.getUser(siUsername.getText(), siPassword.getText());
-        if (!((user.getUserName().equals("")) && (user.getPassword().equals("")))) {
-            logIn(event, user);
+        if(access.isUser(siUsername.getText(), siPassword.getText())){
+            logIn(event, access.getUser(siUsername.getText())); 
         }
         else {
             logInFailour("Username or password is incorrect");
@@ -80,8 +93,8 @@ public class LogInController {
     }
 
     /**
-     * Lunches main-gui, myMovies
-     * @param event used to get the stage implemented by application start-method
+     * Sender en bruker til "hoved-GUI", myMovies
+     * @param event brukes for å få tak i Stage implementert av applikasjonens start-metode.
      * @throws IOException
      */
     @FXML
@@ -92,16 +105,15 @@ public class LogInController {
         Stage myMoviesWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         MyMoveisController mmc = loader.getController(); 
-        mmc.setUser(user); 
+        mmc.setUp(user, this.access); 
 
         myMoviesWindow.setScene(myMoviesScene);
         myMoviesWindow.show();
     }
 
     /**
-     * Creates a pop-up window to display error messages for invalid 
-     * user input in "sign up" and "sign in"
-     * @param message Text in pop-up set to the string contained in message
+     * Lager et pop-up vindu som viser frem en feilmelding for ugyldig innloggingsinformasjon.
+     * @param message teksten i pop-up vinduet settes til message, som varierer ut i fra type feil.
      */
     @FXML
     public void logInFailour(String message) {
@@ -109,18 +121,18 @@ public class LogInController {
         Pane root = new Pane();
         Button ok = new Button("Ok");
         ok.setId("ok");
-        Label tekst = new Label();
+        Label text = new Label();
         ok.setScaleX(1);
         ok.setScaleY(1);
         ok.setLayoutX(131);
         ok.setLayoutY(125);
-        tekst.setFont(Font.font(13));
-        tekst.setLayoutX(10);
-        tekst.setLayoutY(35);
-        tekst.setScaleX(1);
-        tekst.setScaleY(1);
-        tekst.setText(message);
-        root.getChildren().addAll(ok, tekst);
+        text.setFont(Font.font(13));
+        text.setLayoutX(10);
+        text.setLayoutY(35);
+        text.setScaleX(1);
+        text.setScaleY(1);
+        text.setText(message);
+        root.getChildren().addAll(ok, text);
         stage.setScene(new Scene(root, 340, 166));
         stage.setTitle("Invalid user information");
         stage.show();

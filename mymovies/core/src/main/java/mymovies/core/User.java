@@ -33,6 +33,12 @@ public class User {
         }
     }
 
+    public void removeMovie(Film film){
+        if (myMovies.contains(film)){
+            myMovies.remove(film);
+        }
+    }
+
     private boolean validUserName(String userName){
        return userName.length()>=2;
     }
