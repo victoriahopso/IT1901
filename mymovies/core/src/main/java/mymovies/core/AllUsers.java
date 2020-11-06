@@ -14,7 +14,7 @@ public class AllUsers implements Iterable<User> {
 
     private Collection<User> users = new ArrayList<>();
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         if (!users.contains(user)) {
             int counter = 0;
             for (User us : users) {
@@ -24,8 +24,10 @@ public class AllUsers implements Iterable<User> {
             }
             if (counter == users.size()) {
                 users.add(user);
+                return user;
             }
         }
+        return null;
     }
 
     public Collection<User> getAllUsers() {
@@ -45,9 +47,27 @@ public class AllUsers implements Iterable<User> {
         return null;
     }
 
+    public User getUser(String username) {
+        for (User user : users) {
+            if (user.getUserName().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     @Override
     public Iterator<User> iterator() {
         return users.iterator();
+    }
+
+    public boolean isUser(String username, String password) {
+        for (User user : users) {
+            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

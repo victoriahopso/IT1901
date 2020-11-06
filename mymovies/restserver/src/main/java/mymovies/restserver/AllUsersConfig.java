@@ -1,4 +1,4 @@
-package restserver;
+package mymovies.restserver;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,20 +8,11 @@ import java.nio.charset.StandardCharsets;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import todolist.core.TodoList;
-import todolist.core.TodoModel;
-import todolist.json.TodoPersistence;
-import todolist.restapi.TodoModelService;
 
-public class MyMoviesConfig extends ResourceConfig {
+public class AllUsersConfig extends ResourceConfig {
 
   private AllUsers allUsers;
 
-  /**
-   * Initialize this TodoConfig.
-   *
-   * @param todoModel todoModel instance to serve
-   */
   public MyMoviesConfig(AllUsers allUsers) {
     setAllUsers(AllUsers);
     register(MyMoviesService.class);
@@ -35,15 +26,8 @@ public class MyMoviesConfig extends ResourceConfig {
     });
   }
 
-  /**
-   * Initialize this MyMoviesConfig with a default TodoModel.
-   */
   public MyMoviesConfig() {
     this(createDefaultAllUsers());
-  }
-//model
-  public TodoModel getAllUsers() {
-    return this.AllUsers;
   }
 
   public void setAllUsers(AllUsers allUsers) {
@@ -66,4 +50,5 @@ public class MyMoviesConfig extends ResourceConfig {
     allUsers.addAllUsers(new AllUsers("user2"));
     return allUsers;
   }
+  //Har noen redigert på dette i etterkant? Var litt usikker på om jeg skulle endre på noe her hvis det allerede er fullført?
 }

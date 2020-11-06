@@ -22,7 +22,6 @@ import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import mymovies.core.AllUsers;
 import mymovies.core.Film;
-import mymovies.core.MyMovies;
 
 public class ControllerTest extends ApplicationTest {
 

@@ -23,9 +23,19 @@ public class User {
         return copy;
     }
 
+    public void setMyMovies(Collection<Film> col) {
+        this.myMovies = col;
+    }
+
     public void addMovie(Film film){
         if (!myMovies.contains(film)){
             myMovies.add(film);
+        }
+    }
+
+    public void removeMovie(Film film){
+        if (myMovies.contains(film)){
+            myMovies.remove(film);
         }
     }
 
@@ -44,17 +54,4 @@ public class User {
     public String getPassword(){
         return this.password;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
