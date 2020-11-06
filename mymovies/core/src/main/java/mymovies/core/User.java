@@ -5,14 +5,14 @@ import java.util.Collection;
 
 public class User {
 
-    protected String userName; 
+    protected String userName;
     protected String password;
-    protected Collection<Film> myMovies; 
+    protected Collection<Film> myMovies;
 
-    public User(String userName, String password){
-        if (validUserName(userName) && validPassword(password)){
+    public User(String userName, String password) {
+        if (validUserName(userName) && validPassword(password)) {
             this.userName = userName;
-            this.password = password; 
+            this.password = password;
             myMovies = new ArrayList<>();
         }
     }
@@ -22,8 +22,8 @@ public class User {
         this.password = user.getPassword();
         this.myMovies = user.getMyMovies();
     }
-    
-    public Collection<Film> getMyMovies(){ 
+
+    public Collection<Film> getMyMovies() {
         Collection<Film> copy = new ArrayList<>();
         myMovies.forEach(p -> copy.add(p));
         return copy;
@@ -33,25 +33,31 @@ public class User {
         this.myMovies = col;
     }
 
-    public void addMovie(Film film){
-        if (!myMovies.contains(film)){
+    public void addMovie(Film film) {
+        if (!myMovies.contains(film)) {
             myMovies.add(film);
         }
     }
 
-    private boolean validUserName(String userName){
-       return userName.length()>=2;
+    private boolean validUserName(String userName) {
+        return userName.length() >= 2;
     }
 
-    private boolean validPassword(String password){
-        return password.length()>=8;
+    private boolean validPassword(String password) {
+        return password.length() >= 8;
     }
 
-    public String getUserName(){
+    public String getUserName() {
         return this.userName;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return this.password;
+    }
+
+    public void removeMovie(Film film) {
+        if (myMovies.contains(film)) {
+            myMovies.remove(film);
+        }
     }
 }

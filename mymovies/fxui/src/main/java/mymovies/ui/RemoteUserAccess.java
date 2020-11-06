@@ -26,7 +26,10 @@ public class RemoteUserAccess {
     }
 
     public boolean isUser(String username, String password) {
-        return getAllUsers().isUser(username, password);
+        if (getAllUsers().getUser(username, password) != null) {
+            return true;
+        }
+        return false;
     }
 
     private String param(String s) {
@@ -55,7 +58,7 @@ public class RemoteUserAccess {
 
     public User getUser(String username) {
         User user = this.allUsers.getUser(username);
-        if (user == null || (!(user instanceof User))) {
+        if (user == null) {
             HttpRequest request = HttpRequest.newBuilder(uri(username)).header("Accept", "application/json").GET()
                     .build();
             try {
@@ -64,11 +67,11 @@ public class RemoteUserAccess {
                 String responseString = response.body();
                 System.out.println("getUser(" + username + ") response: " + responseString);
                 User secondUser = objectMapper.readValue(responseString, User.class);
-                if (!(secondUser instanceof User)) {
-                    User thirdUser = new User(secondUser.getUserName(), secondUser.getPassword());
-                    thirdUser.setMyMovies(secondUser.getMyMovies());
-                    secondUser = thirdUser;
-                }
+
+                User thirdUser = new User(secondUser.getUserName(), secondUser.getPassword());
+                thirdUser.setMyMovies(secondUser.getMyMovies());
+                secondUser = thirdUser;
+
                 this.allUsers.addUser(secondUser);
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
@@ -114,7 +117,7 @@ public class RemoteUserAccess {
     public boolean usernameTaken(String username) {
         if (getAllUsers().getUser(username) == null) {
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
 }
