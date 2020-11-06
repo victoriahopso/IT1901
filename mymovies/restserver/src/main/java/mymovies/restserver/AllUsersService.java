@@ -7,13 +7,18 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import mymovies.core.AllUsers;
+import mymovies.json.AllUsersDeserializer;
+import mymovies.json.UsersModule;
 import mymovies.json.UsersPersistence;
 
 @Service
 public class AllUsersService {
 
     private AllUsers allUsers;
+    private static ObjectMapper objectMapper = new ObjectMapper().registerModule(new UsersModule());
 
     public AllUsersService(AllUsers allUsers) {
         this.allUsers = allUsers;
@@ -32,11 +37,12 @@ public class AllUsersService {
     }
 
     private static AllUsers firstAllUsers() {
-        UsersPersistence usersPersistence = new UsersPersistence();
+        //UsersPersistence usersPersistence = new UsersPersistence();
         URL url = AllUsersService.class.getResource("allusers.json");
         if (url != null) {
             try (Reader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
-                return usersPersistence.read(reader);
+                return objectMapper.readValue(reader, AllUsers.class);
+                //return usersPersistence.read(reader);
             } catch (IOException e) {
                 System.out.println("Klarte ikke å åpne allusers.json, dermed skjer dette manuelt(" + e + ")");
             }

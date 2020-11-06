@@ -49,7 +49,7 @@ public class LogInController {
     @FXML
     public void handleSignUp(ActionEvent event) throws IOException {
         if (suPassword.getText().equals(confPassword.getText())) {
-            if (!access.usernameTaken(suUsername.getText())) { // LEGG TIL METODE I ACCESS
+            if (!access.usernameTaken(suUsername.getText())) {
                 User user = new User(suUsername.getText(), suPassword.getText());
                 access.addUser(user);
                 logIn(event, user);

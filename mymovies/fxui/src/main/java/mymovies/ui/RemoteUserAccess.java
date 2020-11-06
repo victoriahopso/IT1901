@@ -116,8 +116,8 @@ public class RemoteUserAccess {
 
     public boolean usernameTaken(String username) {
         if (getAllUsers().getUser(username) == null) {
-            return true;
-        } else
             return false;
+        } else
+            return true;
     }
 }

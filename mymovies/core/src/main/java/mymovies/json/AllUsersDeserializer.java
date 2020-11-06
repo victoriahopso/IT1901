@@ -29,16 +29,16 @@ public class AllUsersDeserializer extends JsonDeserializer<AllUsers> {
             ObjectNode objectNode = (ObjectNode) jsonNode;
             AllUsers allUsers = new AllUsers();
 
-            TreeNode itemsNode = objectNode.get("allUsers");
+            JsonNode itemsNode = objectNode.get("allUsers");
             if (itemsNode instanceof ArrayNode) {
-                for (TreeNode elementNode : ((ArrayNode) itemsNode)) {
-                    User user = userDeserializer.deserialize((JsonNode) elementNode);
+                for (JsonNode elementNode : ((ArrayNode) itemsNode)) {
+                    User user = userDeserializer.deserialize(elementNode);
                     if (user != null) {
                         allUsers.addUser(user);
                     }
                 }
-                return allUsers;
             }
+            return allUsers;
         }
         return null;
     }
