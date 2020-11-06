@@ -41,7 +41,7 @@ public class RemoteUserAccess implements MyMoviesAccess {
 
     private AllUsers getAllUsers() {
         if (allUsers == null) {
-            HttpRequest request = HttpRequest.newBuilder(this.uri).header("Accept", "application/json").GET().build();
+            HttpRequest request = HttpRequest.newBuilder(uri).header("Accept", "application/json").GET().build();
             try {
                 final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                         HttpResponse.BodyHandlers.ofString());
@@ -81,12 +81,11 @@ public class RemoteUserAccess implements MyMoviesAccess {
     }
 
     @Override
-    public void addNewUser(User user) {
+    public void addUser(User user) {
         try {
             String string = objectMapper.writeValueAsString(user);
-            HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName()))
-                    .header("Accept", "application/json").header("Content-Type", "application/json")
-                    .PUT(BodyPublishers.ofString(string)).build();
+            HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
+                    .header("Content-Type", "application/json").POST(BodyPublishers.ofString(string)).build();
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
@@ -100,8 +99,28 @@ public class RemoteUserAccess implements MyMoviesAccess {
     }
 
     @Override
-    public void notify(User user) {
-        addNewUser(user);
+    public void updateUser(User user) {
+        try {
+            String string = objectMapper.writeValueAsString(user);
+            HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
+                    .header("Content-Type", "application/json").PUT(BodyPublishers.ofString(string)).build();
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            String responseString = response.body();
+            Boolean added = objectMapper.readValue(responseString, Boolean.class);
+            if (added != null) {
+                allUsers.addUser(user);
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @Override
+    public boolean usernameTaken(String username) {
+        if (getAllUsers().getUser(username) == null) {
+            return true;
+        }
+        else return false;
+    }
 }

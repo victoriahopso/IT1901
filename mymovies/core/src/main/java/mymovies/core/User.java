@@ -16,6 +16,12 @@ public class User {
             myMovies = new ArrayList<>();
         }
     }
+
+    public void updateUser(User user) {
+        this.userName = user.getUserName();
+        this.password = user.getPassword();
+        this.myMovies = user.getMyMovies();
+    }
     
     public Collection<Film> getMyMovies(){ 
         Collection<Film> copy = new ArrayList<>();

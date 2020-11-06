@@ -11,9 +11,12 @@ public interface MyMoviesAccess {
     User getUser(String username);
     // Metoden returnerer User(name, password)-objektet fra serveren.
 
-    void addNewUser(User user);
+    void addUser(User user);
     // Metoden legger til denne brukeren på serveren
 
-    void notify(User user);
-    //Oppdaterer brukerne dersom allUsers er endret
+    void updateUser(User user);
+    //Oppdaterer brukeren
+
+    boolean usernameTaken(String username);
+    //Sjekker om brukernavnet er i bruk
 }

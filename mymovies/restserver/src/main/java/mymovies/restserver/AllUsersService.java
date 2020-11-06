@@ -33,12 +33,12 @@ public class AllUsersService {
 
     private static AllUsers firstAllUsers() {
         UsersPersistence usersPersistence = new UsersPersistence();
-        URL url = AllUsersService.class.getResource("first.json");
+        URL url = AllUsersService.class.getResource("allusers.json");
         if (url != null) {
             try (Reader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
                 return usersPersistence.read(reader);
             } catch (IOException e) {
-                System.out.println("Klarte ikke å åpne first.json, dermed skjer dette manuelt(" + e + ")");
+                System.out.println("Klarte ikke å åpne allusers.json, dermed skjer dette manuelt(" + e + ")");
             }
         }
         AllUsers allUsers = new AllUsers();
