@@ -18,6 +18,22 @@ public class Film {
         this.rating = rating;
     }
 
+    public Film() {
+
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     public String getName() {
         return this.name;
     }

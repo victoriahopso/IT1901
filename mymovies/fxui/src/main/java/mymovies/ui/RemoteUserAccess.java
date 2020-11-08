@@ -10,6 +10,8 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.nio.charset.StandardCharsets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import mymovies.core.AllUsers;
 import mymovies.core.User;
@@ -18,7 +20,7 @@ import mymovies.json.UsersModule;
 public class RemoteUserAccess {
 
     private AllUsers allUsers;
-    private static final URI uri = URI.create("http://localhost:8080/");
+    private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
     private ObjectMapper objectMapper;
 
     public RemoteUserAccess() {
@@ -82,16 +84,20 @@ public class RemoteUserAccess {
 
     public void addUser(User user) {
         try {
+            //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            //String string = gson.toJson(user);
             String string = objectMapper.writeValueAsString(user);
+            System.out.println(string);
             HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
                     .header("Content-Type", "application/json").POST(BodyPublishers.ofString(string)).build();
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            Boolean added = objectMapper.readValue(responseString, Boolean.class);
-            if (added != null) {
-                allUsers.addUser(user);
-            }
+            //Boolean added = objectMapper.readValue(responseString, Boolean.class);
+            //if (added != null) {
+            //    allUsers.addUser(user);
+            //}
+            System.out.println(responseString);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -50,9 +50,12 @@ public class LogInController {
     public void handleSignUp(ActionEvent event) throws IOException {
         if (suPassword.getText().equals(confPassword.getText())) {
             if (!access.usernameTaken(suUsername.getText())) {
-                User user = new User(suUsername.getText(), suPassword.getText());
-                access.addUser(user);
-                logIn(event, user);
+                User user2 = new User();
+                user2.setUserName(suUsername.getText());
+                user2.setPassword(suPassword.getText());
+                System.out.println(user2.getUserName());
+                access.addUser(user2);
+                logIn(event, user2);
             } else {
                 logInFailour("Username is taken. Choose another username.");
                 suUsername.setText(null);
@@ -92,7 +95,7 @@ public class LogInController {
     @FXML
     public void logIn(ActionEvent event, User user) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        Parent myMoviesParent = FXMLLoader.load(getClass().getResource("Overgang.fxml"));
+        Parent myMoviesParent = FXMLLoader.load(getClass().getResource("MyMovies.fxml"));
         Scene myMoviesScene = new Scene(myMoviesParent);
         Stage myMoviesWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         MyMoveisController mmc = new MyMoveisController();

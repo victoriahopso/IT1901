@@ -47,6 +47,10 @@ public class AllUsers implements Iterable<User> {
         return null;
     }
 
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
+
     public User getUser(String username) {
         for (User user : users) {
             if (user.getUserName().equals(username)) {

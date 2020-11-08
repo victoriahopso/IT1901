@@ -8,6 +8,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import mymovies.core.AllUsers;
 import mymovies.json.AllUsersDeserializer;
@@ -42,6 +44,8 @@ public class AllUsersService {
         if (url != null) {
             try (Reader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
                 return objectMapper.readValue(reader, AllUsers.class);
+                //return new Gson().fromJson(reader, new TypeToken<AllUsers>(){}.getType());
+
                 //return usersPersistence.read(reader);
             } catch (IOException e) {
                 System.out.println("Klarte ikke å åpne allusers.json, dermed skjer dette manuelt(" + e + ")");

@@ -17,10 +17,8 @@ import mymovies.core.AllUsers;
 import mymovies.core.User;
 
 @RestController
-@RequestMapping(AllUsersController.TODO_MODEL_SERVICE_PATH)
+@RequestMapping("/restserver/movies")
 public class AllUsersController {
-
-    public static final String TODO_MODEL_SERVICE_PATH = "restserver/movies";
 
     @Autowired
     private AllUsersService allUsersService;
@@ -37,25 +35,25 @@ public class AllUsersController {
     }
 
     // Hente ut bruker med "username"
-    @RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    //@GetMapping(path = "/{username}")
-    public ResponseEntity<Object> getUser(@PathVariable("username") String username) {
+    //@RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @GetMapping(path = "/{username}")
+    public User getUser(@PathVariable("username") String username) {
         User user = getAllUsers().getUser(username);
         checkUser(user, username);
-        return new ResponseEntity<>("Bruker hentet", HttpStatus.OK);
+        return user;
     }
 
     // Oppdaterer en allerede eksisterende bruker
-    @RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    //@PutMapping(path = "/{username}")
-    public ResponseEntity<Object> updateUser(@PathVariable("username/update") String username, @RequestBody User user) {
+    //@RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/{username}")
+    public ResponseEntity<Object> updateUser(@PathVariable("username") String username, @RequestBody User user) {
         getAllUsers().getUser(username).updateUser(user);
         return new ResponseEntity<>("Bruker endret", HttpStatus.OK);
     }
 
     // Legger til en ny bruker
-    @RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    //@PostMapping(path = "/{username}")
+    //@RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @PostMapping(path = "/{username}")
     public ResponseEntity<Object> addUser(@PathVariable("username") String username, @RequestBody User user) {
         getAllUsers().addUser(user);
         return new ResponseEntity<>("Bruker lagt til", HttpStatus.CREATED);
