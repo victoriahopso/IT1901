@@ -67,6 +67,8 @@ public class MyMoveisController {
      */
     @FXML
     private void handleSubmit() {
+        System.out.println(this.user);
+        System.out.println(this.user.getUserName());
         Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
         user.addMovie(film);
         access.updateUser(user);

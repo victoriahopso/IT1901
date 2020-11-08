@@ -94,14 +94,13 @@ public class LogInController {
      */
     @FXML
     public void logIn(ActionEvent event, User user) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent myMoviesParent = FXMLLoader.load(getClass().getResource("MyMovies.fxml"));
-        Scene myMoviesScene = new Scene(myMoviesParent);
-        Stage myMoviesWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
-        MyMoveisController mmc = new MyMoveisController();
-        mmc.setUp(user, access);
-        loader.setController(mmc);
-        myMoviesWindow.setScene(myMoviesScene);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyMovies.fxml"));
+        Stage myMoviesWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = (Parent) fxmlLoader.load();
+        MyMoveisController controller = fxmlLoader.<MyMoveisController>getController();
+        controller.setUp(user, access);
+        Scene scene = new Scene(root);
+        myMoviesWindow.setScene(scene);
         myMoviesWindow.show();
     }
 

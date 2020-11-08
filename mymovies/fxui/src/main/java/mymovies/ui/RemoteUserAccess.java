@@ -1,6 +1,8 @@
 package mymovies.ui;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -14,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import mymovies.core.AllUsers;
+import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
 
@@ -22,6 +25,7 @@ public class RemoteUserAccess {
     private AllUsers allUsers;
     private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
     private ObjectMapper objectMapper;
+    //RW rw = new RW();
 
     public RemoteUserAccess() {
         this.objectMapper = new ObjectMapper().registerModule(new UsersModule());
@@ -84,8 +88,8 @@ public class RemoteUserAccess {
 
     public void addUser(User user) {
         try {
-            //Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            //String string = gson.toJson(user);
+            // Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            // String string = gson.toJson(user);
             String string = objectMapper.writeValueAsString(user);
             System.out.println(string);
             HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
@@ -93,10 +97,13 @@ public class RemoteUserAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            //Boolean added = objectMapper.readValue(responseString, Boolean.class);
-            //if (added != null) {
-            //    allUsers.addUser(user);
-            //}
+            //allUsers.addUser(user);
+            //objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
+            // Boolean added = objectMapper.readValue(responseString, Boolean.class);
+            // if (added != null) {
+            // allUsers.addUser(user);
+            // }
+            System.out.println(getAllUsers().getUser(user.getUserName()));
             System.out.println(responseString);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -111,10 +118,14 @@ public class RemoteUserAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            Boolean added = objectMapper.readValue(responseString, Boolean.class);
-            if (added != null) {
-                allUsers.addUser(user);
-            }
+            allUsers.updateUser(user);
+            //allUsers.updateUser(user);
+            //objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
+            // Boolean added = objectMapper.readValue(responseString, Boolean.class);
+            // if (added != null) {
+            // allUsers.addUser(user);
+            // }
+            System.out.println(responseString);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
