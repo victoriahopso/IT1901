@@ -10,20 +10,20 @@ import mymovies.core.User;
 @SuppressWarnings("serial")
 public class UsersModule extends SimpleModule {
 
-    /**
-     * Legger til serializers og deserializers
-     */
-    private static final String NAME = "Users";
+  /**
+   * Legger til serializers og deserializers
+   */
+  private static final String NAME = "Users";
 
-    public UsersModule() {
-        super(NAME, Version.unknownVersion());
-        addSerializer(User.class, new UserSerializer());
-        addDeserializer(User.class, new UserDeserializer());
+  public UsersModule() {
+    super(NAME, Version.unknownVersion());
+    addSerializer(User.class, new UserSerializer());
+    addDeserializer(User.class, new UserDeserializer());
 
-        addSerializer(AllUsers.class, new AllUsersSerializer());
-        addDeserializer(AllUsers.class, new AllUsersDeserializer());
+    addSerializer(AllUsers.class, new AllUsersSerializer());
+    addDeserializer(AllUsers.class, new AllUsersDeserializer());
 
-        addSerializer(Film.class, new FilmSerializer());
-        addDeserializer(Film.class, new FilmDeserializer());
-    }
+    addSerializer(Film.class, new FilmSerializer());
+    addDeserializer(Film.class, new FilmDeserializer());
+  }
 }

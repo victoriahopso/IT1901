@@ -11,17 +11,17 @@ import mymovies.core.User;
 
 public class UserSerializer extends JsonSerializer<User> {
 
-    @Override
-    public void serialize(User user, JsonGenerator gen, SerializerProvider prov) throws IOException {
-        gen.writeStartObject();
-        gen.writeStringField("username", user.getUserName());
-        gen.writeStringField("password", user.getPassword());
-        gen.writeArrayFieldStart("myMovies");
-        for (Film film : user.getMyMovies()) {
-            gen.writeObject(film);
-        }
-        gen.writeEndArray();
-        gen.writeEndObject();
-
+  @Override
+  public void serialize(User user, JsonGenerator gen, SerializerProvider prov) throws IOException {
+    gen.writeStartObject();
+    gen.writeStringField("username", user.getUserName());
+    gen.writeStringField("password", user.getPassword());
+    gen.writeArrayFieldStart("myMovies");
+    for (Film film : user.getMyMovies()) {
+      gen.writeObject(film);
     }
+    gen.writeEndArray();
+    gen.writeEndObject();
+
+  }
 }
