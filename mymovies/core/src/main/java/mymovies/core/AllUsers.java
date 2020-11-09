@@ -30,6 +30,14 @@ public class AllUsers implements Iterable<User> {
         return null;
     }
 
+    public void updateUser(User user) {
+        for (User user2 : getAllUsers()) {
+            if (user2.getUserName().equals(user.getUserName())) {
+                user2.updateUser(user);
+            }
+        }
+    }
+
     public Collection<User> getAllUsers() {
         Collection<User> copy = new ArrayList<>();
         for (User u : users) {
@@ -45,6 +53,10 @@ public class AllUsers implements Iterable<User> {
             }
         }
         return null;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 
     public User getUser(String username) {

@@ -26,12 +26,4 @@ public class UsersModule extends SimpleModule {
         addSerializer(Film.class, new FilmSerializer());
         addDeserializer(Film.class, new FilmDeserializer());
     }
-
-    //NY LOGIKK: En AllUsers inneholder mange User.
-    //           En User inneholder en MyMovies. 
-    //           En MyMovies inneholder flere Film
-    //
-    // LAGRE I SKYEN: AllUsers serialized 
-    // HENTE HVILKEN SOM HELST INFO: deserialize AllUsers --> deserialize alt innhold. 
-    
 }

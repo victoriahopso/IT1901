@@ -25,6 +25,7 @@ import mymovies.core.Film;
 
 public class ControllerTest extends ApplicationTest {
 
+    /**
     MyMoveisController controller;
 
     @Override
@@ -48,6 +49,7 @@ public class ControllerTest extends ApplicationTest {
      * ignen til neste test.
      * @throws Exception
      */
+    /**
     @AfterEach
     public void tearDown () throws Exception {
         AllUsers allUsers = new AllUsers();
@@ -64,6 +66,7 @@ public class ControllerTest extends ApplicationTest {
      * Lager en ny container og fyller den med innhold fra fil. Sjekker at dette innholdet
      * er likt innholdet i controlleren sin myMovies. 
      */
+    /**
     @Test
     public void handleSubmitTest() {
         inputExampleMovie(false);
@@ -98,6 +101,7 @@ public class ControllerTest extends ApplicationTest {
      * Sjekker at det leses korrekt fra fil til myMovies, og at innholdet som vises for 
      * bruker er skrevet på riktig måte. 
      */
+    /**
     @Test
     public void testResumeSession(){
         inputExampleMovie(true);
@@ -113,6 +117,7 @@ public class ControllerTest extends ApplicationTest {
      * Sjekker at kanppen submit er disabled med mindre alle input-felt er fyllt inn.
      * Sjekker at Comboboxen fylles med verdiene fra ratings og genres. 
      */
+    /**
     @Test 
     public void testInitialize(){
         assertTrue(controller.submit.isDisabled());
@@ -123,6 +128,7 @@ public class ControllerTest extends ApplicationTest {
     /**
      * Sjekker at alle input-felt settes til null etter en submit.
      */
+    /**
     @Test
     public void testSubmitted(){
         controller.submitted();
@@ -136,6 +142,7 @@ public class ControllerTest extends ApplicationTest {
      * film.toString+\n for hver film i mymovies,
      * og at den settes til tom streng etter vinduet lukkes
      */
+    /**
     @Test
     public void testGenerateList(){
         inputExampleMovie(true);
@@ -160,6 +167,7 @@ public class ControllerTest extends ApplicationTest {
     * FxRobot fyller inn alle innput-felt.
     * @param andSubmit avgjør om FxRobot skal trykke submit eller ikke. 
     */
+    /**
     private void inputExampleMovie(boolean andSubmit) {
         clickOn("#title").write("The boy");
         clickOn("#genre").clickOn("Horror");
@@ -168,5 +176,6 @@ public class ControllerTest extends ApplicationTest {
             clickOn("#submit");
         }
     }
+    */
 
 }

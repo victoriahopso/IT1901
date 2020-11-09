@@ -34,7 +34,6 @@
                 <Menu mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#generateList" text="Show my movies" />
-                        <MenuItem mnemonicParsing="false" onAction="#resumeSession" text="Login" />
                         <MenuItem mnemonicParsing="false" onAction="#exitApp" text="Close" />
                     </items>
                 </Menu>

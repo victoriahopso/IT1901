@@ -32,16 +32,16 @@ public class UserDeserializer extends JsonDeserializer<User> {
             ObjectNode objectNode = (ObjectNode) jsonNode;
             User user = new User(objectNode.get("username").asText(), objectNode.get("password").asText());
 
-            TreeNode itemsNode = objectNode.get("myMovies");
+            JsonNode itemsNode = objectNode.get("myMovies");
             if (itemsNode instanceof ArrayNode) {
-                for (TreeNode elementNode : ((ArrayNode) itemsNode)) {
-                    Film film = filmDeserializer.deserialize((JsonNode) elementNode);
+                for (JsonNode elementNode : ((ArrayNode) itemsNode)) {
+                    Film film = filmDeserializer.deserialize(elementNode);
                     if (film != null) {
                         user.addMovie(film);
                     }
                 }
-                return user;
             }
+            return user;
         }
         return null;
     }

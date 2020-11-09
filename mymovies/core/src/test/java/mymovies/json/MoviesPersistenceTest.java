@@ -15,6 +15,8 @@ import mymovies.core.User;
 
 public class MoviesPersistenceTest {
 
+    /**
+
     private UsersPersistence userPersistence = new UsersPersistence();
     private RW rw = new RW();
 
@@ -87,4 +89,5 @@ public class MoviesPersistenceTest {
             //myMovies3 = moviesPersistence.read(reader2);
             //assertFalse(myMovies3.getFilmer().iterator().hasNext());
     }
+    */
 }

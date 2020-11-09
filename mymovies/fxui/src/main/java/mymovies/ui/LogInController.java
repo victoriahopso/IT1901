@@ -16,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import mymovies.core.AllUsers;
 import mymovies.core.User;
 
 public class LogInController {
@@ -29,45 +28,37 @@ public class LogInController {
     PasswordField siPassword, suPassword, confPassword;
 
     private RemoteUserAccess access = new RemoteUserAccess();
-    
 
     @FXML
     public void initialize() {
-        signIn.disableProperty().bind(siUsername.textProperty().isEmpty()
-                .or(siPassword.textProperty().isEmpty()));
+        signIn.disableProperty().bind(siUsername.textProperty().isEmpty().or(siPassword.textProperty().isEmpty()));
 
         signUp.disableProperty().bind(suUsername.textProperty().isEmpty()
-                .or(suPassword.textProperty().isEmpty()
-                .or(confPassword.textProperty().isEmpty())));
-        setAccess();
-    }
-
-    private void setAccess(){ //se todoappcontroller
-        //SETT ACCESS TIL REMOTE/DIRECT
+                .or(suPassword.textProperty().isEmpty().or(confPassword.textProperty().isEmpty())));
     }
 
     /**
      * Hvis passordet er korrekt bekreftet, og brukernavnet ikke eksisterer fra før
-     * opprettes en ny bruker.
-     * Metoden gir beskjed til API om å legge til en ny bruker på serveren.
-     * @param event Tar i mot event (fra #onAction), og sender dette videre til login() slik at 
-     * ny fxml fil kan opperere på samme stage.
+     * opprettes en ny bruker. Metoden gir beskjed til API om å legge til en ny
+     * bruker på serveren.
+     * 
+     * @param event Tar i mot event (fra #onAction), og sender dette videre til
+     *              login() slik at ny fxml fil kan opperere på samme stage.
      * @throws IOException
      */
     @FXML
     public void handleSignUp(ActionEvent event) throws IOException {
-        if (suPassword.getText() == confPassword.getText()) {
-            if (!access.userNameTaken(suUsername.getText())){ //LEGG TIL METODE I ACCESS
-                User user = new User(suUsername.getText(), suPassword.getText());
-                access.addNewUser(user);
-                logIn(event, user);
-            }
-            else {
+        if (suPassword.getText().equals(confPassword.getText())) {
+            if (!access.usernameTaken(suUsername.getText())) {
+                User user2 = new User(suUsername.getText(), suPassword.getText());
+                System.out.println(user2.getUserName());
+                access.addUser(user2);
+                logIn(event, user2);
+            } else {
                 logInFailour("Username is taken. Choose another username.");
                 suUsername.setText(null);
             }
-        }
-        else {
+        } else {
             logInFailour("Make sure you type the correct password twice.");
             suPassword.setText(null);
             confPassword.setText(null);
@@ -75,18 +66,18 @@ public class LogInController {
     }
 
     /**
-     * Hvis inputtet brukernavn og passord matcher en eksisterende bruker
-     * logges brukeren inn. Hvis ikke: feedback om ugyldig login
-     * @param event Tar i mot event (fra #onAction), og sender dette videre til login() slik at 
-     * ny fxml fil kan opperere på samme stage. 
+     * Hvis inputtet brukernavn og passord matcher en eksisterende bruker logges
+     * brukeren inn. Hvis ikke: feedback om ugyldig login
+     * 
+     * @param event Tar i mot event (fra #onAction), og sender dette videre til
+     *              login() slik at ny fxml fil kan opperere på samme stage.
      * @throws IOException
      */
     @FXML
     public void handleSignIn(ActionEvent event) throws IOException {
-        if(access.isUser(siUsername.getText(), siPassword.getText())){
-            logIn(event, access.getUser(siUsername.getText())); 
-        }
-        else {
+        if (access.isUser(siUsername.getText(), siPassword.getText())) {
+            logIn(event, access.getUser(siUsername.getText()));
+        } else {
             logInFailour("Username or password is incorrect");
             siPassword.setText(null);
         }
@@ -94,26 +85,29 @@ public class LogInController {
 
     /**
      * Sender en bruker til "hoved-GUI", myMovies
-     * @param event brukes for å få tak i Stage implementert av applikasjonens start-metode.
+     * 
+     * @param event brukes for å få tak i Stage implementert av applikasjonens
+     *              start-metode.
      * @throws IOException
      */
     @FXML
     public void logIn(ActionEvent event, User user) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent myMoviesParent = FXMLLoader.load(getClass().getResource("MyMovies.fxml"));
-        Scene myMoviesScene = new Scene(myMoviesParent);
-        Stage myMoviesWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        MyMoveisController mmc = loader.getController(); 
-        mmc.setUp(user, this.access); 
-
-        myMoviesWindow.setScene(myMoviesScene);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyMovies.fxml"));
+        Stage myMoviesWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = (Parent) fxmlLoader.load();
+        MyMoveisController controller = fxmlLoader.<MyMoveisController>getController();
+        controller.setUp(user, access);
+        Scene scene = new Scene(root);
+        myMoviesWindow.setScene(scene);
         myMoviesWindow.show();
     }
 
     /**
-     * Lager et pop-up vindu som viser frem en feilmelding for ugyldig innloggingsinformasjon.
-     * @param message teksten i pop-up vinduet settes til message, som varierer ut i fra type feil.
+     * Lager et pop-up vindu som viser frem en feilmelding for ugyldig
+     * innloggingsinformasjon.
+     * 
+     * @param message teksten i pop-up vinduet settes til message, som varierer ut i
+     *                fra type feil.
      */
     @FXML
     public void logInFailour(String message) {
@@ -137,11 +131,10 @@ public class LogInController {
         stage.setTitle("Invalid user information");
         stage.show();
 
-        //om man trykker på knappen "ok", lukkes vinduet
+        // om man trykker på knappen "ok", lukkes vinduet
         ok.setOnMouseClicked((MouseEvent event1) -> {
             stage.close();
         });
     }
-
 
 }
