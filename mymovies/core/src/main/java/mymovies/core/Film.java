@@ -49,5 +49,8 @@ public class Film {
     public String displayText() {
         return "Film: " + this.name + ", Genre: " + this.genre + ", Rating: " + Integer.toString(this.rating);
     }
+    public String displayText(){
+        return "Film: " + this.name + ", Genre: " + this.genre + ", Rating: " + Integer.toString(this.rating);
+    }
 
 }

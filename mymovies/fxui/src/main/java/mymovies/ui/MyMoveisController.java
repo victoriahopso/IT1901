@@ -154,6 +154,7 @@ public class MyMoveisController {
             }
         }
     }
+    
 
     // For test purposes
     protected Collection<Film> getMyMovies() {
