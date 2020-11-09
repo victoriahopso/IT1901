@@ -8,10 +8,6 @@ public class User {
     protected String userName;
     protected String password;
     protected Collection<Film> myMovies = new ArrayList<>();
-    
-    public User() {
-
-    }
 
     public User(String userName, String password) {
         if (validUserName(userName) && validPassword(password)) {
@@ -19,6 +15,11 @@ public class User {
             this.password = password;
             myMovies = new ArrayList<>();
         }
+    }
+
+    @Override
+    public String toString() {
+        return ("User: " + userName + ", password: " + password);
     }
 
     public void updateUser(User user) {
@@ -32,7 +33,7 @@ public class User {
         myMovies.forEach(p -> copy.add(p));
         return copy;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -55,8 +56,8 @@ public class User {
         return userName.length() >= 2;
     }
 
-    private boolean validPassword(String password) { //Kan ikke sjekke dette her, uten å sende feilmelding?!
-        return password.length() >= 8;
+    private boolean validPassword(String password) { // Kan ikke sjekke dette her, uten å sende feilmelding?!
+        return password.length() >= 3;
     }
 
     public String getUserName() {

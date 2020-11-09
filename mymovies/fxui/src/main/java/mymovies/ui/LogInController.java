@@ -50,9 +50,7 @@ public class LogInController {
     public void handleSignUp(ActionEvent event) throws IOException {
         if (suPassword.getText().equals(confPassword.getText())) {
             if (!access.usernameTaken(suUsername.getText())) {
-                User user2 = new User();
-                user2.setUserName(suUsername.getText());
-                user2.setPassword(suPassword.getText());
+                User user2 = new User(suUsername.getText(), suPassword.getText());
                 System.out.println(user2.getUserName());
                 access.addUser(user2);
                 logIn(event, user2);

@@ -79,6 +79,7 @@ public class RemoteUserAccess {
                 secondUser = thirdUser;
 
                 this.allUsers.addUser(secondUser);
+                
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -91,13 +92,13 @@ public class RemoteUserAccess {
             // Gson gson = new GsonBuilder().setPrettyPrinting().create();
             // String string = gson.toJson(user);
             String string = objectMapper.writeValueAsString(user);
-            System.out.println(string);
+            System.out.println("User: " + string);
             HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
                     .header("Content-Type", "application/json").POST(BodyPublishers.ofString(string)).build();
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            //allUsers.addUser(user);
+            allUsers.addUser(user);
             //objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
             // Boolean added = objectMapper.readValue(responseString, Boolean.class);
             // if (added != null) {
@@ -113,6 +114,7 @@ public class RemoteUserAccess {
     public void updateUser(User user) {
         try {
             String string = objectMapper.writeValueAsString(user);
+            System.out.println("User: " + string);
             HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
                     .header("Content-Type", "application/json").PUT(BodyPublishers.ofString(string)).build();
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
