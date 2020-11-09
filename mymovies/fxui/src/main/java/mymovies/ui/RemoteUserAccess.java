@@ -1,8 +1,6 @@
 package mymovies.ui;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -20,7 +18,7 @@ import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
 
-public class RemoteUserAccess {
+public class RemoteUserAccess implements UserAccess{
 
     private AllUsers allUsers;
     private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
@@ -31,6 +29,7 @@ public class RemoteUserAccess {
         this.objectMapper = new ObjectMapper().registerModule(new UsersModule());
     }
 
+    @Override
     public boolean isUser(String username, String password) {
         if (getAllUsers().getUser(username, password) != null) {
             return true;
@@ -62,6 +61,7 @@ public class RemoteUserAccess {
         return allUsers;
     }
 
+    @Override
     public User getUser(String username) {
         User user = this.allUsers.getUser(username);
         if (user == null) {
@@ -87,6 +87,7 @@ public class RemoteUserAccess {
         return user;
     }
 
+    @Override
     public void addUser(User user) {
         try {
             // Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -111,6 +112,7 @@ public class RemoteUserAccess {
         }
     }
 
+    @Override
     public void updateUser(User user) {
         try {
             String string = objectMapper.writeValueAsString(user);
@@ -133,10 +135,13 @@ public class RemoteUserAccess {
         }
     }
 
+    @Override
     public boolean usernameTaken(String username) {
         if (getAllUsers().getUser(username) == null) {
             return false;
         } else
             return true;
     }
+
+
 }
