@@ -10,20 +10,17 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.nio.charset.StandardCharsets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import mymovies.core.AllUsers;
-import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
 
-public class RemoteUserAccess implements UserAccess{
+public class RemoteUserAccess implements UserAccess {
 
     private AllUsers allUsers;
     private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
     private ObjectMapper objectMapper;
-    //RW rw = new RW();
+    // RW rw = new RW();
 
     public RemoteUserAccess() {
         this.objectMapper = new ObjectMapper().registerModule(new UsersModule());
@@ -79,7 +76,7 @@ public class RemoteUserAccess implements UserAccess{
                 secondUser = thirdUser;
 
                 this.allUsers.addUser(secondUser);
-                
+
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -100,7 +97,7 @@ public class RemoteUserAccess implements UserAccess{
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
             allUsers.addUser(user);
-            //objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
+            // objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
             // Boolean added = objectMapper.readValue(responseString, Boolean.class);
             // if (added != null) {
             // allUsers.addUser(user);
@@ -123,8 +120,8 @@ public class RemoteUserAccess implements UserAccess{
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
             allUsers.updateUser(user);
-            //allUsers.updateUser(user);
-            //objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
+            // allUsers.updateUser(user);
+            // objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
             // Boolean added = objectMapper.readValue(responseString, Boolean.class);
             // if (added != null) {
             // allUsers.addUser(user);
@@ -142,6 +139,5 @@ public class RemoteUserAccess implements UserAccess{
         } else
             return true;
     }
-
 
 }

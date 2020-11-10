@@ -14,7 +14,7 @@ public class MockUserAccess implements UserAccess {
 
     @Override
     public boolean isUser(String username, String password) {
-        return allUsers.getUser(username, password)!=null;
+        return allUsers.getUser(username, password) != null;
     }
 
     @Override
@@ -34,12 +34,12 @@ public class MockUserAccess implements UserAccess {
 
     @Override
     public boolean usernameTaken(String username) {
-        for(User user : allUsers){
-            if (user.getUserName().equals(username)){
+        for (User user : allUsers) {
+            if (user.getUserName().equals(username)) {
                 return true;
             }
         }
         return false;
     }
-    
+
 }
