@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,7 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import mymovies.core.Film;
 import mymovies.core.User;
 
@@ -32,6 +30,7 @@ public class MyMoveisController {
     protected ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic",
             "Action", "Thriller", "Sci-fi");
     protected javafx.collections.ObservableList<Film> moviesList = FXCollections.observableArrayList();
+    protected TableView<Film> table;
     protected User user;
     protected UserAccess access;
 
@@ -95,7 +94,7 @@ public class MyMoveisController {
     public void generateList(ActionEvent event) {
 
         moviesList.addAll(this.user.getMyMovies());
-        TableView<Film> table = new TableView<Film>();
+        table = new TableView<Film>();
         table.setId("table");
 
         Button ok = new Button("Close view");

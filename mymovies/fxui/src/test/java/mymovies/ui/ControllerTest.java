@@ -6,22 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
@@ -166,6 +161,17 @@ public class ControllerTest extends ApplicationTest {
         assertTrue(it4.hasNext());
         assertEquals(film3, it4.next());
         assertFalse(it4.hasNext());
+
+        // tester å fjerne en film 
+        controller.table.getSelectionModel().select(film1);
+        clickOn("#removeMovie");
+        assertEquals(2, controller.moviesList.size());
+        ListIterator<Film> it5 = controller.moviesList.listIterator();
+        assertTrue(it5.hasNext());
+        assertEquals(film2, it5.next());
+        assertTrue(it5.hasNext());
+        assertEquals(film3, it5.next());
+        assertFalse(it5.hasNext());
     }
 
     /**

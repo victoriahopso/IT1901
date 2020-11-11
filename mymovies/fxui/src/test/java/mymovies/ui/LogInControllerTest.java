@@ -77,6 +77,7 @@ public class LogInControllerTest extends ApplicationTest {
         clickOn(controller.confPassword).write("annetPassord");
         clickOn(controller.signUp);
         assertNull(controller.access.getUser("brukernavn3"));
+        clickOn("#ok");
     }
 
     @Test
@@ -107,7 +108,7 @@ public class LogInControllerTest extends ApplicationTest {
         clickOn(controller.siPassword).write("passord");
         clickOn(controller.signIn);
         assertNull(controller.access.getUser(controller.siUsername.getText()));
-
+        clickOn("#ok");
     }
     
 }
