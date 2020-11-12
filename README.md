@@ -5,21 +5,33 @@
 
 ## MyMovies prosjektet
 Projektet er bygget med **Maven**, og har støtte for direkte tilgang til **Gitpod**.
-Bygget er rigget for å rapportere testdekningsgrad ved kjøring av *mvn verify*.
-For å forsikre kodekvalitet benyttes **Checkstyle**, **Spotbugs**, og **JaCoCo**. 
-Vi implementerer fillagring med **JSON**.
+Bygget er rigget for å rapportere testdekningsgrad (vha. **JaCoCo**) ved kjøring av `mvn verify`.
+For å forsikre kodekvalitet benyttes **Checkstyle** som sjekker overfladiske og stilmessige egenskaper, og **Spotbugs** som analyserer koden for vanlige feil.
+Vi implementerer fillagring med **Json**. Benyttet rammeverk for RestAPI og RestServer er **SpringBoot**.
 
-Koden kjøres ved hjelp av kommandoen *mvn javafx:run -f fxui/pom.xml*
+### Bygging og kjøring 
+- **Bygging:** kjør `mvn install`fra **mymovies**-mappen. 
+- **Starte server:** åpne en ny terminal, skriv kommandoen `mvn sprin-boot:run -f restserver/pom.xml`i **mymovies**-mappen.
+- **Kjøring:** gå tilbake til den første terminalen og skriv kommandoen `mvn javafx:run -f fxui/pom.xml`
 
 
 ### Organisering av koden 
+Prosjektet er delt inn i 3 moduler, henholdsvis *core*, *fxui* og *restserver*.
+- *core* inneholder dataklasser og persistens (Json format).
+- *fxui* inneholder kontrollere for GUI, og grensesnitt med implementasjoner for tilgang til server. FXML filer for GUI finnes i *resources*.
+- *restserver* inneholder håndering av dataflyt til og fra server. 
+
+Hver modul har tilhørende tester under scr/test. 
+- Sekvensdiagram: 
+- Arkitektur: 
+
+---
+
 - Kildekode: [mymovies/core/src/main/java/mymovies/core](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fcore)
-- Testkode for applikasjonen: [mymovies/core/src/test/java/mymovies/core](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Ftest%2Fjava%2Fmymovies%2Fcore)
 - Persistens: [mymovies/core/src/main/java/mymovies/json](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fjson)
 - Brukergrensesnitt: [mymovies/fxui/src/main/java/mymovies/ui](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Ffxui%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fui)
-- Tilhørende ressurser: [mymovies/fxui/src/main/resources/mymovies/ui](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Ffxui%2Fsrc%2Fmain%2Fresources%2Fmymovies%2Fui)
-- Testkode for brukergrensesnitt: [mymovies/fxui/src/test/java/mymovies/ui](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Ffxui%2Fsrc%2Ftest%2Fjava%2Fmymovies%2Fui)
+
 ---
 
 #### Arbeidet 
-Prosjektet deles inn i brukerhistorier, som deretter deles inn i mindre utviklingsoppgaver og tilordnes et gruppemedlem. Det opprettes en egen branch for hver utviklingsoppgave, og det benyttes parprogrammering hvor man bytter på hvem som koder og hvem som observerer.
+Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i mindre utviklingsoppgaver(*issues*) og tilordnes et gruppemedlem. Det opprettes en egen grein for hver utviklingsoppgave, og det benyttes parprogrammering der det er hensiktsmessig. 
