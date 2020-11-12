@@ -25,15 +25,15 @@ Prosjektet er delt inn i 3 moduler, henholdsvis *core*, *fxui* og *restserver*.
 - *fxui* inneholder kontrollere for GUI, og grensesnitt med implementasjoner for tilgang til server. FXML filer for GUI finnes i *resources*.
 - *restserver* inneholder håndering av dataflyt til og fra server. 
 
-Hver modul har tilhørende tester under scr/test. 
-- Sekvensdiagram: 
-- Arkitektur: 
+Hver modul har tilhørende tester under src/test. Alle tester utenom Integrationtest (RestApi og RestServer) benytter rammeverket jUnit.  
+ 
 
 ---
 
 - Kildekode: [mymovies/core/src/main/java/mymovies/core](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fcore)
 - Persistens: [mymovies/core/src/main/java/mymovies/json](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fjson)
 - Brukergrensesnitt: [mymovies/fxui/src/main/java/mymovies/ui](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Ffxui%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fui)
+- RestServer: 
 
 ---
 
@@ -42,3 +42,11 @@ Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i m
 
 ## Brukerhistorier
 https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukerhistorier
+
+## Diagrammer 
+- Sekvensdiagram: 
+- Arkitektur: 
+
+## Skjermbilder av brukergrensesnitt
+https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukeregrensesnitt,-skjermbiler
+
