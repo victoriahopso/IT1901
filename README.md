@@ -38,4 +38,7 @@ Hver modul har tilhørende tester under scr/test.
 ---
 
 #### Arbeidet 
-Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i mindre utviklingsoppgaver(*issues*) og tilordnes et gruppemedlem. Det opprettes en egen grein for hver utviklingsoppgave, og det benyttes parprogrammering der det er hensiktsmessig. 
+Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i mindre utviklingsoppgaver(*issues*) og tilordnes et gruppemedlem. Det opprettes en egen grein for hver utviklingsoppgave, og det benyttes parprogrammering der det er hensiktsmessig.
+
+## Brukerhistorier
+https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukerhistorier
