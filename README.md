@@ -2,6 +2,10 @@
 #### Åpne prosjektet i Gitpod:
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.idi.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003) 
 
+## MyMovies applikasjonen
+Formål: registrere enkle filmanmeldelser samt kunne se og administrere en ryddig oversikt over "mine registreringer". 
+
+En innlogget bruker kan legge til så mange filmanmeldelser som ønsket. Brukeren kan også se en oversikt over alle registreringer, sortere listen på ønsket kriterium, samt fjerne registreringer. 
 
 ## MyMovies prosjektet
 Projektet er bygget med **Maven**, og har støtte for direkte tilgang til **Gitpod**.
