@@ -20,12 +20,13 @@ Vi implementerer fillagring med **Json**. Benyttet rammeverk for RestAPI og Rest
 
 
 ### Organisering av koden 
-Prosjektet er delt inn i 3 moduler, henholdsvis *core*, *fxui* og *restserver*.
+Prosjektet er delt inn i 4 moduler, henholdsvis *core*, *fxui*, *restserver* og *integrationtest*.
 - *core* inneholder dataklasser og persistens (Json format).
 - *fxui* inneholder kontrollere for GUI, og grensesnitt med implementasjoner for tilgang til server. FXML filer for GUI finnes i *resources*.
 - *restserver* inneholder håndering av dataflyt til og fra server. 
+- *integrationtest* inneholder tester for "samhandling" mellom klasser for kjøring av server, restApi og kontrollere. 
 
-Hver modul har tilhørende tester under src/test. Alle tester utenom Integrationtest (RestApi og RestServer) benytter rammeverket jUnit.  
+Hver modul har tilhørende tester under src/test. Alle tester benytter rammeverket jUnit.
  
 
 ---
@@ -44,8 +45,7 @@ Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i m
 https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukerhistorier
 
 ## Diagrammer 
-- Sekvensdiagram: 
-- Arkitektur: 
+***insert her: link til wiki når klart***
 
 ## Skjermbilder av brukergrensesnitt
 https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukeregrensesnitt,-skjermbiler
