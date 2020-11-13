@@ -27,7 +27,8 @@ public class LogInController {
     @FXML
     PasswordField siPassword, suPassword, confPassword;
 
-    private RemoteUserAccess access = new RemoteUserAccess();
+    UserAccess access = new RemoteUserAccess();
+    User user;
 
     @FXML
     public void initialize() {
@@ -51,9 +52,10 @@ public class LogInController {
         if (suPassword.getText().equals(confPassword.getText())) {
             if (!access.usernameTaken(suUsername.getText())) {
                 User user2 = new User(suUsername.getText(), suPassword.getText());
-                System.out.println(user2.getUserName());
-                access.addUser(user2);
-                logIn(event, user2);
+                this.user = user2;
+                System.out.println(user.getUserName());
+                access.addUser(user);
+                logIn(event);
             } else {
                 logInFailour("Username is taken. Choose another username.");
                 suUsername.setText(null);
@@ -63,6 +65,10 @@ public class LogInController {
             suPassword.setText(null);
             confPassword.setText(null);
         }
+    }
+
+    public void setAccess(UserAccess access) {
+        this.access = access;
     }
 
     /**
@@ -76,7 +82,8 @@ public class LogInController {
     @FXML
     public void handleSignIn(ActionEvent event) throws IOException {
         if (access.isUser(siUsername.getText(), siPassword.getText())) {
-            logIn(event, access.getUser(siUsername.getText()));
+            this.user = access.getUser(siUsername.getText());
+            logIn(event);
         } else {
             logInFailour("Username or password is incorrect");
             siPassword.setText(null);
@@ -91,7 +98,7 @@ public class LogInController {
      * @throws IOException
      */
     @FXML
-    public void logIn(ActionEvent event, User user) throws IOException {
+    public void logIn(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyMovies.fxml"));
         Stage myMoviesWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Parent root = (Parent) fxmlLoader.load();
