@@ -15,25 +15,25 @@ import java.nio.file.Paths;
 
 public class RW {
 
-    public InputStreamReader createReader(String file) {
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
-            return reader;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+  public InputStreamReader createReader(String file) {
+    try {
+      InputStream inputStream = new FileInputStream(file);
+      InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+      return reader;
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    return null;
+  }
 
-    public Writer createWriter(String userPath) {
-        Path path = Paths.get(System.getProperty("user.home"), userPath);
-        try {
-            Writer writer = new FileWriter(path.toFile(), StandardCharsets.UTF_8);
-            return writer;
-        } catch (IOException e) {
-            System.err.println("Klarte ikke å skrive til hjemmeområde ved " + userPath);
-        }
-        return null;
+  public Writer createWriter(String userPath) {
+    Path path = Paths.get(System.getProperty("user.home"), userPath);
+    try {
+      Writer writer = new FileWriter(path.toFile(), StandardCharsets.UTF_8);
+      return writer;
+    } catch (IOException e) {
+      System.err.println("Klarte ikke å skrive til hjemmeområde ved " + userPath);
     }
+    return null;
+  }
 }
