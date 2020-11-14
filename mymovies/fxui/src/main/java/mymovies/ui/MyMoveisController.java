@@ -87,7 +87,7 @@ public class MyMoveisController {
     title.setText(null);
   }
 
-/**
+  /**
      * Lager et nytt vindu som viser informasjonen om filmene
      */
   //BEHOLD

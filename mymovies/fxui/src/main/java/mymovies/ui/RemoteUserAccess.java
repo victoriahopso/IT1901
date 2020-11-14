@@ -2,10 +2,10 @@ package mymovies.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
@@ -83,8 +83,8 @@ public class RemoteUserAccess implements UserAccess {
   @Override
     public void addUser(User user) {
     try {
-            // Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            // String string = gson.toJson(user);
+      // Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      // String string = gson.toJson(user);
       String string = objectMapper.writeValueAsString(user);
       System.out.println("User: " + string);
       HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
