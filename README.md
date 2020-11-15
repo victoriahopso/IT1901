@@ -15,7 +15,7 @@ Vi implementerer fillagring med **Json**. Benyttet rammeverk for RestAPI og Rest
 
 ### Bygging og kjøring 
 - **Bygging:** kjør `mvn install`fra **mymovies**-mappen. 
-- **Starte server:** åpne en ny terminal, skriv kommandoen `mvn sprin-boot:run -f restserver/pom.xml`i **mymovies**-mappen.
+- **Starte server:** åpne en ny terminal, skriv kommandoen `mvn spring-boot:run -f restserver/pom.xml`i **mymovies**-mappen.
 - **Kjøring:** gå tilbake til den første terminalen og skriv kommandoen `mvn javafx:run -f fxui/pom.xml`
 
 
@@ -26,7 +26,7 @@ Prosjektet er delt inn i 4 moduler, henholdsvis *core*, *fxui*, *restserver* og 
 - *restserver* inneholder håndering av dataflyt til og fra server. 
 - *integrationtest* inneholder tester for "samhandling" mellom klasser for kjøring av server, restApi og kontrollere. 
 
-Hver modul har tilhørende tester under src/test. Alle tester benytter rammeverket jUnit.
+Hver modul har tilhørende tester under src/test (untatt integrationtest). Alle tester benytter rammeverket jUnit.
  
 
 ---
