@@ -24,6 +24,7 @@ import mymovies.core.AllUsers;
 import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
+import mymovies.json.UsersPersistence;
 import mymovies.restserver.AllUsersController;
 import mymovies.restserver.AllUsersService;
 
@@ -39,41 +40,32 @@ public class AllUsersIT {
   User user1 = new User("testUser", "testPassword");
   User user2 = new User("testUser2", "testPassword2");
   ObjectMapper mapper = new ObjectMapper().registerModule(new UsersModule());
+  UsersPersistence persistence = new UsersPersistence();
   RW rw = new RW();
 
   private final static String pathStarter = "../mymovies/integrationtests/src/test/resources/mymovies/ui/";
   private final String userPath = Paths.get(pathStarter + "it-allusers.json").toString();
 
   @BeforeEach
-  public void setUp() {
+  public void setUp() throws IOException {
     all = new AllUsers();
     user1 = new User("testUser", "testPassword");
     all.addUser(user1);
-    try {
-      mapper.writeValue(rw.createWriter(userPath), AllUsers.class);
-    } catch (IOException e) {
-      fail("Couldn't write user");
-      e.printStackTrace();
-    }
+    persistence.write(all, rw.createWriter(userPath));
   }
 
   // Skriver over allUsers-objektet med ett nytt tomt
   @AfterEach
-  public void deleteTestUser() {
+  public void deleteTestUser() throws IOException {
     all.getAllUsers().stream().filter(user -> user.getUserName().equals(user1.getUserName())).findAny().orElse(null);
-    try {
-      mapper.writeValue(rw.createWriter(userPath), AllUsers.class);
-    } catch (IOException e) {
-      fail("Couldn't write to file in deleteTestuser");
-      e.printStackTrace();
-    }
+    persistence.write(new AllUsers(), rw.createWriter(userPath));
   }
 
   @Test
-  public void postUser() {
+  public void postUser() throws IOException {
     try {
       testPostUser(user2, user2.getUserName());
-      all = mapper.readValue(rw.createReader(userPath), AllUsers.class);
+      all = persistence.read(rw.createReader(userPath));
     } catch (Exception e) {
       fail("Couldn't post user");
       e.printStackTrace();
@@ -81,12 +73,7 @@ public class AllUsersIT {
 
     Collection<User> users = all.getAllUsers();
     users.remove(users.stream().filter(user -> user.equals(user2)).findAny().orElse(null));
-    try {
-      mapper.writeValue(rw.createWriter(userPath), AllUsers.class);
-    } catch (IOException e) {
-      fail("Couldn't remove user");
-      e.printStackTrace();
-    }
+    persistence.write(all, rw.createWriter(userPath));
   }
 
   @Test
@@ -111,7 +98,7 @@ public class AllUsersIT {
   @Test
   public void getAllUsers() {
     try {
-      assertEquals(testGetAllUsers(), mapper.readValue(rw.createReader(userPath), AllUsers.class));
+      assertEquals(testGetAllUsers(), persistence.read(rw.createReader(userPath)));
     } catch (Exception e) {
       fail("Couldn't read allUsers from file");
     }
