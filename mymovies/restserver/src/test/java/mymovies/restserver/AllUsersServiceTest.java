@@ -1,17 +1,21 @@
 package mymovies.restserver;
 
-import java.beans.Transient;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import mymovies.core.AllUsers;
 import mymovies.core.User;
+import mymovies.json.UsersModule;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 public class AllUsersServiceTest {
+
+  /*
 
   @TestConfiguration
   static class AllUsersServiceTestContextConfiguration {
@@ -30,7 +34,7 @@ public class AllUsersServiceTest {
 
   private ObjectMapper mapper;
 
-  @Before
+  @BeforeAll
   public void setUp() {
     User user1 = new User("Kilperik", "password");
     all.addUser(user1);
@@ -45,5 +49,6 @@ public class AllUsersServiceTest {
   @Test
   public void firstAllUsers() {
   }
+  */
 
 }
