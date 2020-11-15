@@ -10,36 +10,35 @@ import mymovies.core.User;
 
 public class MockUserAccess implements UserAccess {
 
-    AllUsers allUsers = new AllUsers();
+  AllUsers allUsers = new AllUsers();
 
-    @Override
-    public boolean isUser(String username, String password) {
-        return allUsers.getUser(username, password) != null;
-    }
+  @Override
+  public boolean isUser(String username, String password) {
+    return allUsers.getUser(username, password) != null;
+  }
 
-    @Override
+  @Override
     public User getUser(String username) {
-        return allUsers.getUser(username);
-    }
+    return allUsers.getUser(username);
+  }
 
-    @Override
-    public void addUser(User user) {
-        allUsers.addUser(user);
-    }
+  @Override
+  public void addUser(User user) {
+    allUsers.addUser(user);
+  }
 
-    @Override
+  @Override
     public void updateUser(User user) {
-        allUsers.addUser(user);
-    }
+    allUsers.addUser(user);
+  }
 
-    @Override
+  @Override
     public boolean usernameTaken(String username) {
-        for (User user : allUsers) {
-            if (user.getUserName().equals(username)) {
-                return true;
-            }
-        }
-        return false;
+    for (User user : allUsers) {
+      if (user.getUserName().equals(username)) {
+        return true;
+      }
     }
-
+    return false;
+  }
 }

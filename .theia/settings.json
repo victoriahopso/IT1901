@@ -1,9 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
+    "java.format.settings.url": "mymovies/config/checkstyle/style.xml",
+    "[java]": {
+      "editor.tabSize": 2
     }
 }

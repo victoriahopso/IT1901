@@ -9,13 +9,13 @@ import mymovies.core.User;
 
 public interface UserAccess {
 
-    public boolean isUser(String username, String password);
+  public boolean isUser(String username, String password);
 
-    public User getUser(String username);
+  public User getUser(String username);
 
-    public void addUser(User user);
+  public void addUser(User user);
 
-    public void updateUser(User user);
+  public void updateUser(User user);
 
-    public boolean usernameTaken(String username);
+  public boolean usernameTaken(String username);
 }
