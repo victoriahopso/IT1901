@@ -34,7 +34,7 @@ public class ControllerTest extends ApplicationTest {
         this.controller = loader.getController();
         stage.setScene(new Scene(root));
         stage.show();
-        User user = new User("brukernavn", "passord");
+        User user = new User("brukernavn", "password");
         UserAccess access = new MockUserAccess();
         controller.setUp(user, access);
     }
