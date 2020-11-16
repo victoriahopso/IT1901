@@ -18,7 +18,6 @@ public class RemoteUserAccess implements UserAccess {
   private AllUsers allUsers;
   private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
   private ObjectMapper objectMapper;
-  // RW rw = new RW();
 
   public RemoteUserAccess() {
     this.objectMapper = new ObjectMapper().registerModule(new UsersModule());
@@ -42,7 +41,8 @@ public class RemoteUserAccess implements UserAccess {
 
   private AllUsers getAllUsers() {
     if (allUsers == null) {
-      HttpRequest request = HttpRequest.newBuilder(uri).header("Accept", "application/json").GET().build();
+      HttpRequest request = 
+          HttpRequest.newBuilder(uri).header("Accept", "application/json").GET().build();
       try {
         final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                 HttpResponse.BodyHandlers.ofString());
@@ -60,7 +60,8 @@ public class RemoteUserAccess implements UserAccess {
     public User getUser(String username) {
     User user = this.allUsers.getUser(username);
     if (user == null) {
-      HttpRequest request = HttpRequest.newBuilder(uri(username)).header("Accept", "application/json").GET()
+      HttpRequest request = 
+          HttpRequest.newBuilder(uri(username)).header("Accept", "application/json").GET()
               .build();
       try {
         final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
@@ -83,21 +84,16 @@ public class RemoteUserAccess implements UserAccess {
   @Override
     public void addUser(User user) {
     try {
-      // Gson gson = new GsonBuilder().setPrettyPrinting().create();
-      // String string = gson.toJson(user);
       String string = objectMapper.writeValueAsString(user);
       System.out.println("User: " + string);
-      HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
-              .header("Content-Type", "application/json").POST(BodyPublishers.ofString(string)).build();
+      HttpRequest request = 
+          HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
+              .header("Content-Type", "application/json")
+                  .POST(BodyPublishers.ofString(string)).build();
       final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
               HttpResponse.BodyHandlers.ofString());
       String responseString = response.body();
       allUsers.addUser(user);
-      // objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
-      // Boolean added = objectMapper.readValue(responseString, Boolean.class);
-      // if (added != null) {
-      // allUsers.addUser(user);
-      // }
       System.out.println(getAllUsers().getUser(user.getUserName()));
       System.out.println(responseString);
     } catch (IOException | InterruptedException e) {
@@ -110,18 +106,13 @@ public class RemoteUserAccess implements UserAccess {
     try {
       String string = objectMapper.writeValueAsString(user);
       System.out.println("User: " + string);
-      HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
-                .header("Content-Type", "application/json").PUT(BodyPublishers.ofString(string)).build();
+      HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName()))
+          .header("Accept", "application/json").header("Content-Type", "application/json")
+              .PUT(BodyPublishers.ofString(string)).build();
       final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                 HttpResponse.BodyHandlers.ofString());
       String responseString = response.body();
       allUsers.updateUser(user);
-      // allUsers.updateUser(user);
-      // objectMapper.writeValue(rw.createWriter("allusers.json"), allUsers);
-      // Boolean added = objectMapper.readValue(responseString, Boolean.class);
-      // if (added != null) {
-      // allUsers.addUser(user);
-      // }
       System.out.println(responseString);
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
@@ -132,8 +123,8 @@ public class RemoteUserAccess implements UserAccess {
     public boolean usernameTaken(String username) {
     if (getAllUsers().getUser(username) == null) {
       return false;
-    } 
-    else {
+     
+    } else {
       return true;
     }
   }

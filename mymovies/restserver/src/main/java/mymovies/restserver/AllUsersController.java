@@ -4,7 +4,6 @@ import mymovies.core.AllUsers;
 import mymovies.core.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +21,7 @@ public class AllUsersController {
   private AllUsersService allUsersService;
 
   @GetMapping
-    public AllUsers getAllUsers() {
+  public AllUsers getAllUsers() {
     return allUsersService.getAllUsers();
   }
 
@@ -33,28 +31,45 @@ public class AllUsersController {
     }
   }
 
-  // Hente ut bruker med "username"
-  //@RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+  /**
+   * Henter ut en bruker med parameteret.
+
+   * @param username brukernavn
+   * @return User-objekt
+   */
   @GetMapping(path = "/{username}")
-    public User getUser(@PathVariable("username") String username) {
+  public User getUser(@PathVariable("username") String username) {
     User user = getAllUsers().getUser(username);
     checkUser(user, username);
     return user;
   }
 
-  // Oppdaterer en allerede eksisterende bruker
-  //@RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+  /**
+   * Oppdaterer en allerede eksisterende bruker Brukes når 
+   * User-objektets attributt myMovies er endret.
+
+   * @param username brukernavn
+   * @param user     user-objektet.
+   * @return resopns
+   */
   @PutMapping("/{username}")
-    public ResponseEntity<Object> updateUser(@PathVariable("username") String username, @RequestBody User user) {
+  public ResponseEntity<Object> 
+        updateUser(@PathVariable("username") String username, @RequestBody User user) {
     System.out.println("PUT: " + user);
     getAllUsers().getUser(username).updateUser(user);
     return new ResponseEntity<>("Bruker endret", HttpStatus.OK);
   }
 
-  // Legger til en ny bruker
-  //@RequestMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+  /**
+   * Legger til en ny bruker.
+
+   * @param username brukernavn
+   * @param user     user-objekt
+   * @return respons
+   */
   @PostMapping(path = "/{username}")
-    public ResponseEntity<Object> addUser(@PathVariable("username") String username, @RequestBody User user) {
+  public ResponseEntity<Object> 
+          addUser(@PathVariable("username") String username, @RequestBody User user) {
     System.out.println("POST: " + user);
     getAllUsers().addUser(user);
     return new ResponseEntity<>("Bruker lagt til", HttpStatus.CREATED);

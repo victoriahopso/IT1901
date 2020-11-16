@@ -7,8 +7,8 @@ public class Film {
   private int rating;
 
   /**
-     * Konstruktør som tar inn informasjon om film_objektet
-     * 
+     * Konstruktør som tar inn informasjon om film_objektet.
+
      * @param name   Navn på filmen
      * @param genre  Sjangeren til filmen
      * @param rating Ratingen til filmen
@@ -44,11 +44,13 @@ public class Film {
   }
 
   public String toString() {
-    return "Film: " + this.name + ", Genre: " + this.genre + ", Rating: " + Integer.toString(this.rating);
+    return "Film: " + this.name + ", Genre: " + this.genre 
+            + ", Rating: " + Integer.toString(this.rating);
   }
 
   public String displayText() {
-    return "Film: " + this.name + ", Genre: " + this.genre + ", Rating: " + Integer.toString(this.rating);
+    return "Film: " + this.name + ", Genre: " + this.genre 
+            + ", Rating: " + Integer.toString(this.rating);
   }
 
 }

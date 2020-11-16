@@ -14,20 +14,21 @@ public class UsersPersistence {
   private ObjectMapper mapper;
 
   /**
-     * kontroller som initialiserer en ny mapper
-     */
+   * kontroller som initialiserer en ny mapper.
+   */
   public UsersPersistence() {
     mapper = new ObjectMapper();
     mapper.registerModule(new UsersModule());
   }
 
   /**
-     * Metode som leser myMovies-objekt fra json-fil
-     * 
-     * @param reader Tar inn en reader
-     * @return Returnerer ett myMovies-objekt
-     * @throws IOException
-     */
+   * Metode som leser AllUsers-objekt fra json-fil.
+
+   * @param reader     Tar inn en reader
+   * @return     Returnerer ett AllUsers-objekt
+   * @throws IOException
+   *     Kaster unntak hvis objektet ikke kan leses.
+   */
   public AllUsers read(Reader reader) {
     try {
       return mapper.readValue(reader, AllUsers.class);
@@ -41,13 +42,14 @@ public class UsersPersistence {
     return null;
   }
 
-    /**
-     * Metode som skriver myMovies-objekt til json-fil
-     * 
-     * @param myMovies myMovies-objekt
-     * @param writer   Tar inn en writer
-     * @throws IOException
-     */
+  /**
+   * Metode som skriver AllUsers-objekt til json-fil.
+
+   * @param allUsers    AllUsers-objekt
+   * @param writer    Tar inn en writer
+   * @throws IOException
+   *     Kaster unntak hvis objektet ikke kan skrives.
+   */
   public void write(AllUsers allUsers, Writer writer) {
     try {
       mapper.writerWithDefaultPrettyPrinter().writeValue(writer, allUsers);
