@@ -26,10 +26,13 @@ import mymovies.core.User;
 
 public class MyMoveisController {
 
-  protected ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
-  protected ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic",
+  protected ObservableList<String> 
+            ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
+  protected ObservableList<String> 
+            genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic",
             "Action", "Thriller", "Sci-fi");
-  protected javafx.collections.ObservableList<Film> moviesList = FXCollections.observableArrayList();
+  protected javafx.collections.ObservableList<Film> 
+            moviesList = FXCollections.observableArrayList();
   protected TableView<Film> table;
   protected User user;
   protected UserAccess access;
@@ -54,7 +57,9 @@ public class MyMoveisController {
     genre.setItems(genres);
     rating.setItems(ratings);
     submit.disableProperty().bind(
-        title.textProperty().isEmpty().or(genre.valueProperty().isNull().or(rating.valueProperty().isNull())));
+        title.textProperty().isEmpty()
+        .or(genre.valueProperty().isNull()
+        .or(rating.valueProperty().isNull())));
   }
 
   public void setUp(User user, UserAccess access) {
@@ -81,6 +86,9 @@ public class MyMoveisController {
     System.exit(0);
   }
 
+  /**
+   * Nullstiller input-felter etter en film er lagt til.
+   */
   public void submitted() {
     genre.setValue(null);
     rating.setValue(null);
@@ -88,13 +96,13 @@ public class MyMoveisController {
   }
 
   /**
-     * Lager et nytt vindu som viser informasjonen om filmene
-     */
-  //BEHOLD
+   * Lager et nytt vindu som viser fram brukerens filmer.
+   * Filmene kan sorteres på tittel, sjanger og rating. 
+   * Man kan også gjerne filmer.
+   */
   @SuppressWarnings("unchecked")
   @FXML
-    public void generateList(ActionEvent event) {
-
+    public void generateList() {
     moviesList.addAll(this.user.getMyMovies());
     table = new TableView<Film>();
     table.setId("table");

@@ -57,55 +57,66 @@ public class LogInControllerTest extends ApplicationTest {
 
     @Test
     public void testSignInEnabled(){
-        clickOn(controller.siUsername).write("brukernavn1");
-        clickOn(controller.siPassword).write("passord");
+        clickOn(controller.siUsername).write("username1");
+        clickOn(controller.siPassword).write("password");
         assertFalse(controller.signIn.isDisabled());
     }
 
     @Test
     public void testSignUpEnabled(){
-        clickOn(controller.suUsername).write("brukernavn2");
-        clickOn(controller.suPassword).write("passord");
-        clickOn(controller.confPassword).write("passord");
+        clickOn(controller.suUsername).write("username2");
+        clickOn(controller.suPassword).write("password");
+        clickOn(controller.confPassword).write("password");
         assertFalse(controller.signUp.isDisabled());
     }
 
     @Test
     public void testSignUpInvalidInput(){
-        clickOn(controller.suUsername).write("brukernavn3");
-        clickOn(controller.suPassword).write("passord");
-        clickOn(controller.confPassword).write("annetPassord");
+        clickOn(controller.suUsername).write("username3");
+        clickOn(controller.suPassword).write("password");
+        clickOn(controller.confPassword).write("differentPassord");
         clickOn(controller.signUp);
-        assertNull(controller.access.getUser("brukernavn3"));
+        assertNull(controller.access.getUser("username3"));
+        clickOn("#ok");
+
+        controller.suPassword.setText(null);
+        controller.suUsername.setText(null);
+        controller.confPassword.setText(null);
+        clickOn(controller.suUsername).write("a");
+        clickOn(controller.suPassword).write("password");
+        clickOn(controller.confPassword).write("password");
+        clickOn(controller.signUp);
+        assertNull(controller.access.getUser("a"));
         clickOn("#ok");
     }
 
     @Test
     public void testSignUpValidInput(){
-        clickOn(controller.suUsername).write("brukernavn4");
+        clickOn(controller.suUsername).write("username4");
         clickOn(controller.suPassword).write("passord123");
         clickOn(controller.confPassword).write("passord123");
         clickOn(controller.signUp);
-        assertNotNull(controller.access.getUser("brukernavn4"));
+        assertNotNull(controller.access.getUser("username4"));
     }
 
     @Test
     public void testSignInValidInput(){
-        User user2 = new User("Ola","passord");
+        User user2 = new User("Ola","password");
         controller.access.addUser(user2);
         clickOn(controller.siUsername).write("Ola");
-        clickOn(controller.siPassword).write("passord");
+        clickOn(controller.siPassword).write("password");
         clickOn(controller.signIn);
         assertTrue(controller.user.equals(user2));
         assertNotNull(controller.access.getUser("Ola"));
         assertTrue(controller.access.usernameTaken("Ola"));
     }
+    
     @Test
-    public void testSignInInvanlidInput(){
-        User user3 = new User("Kari","passord");
+    public void testSignInInvalidInput(){
+        User user3 = new User("Kari","password");
         controller.access.addUser(user3);
         clickOn(controller.siUsername).write("kari");
-        clickOn(controller.siPassword).write("passord");
+        clickOn(controller.siPassword).write("password");
         clickOn(controller.signIn);
         assertNull(controller.access.getUser(controller.siUsername.getText()));
         clickOn("#ok");

@@ -53,12 +53,11 @@ public class User {
   }
 
   private boolean validUserName(String userName) {
-    return userName.length() >= 2;
+    return userName != null;
   }
   
-  // Kan ikke sjekke dette her, uten å sende feilmelding?!  
   private boolean validPassword(String password) {
-    return password.length() >= 3;
+    return password != null;
   }
 
   public String getUserName() {
