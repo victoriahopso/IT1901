@@ -45,7 +45,7 @@ Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i m
 https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukerhistorier
 
 ## Diagrammer 
-***insert her: link til wiki når klart***
+https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Diagrammer
 
 ## Skjermbilder av brukergrensesnitt
 https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukeregrensesnitt,-skjermbiler
