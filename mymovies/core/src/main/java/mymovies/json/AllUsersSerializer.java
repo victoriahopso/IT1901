@@ -10,7 +10,8 @@ import mymovies.core.User;
 public class AllUsersSerializer extends JsonSerializer<AllUsers> {
 
   @Override
-    public void serialize(AllUsers allUsers, JsonGenerator gen, SerializerProvider prov) throws IOException {
+    public void serialize(AllUsers allUsers, JsonGenerator gen, SerializerProvider prov) 
+        throws IOException {
     gen.writeStartObject();
     gen.writeArrayFieldStart("allUsers");
     for (User us : allUsers.getAllUsers()) {

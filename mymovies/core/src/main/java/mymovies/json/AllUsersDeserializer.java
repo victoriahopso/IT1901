@@ -17,7 +17,8 @@ public class AllUsersDeserializer extends JsonDeserializer<AllUsers> {
   private UserDeserializer userDeserializer = new UserDeserializer();
 
   @Override
-    public AllUsers deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public AllUsers deserialize(JsonParser p, DeserializationContext ctxt) 
+        throws IOException, JsonProcessingException {
     TreeNode treeNode = p.getCodec().readTree(p);
     return deserialize((JsonNode) treeNode);
   }

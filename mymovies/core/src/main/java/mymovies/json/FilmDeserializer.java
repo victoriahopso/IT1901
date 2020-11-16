@@ -12,18 +12,20 @@ import mymovies.core.Film;
 
 public class FilmDeserializer extends JsonDeserializer<Film> {
   @Override
-    public Film deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public Film deserialize(JsonParser p, DeserializationContext ctxt) 
+                throws IOException, JsonProcessingException {
     TreeNode treeNode = p.getCodec().readTree(p);
     return deserialize((JsonNode) treeNode);
   }
 
   /**
-     * 
-     * @param jsonNode jsonNode som brukes for å hente ut
-     * film-objekt informasjon
-     * @return film-objekt som er lagret i json-fil
-     * format: {"name": "...", "genre": "...", "rating": ... }
-     */
+   * Deserialiserer jsonformatert film.
+
+   * @param jsonNode jsonNode som brukes for å hente ut
+   *     film-objekt informasjon
+   * @return film-objekt som er lagret i json-fil
+   *     format: {"name": "...", "genre": "...", "rating": ... }
+   */
   public Film deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode) {
       ObjectNode objectNode = (ObjectNode) jsonNode;
