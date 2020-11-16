@@ -1,0 +1,88 @@
+@startuml
+AllUsers <-- RemoteUserAccess
+AllUsers <-- MockUserAccess
+
+User <-- AllUsers
+User <-- MyMoveisController
+User <-- LogInController
+User <-- RemoteUserAccess
+User <-- MockUserAccess
+
+Film <-- User
+Film <-- MyMoveisController
+
+MyMoveisController <-- LogInController
+
+
+UserAccess <|.. MockUserAccess
+UserAccess <|.. RemoteUserAccess
+
+RemoteUserAccess <-- MyMoveisController
+
+RemoteUserAccess <-- LogInController
+
+class AllUsers{
+Collection<User> users
+Collection<User> getAllUsers()
+}
+
+class User{
+#String userName
+#String password
+#Collection<Film> myMovies
+User(String, String)
+void addMovie(Film)
+void removeMovie(Film)
+}
+
+class Film{
+String name
+String genre
+int Rating
+Film(String, String, int)
+String toString()
+String displayText()
+}
+
+class LogInController{
+UserAccess access
+User user
+void handleSignUp(ActionEvent)
+void handleSignIn(ActionEvent)
+void logIn(ActionEvent)
+void logInFailure(String)
+}
+
+class MyMoveisController{
+#ObservableList<String> ratings
+#ObservableList<String> genres
+#ObservableList<String> moviesList
+#TableView<Film> table
+#User user
+#UserAccess access
+void handleSubmit()
+void submitted()
+void generateList(ActionEvent)
+}
+
+class RemoteUserAccess{
+AllUsers allUsers
+URI uri
+ObjectMapper objectMapper
+RemoteUserAccess()
+String param(String)
+URI uri(String)
+}
+
+interface UserAccess{
+boolean isUser(String, String)
+User getUser(String)
+void addUser(User)
+void updateUser(User)
+boolean usernameTaken(String)
+}
+
+class MockUserAccess{
+AllUsers allUsers
+}
+@enduml
