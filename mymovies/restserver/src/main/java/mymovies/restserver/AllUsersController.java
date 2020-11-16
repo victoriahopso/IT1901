@@ -15,7 +15,7 @@ import mymovies.core.AllUsers;
 import mymovies.core.User;
 
 @RestController
-@RequestMapping("/restserver/movies")
+@RequestMapping("/restserver/mymovies")
 public class AllUsersController {
 
   @Autowired
