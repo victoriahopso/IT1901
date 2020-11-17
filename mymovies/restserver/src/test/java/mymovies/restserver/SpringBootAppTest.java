@@ -10,11 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import mymovies.core.AllUsers;
 import mymovies.core.User;
+import org.junit.jupiter.api.BeforeEach;
 
 
 @SpringBootTest
 public class SpringBootAppTest {
-/*
   @Autowired
   AllUsersService service;
 
@@ -48,5 +48,4 @@ public class SpringBootAppTest {
     all.addUser(user1);
     when(all.getUser("username1").updateUser(user1));
   }
-*/
 }

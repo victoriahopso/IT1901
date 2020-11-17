@@ -3,6 +3,9 @@ package mymovies.json;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.io.IOException;
+import mymovies.core.RW;
 
 import java.util.Iterator;
 
@@ -64,6 +67,7 @@ public class MoviesPersistenceTest {
     assertEquals(film4.getRating(), 1);
     assertFalse(it3.hasNext());
 
+
     // MyMovies myMovies = new MyMovies();
     // MyMovies myMovies2 = new MyMovies();
     // MyMovies myMovies3 = new MyMovies();
@@ -87,4 +91,14 @@ public class MoviesPersistenceTest {
     // myMovies3 = moviesPersistence.read(reader2);
     // assertFalse(myMovies3.getFilmer().iterator().hasNext());
   }
+/*
+Kan fjernes skulle teste ut noe
+  @Test
+public void testExceptionErrorCreateReader() {
+    RW ReaderWriter = new RW();
+    Throwable exception = assertThrows(IOException.class,
+           ()->{ReaderWriter.createReader("ThisWillFail");} );
+}
+*/
+
 }
