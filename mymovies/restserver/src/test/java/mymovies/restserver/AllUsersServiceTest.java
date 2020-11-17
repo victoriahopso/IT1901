@@ -1,54 +1,44 @@
 package mymovies.restserver;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ContextConfiguration;
 import mymovies.core.AllUsers;
-import mymovies.core.User;
-import mymovies.json.UsersModule;
+import mymovies.restserver.AllUsersService;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-//@RunWith(SpringRunner.class)
-public class AllUsersServiceTest {
-
-  /*
-
-  @TestConfiguration
-  static class AllUsersServiceTestContextConfiguration {
-
-    @Bean
-    public AllUsersService getService() {
-      return new AllUsersService();
-    }
-  }
-
-  @Autowired
-  private AllUsersService service;
+@ExtendWith(SpringExtension.class)
+class AllUsersServiceTest{
 
   @MockBean
-  private AllUsers all;
+  private AllUsers allUsers;
 
-  private ObjectMapper mapper;
+  private AllUsersService allUsersService;
 
-  @BeforeAll
-  public void setUp() {
-    User user1 = new User("Kilperik", "password");
-    all.addUser(user1);
-    mapper = new ObjectMapper().registerModule(new UsersModule());
-    service = new AllUsersService();
-
-    Mockito.when(all.getUser("Kilperik")).thenReturn(user1);
-
-    // Mockito.when(employeeRepository.findByName(alex.getName())).thenReturn(alex);
+  @BeforeEach
+  void setUp() {
+    this.allUsersService = new AllUsersService(this.allUsers);
   }
-
+  //Tester getter og setter med parametere
   @Test
-  public void firstAllUsers() {
+  public void AllUsersServiceWithParameterTest(){
+    assertEquals(allUsersService.getAllUsers(), this.allUsers);
+    AllUsers test = new AllUsers();
+    allUsersService.setAllUsers(test);
+    assertEquals(allUsersService.getAllUsers(), test);
   }
-  */
 
+  //Uten parameter så skal den retunere en AllUser objekt som er tomt
+  @Test
+  public void AllUsersServiceWithoutParameterTest(){
+    AllUsersService test = new AllUsersService();
+    assertNotNull(test);
+    assertEquals(test.getAllUsers().size, 0);
+  }
 }
