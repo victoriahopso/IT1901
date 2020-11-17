@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertIsEmpty;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ class AllUsersServiceTest{
   public void AllUsersServiceWithoutParameterTest(){
     AllUsersService test = new AllUsersService();
     assertNotNull(test);
-    assertEquals(test.getAllUsers().size, 0);
+    //assertIsEmpty(test);
   }
 }

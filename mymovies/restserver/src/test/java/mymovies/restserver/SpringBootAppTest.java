@@ -11,15 +11,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import mymovies.core.AllUsers;
 import mymovies.core.User;
 
+
 @SpringBootTest
 public class SpringBootAppTest {
-  /*
-
+/*
   @Autowired
   AllUsersService service;
 
   @MockBean
   AllUsers all;
+
+  @BeforeEach
+  void setUp() {
+    this.all = new AllUsers();
+    this.service = new AllUsersService(this.all);
+  }
 
   @Test
   public void getAllUsersTest() {
@@ -31,7 +37,6 @@ public class SpringBootAppTest {
 
   @Test
   public void getUserTest() {
-    // User user1 = new User("username1", "password1");
     User user = new User("username2", "password2");
     when(all.getUser("username2")).thenReturn(user);
     assertEquals(user, service.getAllUsers().getUser("username2"));
@@ -40,11 +45,8 @@ public class SpringBootAppTest {
   @Test
   public void updateUserTest() {
     User user1 = new User("username1", "password1");
-    User user2 = new User("username1", "password2");
-    all.addUser(user2)
-
-    when(all.getUser("username1").updateUser(user1))
+    all.addUser(user1);
+    when(all.getUser("username1").updateUser(user1));
   }
-  */
-
+*/
 }
