@@ -16,9 +16,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
   private FilmDeserializer filmDeserializer = new FilmDeserializer();
 
-  /**
-   * format: { "myMovies": [ ... ] }
-   */
+
   @Override
     public User deserialize(JsonParser p, DeserializationContext ctxt) 
         throws IOException, JsonProcessingException {
@@ -26,6 +24,14 @@ public class UserDeserializer extends JsonDeserializer<User> {
     return deserialize((JsonNode) treeNode);
   }
 
+  /**
+   * Deserialiserer jsonformat til et Userobjekt.
+
+   * @param jsonNode    brukes som ObjectNode for å deserialisere 
+   *     et User-objekt med alle dets attributter. 
+   * @return
+   *     user-objekt hvis det kunne deserialiseres, null hvis ikke. 
+   */
   public User deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode) {
       ObjectNode objectNode = (ObjectNode) jsonNode;

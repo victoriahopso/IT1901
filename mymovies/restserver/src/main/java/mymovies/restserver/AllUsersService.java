@@ -1,15 +1,14 @@
 package mymovies.restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
 import mymovies.core.AllUsers;
 import mymovies.json.UsersModule;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AllUsersService {
@@ -17,7 +16,7 @@ public class AllUsersService {
   private AllUsers allUsers;
   private static ObjectMapper objectMapper = new ObjectMapper().registerModule(new UsersModule());
 
-  protected String getFileName(){
+  protected String getFileName() {
     return "allusers.json";
   }
 
@@ -30,7 +29,7 @@ public class AllUsersService {
   }
 
   public AllUsers getAllUsers() {
-    if (allUsers == null){
+    if (allUsers == null) {
       allUsers = firstAllUsers();
     }
     return allUsers;
@@ -40,6 +39,12 @@ public class AllUsersService {
     this.allUsers = allUsers;
   }
 
+  /**
+   * Prøver å lese et allUsers-objekt fra eksisterende fil.
+   * Hvis ikke dette går, opprettes et nytt allUsersobjekt.
+
+   * @return    allusers-objekt
+   */
   private AllUsers firstAllUsers() {
     URL url = AllUsersService.class.getResource(getFileName());
     if (url != null) {
@@ -47,10 +52,10 @@ public class AllUsersService {
         return objectMapper.readValue(reader, AllUsers.class);
 
       } catch (IOException e) {
-        System.out.println("Klarte ikke å åpne " + getFileName() + ", dermed skjer dette manuelt(" + e + ")");
+        System.out.println("Klarte ikke å åpne " + getFileName() 
+            + ", dermed skjer dette manuelt(" + e + ")");
       }
     }
-    // Evt lag fil?
     AllUsers allUsers = new AllUsers();
     return allUsers;
   }
