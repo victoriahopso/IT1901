@@ -34,14 +34,6 @@ public class User {
     return copy;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
   public void setMyMovies(Collection<Film> col) {
     this.myMovies = col;
   }

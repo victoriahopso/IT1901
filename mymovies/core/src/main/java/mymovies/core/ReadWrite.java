@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
-public class RW {
+public class ReadWrite {
 
   public InputStreamReader createReader(String file) {
     try {
@@ -27,12 +27,9 @@ public class RW {
       FileOutputStream fileStream = new FileOutputStream(file);
       OutputStreamWriter writer = new OutputStreamWriter(fileStream, "UTF-8");
       return writer;
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
+    } catch (FileNotFoundException | UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-
     return null;
   }
 }

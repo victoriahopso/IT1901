@@ -3,7 +3,7 @@ package mymovies.json;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import mymovies.core.RW;
+import mymovies.core.ReadWrite;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
@@ -16,7 +16,7 @@ import mymovies.core.User;
 public class MoviesPersistenceTest {
 
   private UsersPersistence userPersistence = new UsersPersistence();
-  private RW rw = new RW();
+  private ReadWrite rw = new ReadWrite();
 
   private final static String pathStarter = "/workspace/gr2003/mymovies/core/src/test/resources/mymovies/json/";
   private final String userPath = Paths.get(pathStarter + "persistence-test.json").toString();

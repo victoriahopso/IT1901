@@ -1,13 +1,18 @@
 package mymovies.restserver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.nio.file.Paths;
+import mymovies.core.AllUsers;
+import mymovies.core.Film;
+import mymovies.core.ReadWrite;
+import mymovies.core.User;
+import mymovies.json.UsersModule;
+import mymovies.json.UsersPersistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.io.IOException;
-import java.nio.file.Paths;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +23,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import mymovies.core.AllUsers;
-import mymovies.core.Film;
-import mymovies.core.RW;
-import mymovies.core.User;
-import mymovies.json.UsersModule;
-import mymovies.json.UsersPersistence;
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {AllUsersController.class, AllUserServiceForTesting.class, AllUsersApplication.class})
@@ -33,12 +32,12 @@ public class AllUsersIntegrationTest {
   @Autowired
   private MockMvc mvc;
 
-  AllUsers all = new AllUsers();
-  User user1 = new User("testUser", "passord");
-  User user2 = new User("testUser2", "testPassword2");
-  ObjectMapper mapper = new ObjectMapper().registerModule(new UsersModule());
-  UsersPersistence persistence = new UsersPersistence();
-  RW rw = new RW();
+  private AllUsers all = new AllUsers();
+  private User user1 = new User("testUser", "passord");
+  private User user2 = new User("testUser2", "testPassword2");
+  private ObjectMapper mapper = new ObjectMapper().registerModule(new UsersModule());
+  private UsersPersistence persistence = new UsersPersistence();
+  private ReadWrite rw = new ReadWrite();
 
   private final static String pathStarter = "/workspace/gr2003/mymovies/restserver/src/test/resources/mymovies/restserver/";
   private final String userPath = Paths.get(pathStarter + "it-allusers.json").toString();
@@ -104,14 +103,13 @@ public class AllUsersIntegrationTest {
 
     System.out.println(result.getResponse().getContentAsString());
     User us = mapper.readValue(result.getResponse().getContentAsString(), User.class);
-    System.out.println(us);
     assertNotNull(us);
     assertEquals("testUser", us.getUserName());
   }
 
   private void testPostUser(User user) throws Exception {
     MvcResult result = mvc
-        .perform(MockMvcRequestBuilders.post("http://localhost:8080/restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
+        .perform(MockMvcRequestBuilders.post(uri + user.getUserName()).content(mapper.writeValueAsString(user))
             .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated()).andReturn();
     System.out.println("Result: " + result.toString());
@@ -119,7 +117,7 @@ public class AllUsersIntegrationTest {
 
   private void testPutUser(User user) throws Exception {
     MvcResult result = mvc
-        .perform(MockMvcRequestBuilders.put("http://localhost:8080/restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
+        .perform(MockMvcRequestBuilders.put(uri + user.getUserName()).content(mapper.writeValueAsString(user))
             .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
     System.out.println("Result: " + result.toString());

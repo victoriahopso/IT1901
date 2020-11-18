@@ -6,5 +6,4 @@ public class AllUserServiceForTesting extends AllUsersService {
   protected String getFileName(){
     return "it-allusers.json";
   }
-  
 }

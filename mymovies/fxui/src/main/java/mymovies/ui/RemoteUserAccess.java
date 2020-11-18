@@ -10,8 +10,6 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import mymovies.core.AllUsers;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
@@ -28,7 +26,7 @@ public class RemoteUserAccess implements UserAccess {
   }
 
   @Override
-    public boolean isUser(String username, String password) {
+  public boolean isUser(String username, String password) {
     if (getAllUsers().getUser(username, password) != null) {
       return true;
     }
@@ -52,7 +50,6 @@ public class RemoteUserAccess implements UserAccess {
                 HttpResponse.BodyHandlers.ofString());
         final String responseString = response.body();
         this.allUsers = objectMapper.readValue(responseString, AllUsers.class);
-        System.out.println("AllUsers: " + this.allUsers);
       } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);
       }
@@ -61,7 +58,7 @@ public class RemoteUserAccess implements UserAccess {
   }
 
   @Override
-    public User getUser(String username) {
+  public User getUser(String username) {
     User user = this.allUsers.getUser(username);
     if (user == null) {
       HttpRequest request = 
@@ -71,7 +68,6 @@ public class RemoteUserAccess implements UserAccess {
         final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                 HttpResponse.BodyHandlers.ofString());
         String responseString = response.body();
-        System.out.println("getUser(" + username + ") response: " + responseString);
         User secondUser = objectMapper.readValue(responseString, User.class);
         User thirdUser = new User(secondUser.getUserName(), secondUser.getPassword());
         thirdUser.setMyMovies(secondUser.getMyMovies());
@@ -86,10 +82,9 @@ public class RemoteUserAccess implements UserAccess {
   }
 
   @Override
-    public void addUser(User user) {
+  public void addUser(User user) {
     try {
       String string = objectMapper.writeValueAsString(user);
-      System.out.println("User: " + string);
       HttpRequest request = 
           HttpRequest.newBuilder(uri(user.getUserName())).header("Accept", "application/json")
               .header("Content-Type", "application/json")
@@ -98,7 +93,6 @@ public class RemoteUserAccess implements UserAccess {
               HttpResponse.BodyHandlers.ofString());
       String responseString = response.body();
       allUsers.addUser(user);
-      System.out.println(getAllUsers().getUser(user.getUserName()));
       System.out.println(responseString);
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
@@ -106,10 +100,9 @@ public class RemoteUserAccess implements UserAccess {
   }
 
   @Override
-    public void updateUser(User user) {
+  public void updateUser(User user) {
     try {
       String string = objectMapper.writeValueAsString(user);
-      System.out.println("User: " + string);
       HttpRequest request = HttpRequest.newBuilder(uri(user.getUserName()))
           .header("Accept", "application/json").header("Content-Type", "application/json")
               .PUT(BodyPublishers.ofString(string)).build();
@@ -124,7 +117,7 @@ public class RemoteUserAccess implements UserAccess {
   }
 
   @Override
-    public boolean usernameTaken(String username) {
+  public boolean usernameTaken(String username) {
     if (getAllUsers().getUser(username) == null) {
       return false;
      
@@ -132,5 +125,4 @@ public class RemoteUserAccess implements UserAccess {
       return true;
     }
   }
-
 }

@@ -1,8 +1,5 @@
 package mymovies.json;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.Reader;
@@ -53,5 +50,4 @@ public class UsersPersistence {
       e.printStackTrace();
     }
   }
-
 }

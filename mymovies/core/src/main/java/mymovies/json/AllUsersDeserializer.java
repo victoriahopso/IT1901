@@ -40,5 +40,4 @@ public class AllUsersDeserializer extends JsonDeserializer<AllUsers> {
     }
     return null;
   }
-
 }

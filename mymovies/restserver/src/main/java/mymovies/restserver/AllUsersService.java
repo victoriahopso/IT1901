@@ -50,7 +50,6 @@ public class AllUsersService {
         System.out.println("Klarte ikke å åpne " + getFileName() + ", dermed skjer dette manuelt(" + e + ")");
       }
     }
-    // Evt lag fil?
     AllUsers allUsers = new AllUsers();
     return allUsers;
   }
