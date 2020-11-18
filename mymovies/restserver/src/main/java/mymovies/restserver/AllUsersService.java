@@ -1,13 +1,12 @@
 package mymovies.restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import mymovies.core.AllUsers;
 import mymovies.json.UsersModule;
@@ -31,12 +30,10 @@ public class AllUsersService {
   }
 
   public AllUsers getAllUsers() {
-    //return firstAllUsers();
     if (allUsers == null){
       allUsers = firstAllUsers();
     }
     return allUsers;
-    
   }
 
   public void setAllUsers(AllUsers allUsers) {
@@ -50,7 +47,7 @@ public class AllUsersService {
         return objectMapper.readValue(reader, AllUsers.class);
 
       } catch (IOException e) {
-        System.out.println("Klarte ikke å åpne allusers.json, dermed skjer dette manuelt(" + e + ")");
+        System.out.println("Klarte ikke å åpne " + getFileName() + ", dermed skjer dette manuelt(" + e + ")");
       }
     }
     // Evt lag fil?

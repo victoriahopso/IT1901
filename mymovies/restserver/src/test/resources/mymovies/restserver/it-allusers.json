@@ -1,0 +1,11 @@
+{
+  "allUsers" : [ {
+    "username" : "testUser",
+    "password" : "passord",
+    "myMovies" : [ ]
+  }, {
+    "username" : "testUser2",
+    "password" : "testPassword2",
+    "myMovies" : [ ]
+  } ]
+}
