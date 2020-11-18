@@ -45,11 +45,11 @@ public class User {
   }
 
   private boolean validUserName(String userName) {
-    return userName != null;
+    return userName.length() >= 2;
   }
   
   private boolean validPassword(String password) {
-    return password != null;
+    return password.length() >= 8;
   }
 
   public String getUserName() {
