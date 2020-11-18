@@ -20,26 +20,24 @@ Vi implementerer fillagring med **Json**. Benyttet rammeverk for RestAPI og Rest
 
 
 ### Organisering av koden 
-Prosjektet er delt inn i 4 moduler, henholdsvis *core*, *fxui*, *restserver* og *integrationtest*.
+Prosjektet er delt inn i 3 moduler, henholdsvis *core*, *fxui*, og *restserver*.
 - *core* inneholder dataklasser og persistens (Json format).
 - *fxui* inneholder kontrollere for GUI, og grensesnitt med implementasjoner for tilgang til server. FXML filer for GUI finnes i *resources*.
 - *restserver* inneholder håndering av dataflyt til og fra server. 
-- *integrationtest* inneholder tester for "samhandling" mellom klasser for kjøring av server, restApi og kontrollere. 
 
-Hver modul har tilhørende tester under src/test (untatt integrationtest). Alle tester benytter rammeverket jUnit.
- 
+Hver modul har tilhørende tester under src/test. Alle tester benytter rammeverket jUnit.
 
 ---
 
-- Kildekode: [mymovies/core/src/main/java/mymovies/core](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fcore)
+- Kjernekode: [mymovies/core/src/main/java/mymovies/core](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fcore)
 - Persistens: [mymovies/core/src/main/java/mymovies/json](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Fcore%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fjson)
 - Brukergrensesnitt: [mymovies/fxui/src/main/java/mymovies/ui](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies%2Ffxui%2Fsrc%2Fmain%2Fjava%2Fmymovies%2Fui)
-- RestServer: 
+- Restserver: [mymovies/restserver/src/main/java/mymovies/restserver](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/tree/master/mymovies/restserver/src/main/java/mymovies/restserver)
 
 ---
 
 #### Arbeidet 
-Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i mindre utviklingsoppgaver(*issues*) og tilordnes et gruppemedlem. Det opprettes en egen grein for hver utviklingsoppgave, og det benyttes parprogrammering der det er hensiktsmessig.
+Prosjektet deles inn i brukerhistorier (se *labels*), som deretter deles inn i mindre utviklingsoppgaver(*issues*) og tilordnes et gruppemedlem. Det opprettes en egen grein for hver utviklingsoppgave, og det benyttes parprogrammering der det er mulig og hensiktsmessig.
 
 ## Brukerhistorier
 https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukerhistorier
