@@ -9,7 +9,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-
 import mymovies.core.AllUsers;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
