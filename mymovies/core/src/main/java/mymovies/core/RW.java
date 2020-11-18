@@ -11,6 +11,13 @@ import java.io.UnsupportedEncodingException;
 
 public class RW {
 
+  /**
+   * Lager en inputstreamReader.
+
+   * @param file    filen readeren opprettes for.
+   * @return
+   *     reader, hvis den kunne opprettes, null hvis ikke. 
+   */
   public InputStreamReader createReader(String file) {
     try {
       InputStream inputStream = new FileInputStream(file);
@@ -22,6 +29,13 @@ public class RW {
     return null;
   }
 
+  /**
+   * Lager en OutputStreamWriter.
+
+   * @param file    filen writeren opprettes for.
+   * @return
+   *     writeren hvis den kunne opprettes, null hvis ikke. 
+   */
   public OutputStreamWriter createWriter(String file) {
     try {
       FileOutputStream fileStream = new FileOutputStream(file);
