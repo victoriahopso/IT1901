@@ -20,5 +20,4 @@ public class FilmSerializer extends JsonSerializer<Film> {
     gen.writeNumberField("rating", film.getRating());
     gen.writeEndObject();
   }
-
 }

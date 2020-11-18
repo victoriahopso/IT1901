@@ -17,19 +17,13 @@ public class AllUsers implements Iterable<User> {
    * @return    null
    */
   public User addUser(User user) {
-    if (!users.contains(user)) {
-      int counter = 0;
-      for (User us : users) {
-        if (!us.getUserName().equals(user.getUserName())) {
-          counter++;
-        }
-      }
-      if (counter == users.size()) {
-        users.add(user);
-        return user;
+    for (User us : users) {
+      if (us.getUserName().equals(user.getUserName())) {
+        return null;
       }
     }
-    return null;
+    users.add(user);
+    return user;
   }
 
   /**
@@ -38,9 +32,9 @@ public class AllUsers implements Iterable<User> {
    * @param user    brukeren som skal oppdateres
    */
   public void updateUser(User user) {
-    for (User user2 : getAllUsers()) {
-      if (user2.getUserName().equals(user.getUserName())) {
-        user2.updateUser(user);
+    for (User us : getAllUsers()) {
+      if (us.getUserName().equals(user.getUserName())) {
+        us.updateUser(user);
       }
     }
   }
@@ -52,9 +46,7 @@ public class AllUsers implements Iterable<User> {
    */
   public Collection<User> getAllUsers() {
     Collection<User> copy = new ArrayList<>();
-    for (User u : users) {
-      copy.add(u);
-    }
+    users.forEach(p -> copy.add(p));
     return copy;
   }
 
@@ -107,13 +99,8 @@ public class AllUsers implements Iterable<User> {
     return false;
   }
 
-  public void setUsers(Collection<User> users) {
-    this.users = users;
-  }
-
   @Override
   public Iterator<User> iterator() {
     return users.iterator();
   }
-
 }
