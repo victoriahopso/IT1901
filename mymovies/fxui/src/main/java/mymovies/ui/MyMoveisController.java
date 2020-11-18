@@ -1,22 +1,20 @@
 package mymovies.ui;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.geometry.Orientation;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -27,46 +25,54 @@ import mymovies.core.Film;
 import mymovies.core.User;
 
 public class MyMoveisController {
-  protected ObservableList<String> ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
-  protected ObservableList<String> genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic", "Action",
-      "Thriller", "Sci-fi");
-  User user;
-  RemoteUserAccess access;
+
+  protected ObservableList<String> 
+            ratings = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6");
+  protected ObservableList<String> 
+            genres = FXCollections.observableArrayList("Horror", "Comedy", "Romantic",
+            "Action", "Thriller", "Sci-fi");
+  protected javafx.collections.ObservableList<Film> 
+            moviesList = FXCollections.observableArrayList();
+  protected TableView<Film> table;
+  protected User user;
+  protected UserAccess access;
 
   @FXML
-  Button submit;
+    Button submit;
   @FXML
-  ComboBox<String> rating, genre;
+    ComboBox<String> rating;
   @FXML
-  Label message;
+    ComboBox<String> genre;
   @FXML
-  TextField title;
+    TextField title;
   @FXML
-  Button showMovies;
+    Button showMovies;
 
   /**
-   * Fyller comboBoxene med verdiene fra ratings og genres. Sørger for at
-   * {@link #submit} er disabled så lenge ikke alle 3 inputfeltene er fyllt ut.
-   */
+     * Fyller comboBoxene med verdiene fra ratings og genres. Sørger for at
+     * {@link #submit} er disabled så lenge ikke alle 3 inputfeltene er fyllt ut.
+     */
   @FXML
-  public void initialize() {
+    public void initialize() {
     genre.setItems(genres);
     rating.setItems(ratings);
-    submit.disableProperty()
-        .bind(title.textProperty().isEmpty().or(genre.valueProperty().isNull().or(rating.valueProperty().isNull())));
+    submit.disableProperty().bind(
+        title.textProperty().isEmpty()
+        .or(genre.valueProperty().isNull()
+        .or(rating.valueProperty().isNull())));
   }
 
-  public void setUp(User user, RemoteUserAccess access) {
+  public void setUp(User user, UserAccess access) {
     this.user = user;
     this.access = access;
   }
 
   /**
-   * Henter verdiene fra inputfeltene,lager et Film-objekt, og legger det til i
-   * container-objektet myMovies. Skriver myMovies til jsonfil.
-   */
+     * Henter verdiene fra inputfeltene,lager et Film-objekt, og legger det til i
+     * container-objektet myMovies. Skriver myMovies til jsonfil.
+     */
   @FXML
-  private void handleSubmit() {
+    private void handleSubmit() {
     System.out.println(this.user);
     System.out.println(this.user.getUserName());
     Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
@@ -75,49 +81,76 @@ public class MyMoveisController {
     submitted();
   }
 
-  // hva er greia med denne?
-  // KAST?
   @FXML
-  private void exitApp(ActionEvent event) throws FileNotFoundException {
+    private void exitApp(ActionEvent event) {
     System.exit(0);
   }
 
-  private void submitted() {
+  /**
+   * Nullstiller input-felter etter en film er lagt til.
+   */
+  public void submitted() {
     genre.setValue(null);
     rating.setValue(null);
     title.setText(null);
   }
 
   /**
-   * Lager et nytt vindu som viser informasjonen om filmene
+   * Lager et nytt vindu som viser fram brukerens filmer.
+   * Filmene kan sorteres på tittel, sjanger og rating. 
+   * Man kan også gjerne filmer.
    */
-  // BEHOLD
+  @SuppressWarnings("unchecked")
   @FXML
-  public void generateList(ActionEvent event) {
+    public void generateList() {
+    moviesList.addAll(this.user.getMyMovies());
+    table = new TableView<Film>();
+    table.setId("table");
 
-    Stage stage = new Stage();
     Button ok = new Button("Close view");
-    Label lbl = new Label("Movie ratings:");
+    Button removeMovie = new Button("Delete selected");
+    removeMovie.setId("removeMovie");
     ok.setId("ok");
     ok.setMaxWidth(122);
     ok.setFont(Font.font(17));
-    Button removeMovie = new Button("Delete selected");
-    removeMovie.setId("removeMovie");
 
-    Collection<String> displayTexts = new ArrayList<>();
-    user.getMyMovies().forEach(p -> displayTexts.add(p.displayText()));
-    javafx.collections.ObservableList<String> moviesList = FXCollections.observableArrayList(displayTexts);
+    Stage stage = new Stage();
+    stage.setTitle("My movies");
+    stage.setWidth(800);
+    stage.setHeight(700);
 
-    ListView<String> moviesLw = new ListView<String>();
-    moviesLw.setItems(moviesList);
-    moviesLw.setOrientation(Orientation.VERTICAL);
-    moviesLw.setPrefSize(600, 500);
+    final Label label = new Label("Watched movies");
+    label.setFont(new Font("Arial", 20));
 
-    VBox moviesSelection = new VBox();
-    moviesSelection.setSpacing(10);
-    moviesSelection.getChildren().addAll(lbl, moviesLw);
-    VBox lower = new VBox();
-    lower.getChildren().addAll(ok);
+    table.setEditable(true);
+
+    TableColumn<Film, String> titleCol = new TableColumn<Film, String>("Title");
+    titleCol.setId("Title");
+    titleCol.setMinWidth(100);
+    titleCol.setCellValueFactory(new PropertyValueFactory<Film, String>("name"));
+
+    TableColumn<Film, String> genreCol = new TableColumn<Film, String>("Genre");
+    genreCol.setId("Genre");
+    genreCol.setMinWidth(100);
+    genreCol.setCellValueFactory(new PropertyValueFactory<Film, String>("genre"));
+
+    TableColumn<Film, Integer> ratingCol = new TableColumn<Film, Integer>("Rating");
+    ratingCol.setId("Rating");
+    ratingCol.setMinWidth(200);
+    ratingCol.setCellValueFactory(new PropertyValueFactory<Film, Integer>("rating"));
+
+    table.setItems(moviesList);
+    table.getColumns().addAll(titleCol, genreCol, ratingCol);
+    table.setPrefSize(600, 500);
+
+    final VBox vbox = new VBox();
+    vbox.setSpacing(5);
+    vbox.setPadding(new Insets(10, 0, 0, 10));
+    vbox.getChildren().addAll(label, table, ok);
+    final VBox vboxR = new VBox();
+    vboxR.setSpacing(5);
+    vboxR.setPadding(new Insets(10, 0, 0, 10));
+    vboxR.getChildren().addAll(ok);
 
     GridPane pane = new GridPane();
     ColumnConstraints colConstraints = new ColumnConstraints();
@@ -126,8 +159,8 @@ public class MyMoveisController {
     pane.setAlignment(Pos.CENTER);
     pane.setHgap(10);
     pane.setVgap(5);
-    pane.addRow(0, moviesSelection, removeMovie);
-    pane.addRow(2, lower);
+    pane.addRow(0, vbox, removeMovie);
+    pane.addRow(2, vboxR);
 
     Scene scene = new Scene(pane, 800, 700);
     stage.setScene(scene);
@@ -136,31 +169,13 @@ public class MyMoveisController {
 
     ok.setOnMouseClicked((MouseEvent event1) -> {
       stage.close();
+      moviesList.clear();
     });
 
     removeMovie.setOnMouseClicked((MouseEvent event1) -> {
-      String removable = moviesLw.getSelectionModel().getSelectedItem();
-      removeFilmAssist(removable);
-      moviesList.remove(removable);
+      user.removeMovie(table.getSelectionModel().getSelectedItem());
       access.updateUser(user);
+      moviesList.remove(table.getSelectionModel().getSelectedItem());
     });
-
-  }
-
-  private void removeFilmAssist(String removable) {
-    for (Film film : user.getMyMovies()) {
-      if (removable.equals(film.displayText())) {
-        user.removeMovie(film);
-      }
-    }
-  }
-
-  // For test purposes
-  protected Collection<Film> getMyMovies() {
-    Collection<Film> myMoviesCopy = new ArrayList<>();
-    for (Film film : user.getMyMovies()) {
-      myMoviesCopy.add(film);
-    }
-    return myMoviesCopy;
   }
 }

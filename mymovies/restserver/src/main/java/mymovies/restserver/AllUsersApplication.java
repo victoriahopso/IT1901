@@ -1,9 +1,7 @@
 package mymovies.restserver;
 
 import com.fasterxml.jackson.databind.Module;
-
 import mymovies.json.UsersModule;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 public class AllUsersApplication {
 
   @Bean
-  public Module objectMapperModule() {
+    public Module objectMapperModule() {
     return new UsersModule();
   }
 

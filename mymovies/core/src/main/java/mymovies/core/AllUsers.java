@@ -6,24 +6,37 @@ import java.util.Iterator;
 
 public class AllUsers implements Iterable<User> {
 
-  /**
-   * Det skal kun eksistere én av denne klassen. Den skal lagres i skyen. Den holder styr på brukere.
-   * En kan ikke opprette en bruker med samme brukernavn som en av brukerene i denne klassen.
-   */
-
   private Collection<User> users = new ArrayList<>();
 
+  /**
+   * Legger til en bruker i objektet så fremt den 
+   * ikke allerede er inneholdt i objektet, eller 
+   * at det finnes en annen bruker med samme brukernavn. 
+
+   * @param user    brukeren som skal legges til
+   * @return    null
+   */
   public User addUser(User user) {
-    for (User us : users) {
-      if (us.getUserName().equals(user.getUserName())) {
-        return null;
+    if (!users.contains(user)) {
+      int counter = 0;
+      for (User us : users) {
+        if (!us.getUserName().equals(user.getUserName())) {
+          counter++;
+        }
+      }
+      if (counter == users.size()) {
+        users.add(user);
+        return user;
       }
     }
-    users.add(user);
-    return user;
+    return null;
   }
 
+  /**
+   * Oppdaterer brukerens mymovies attributt. 
 
+   * @param user    brukeren som skal oppdateres
+   */
   public void updateUser(User user) {
     for (User user2 : getAllUsers()) {
       if (user2.getUserName().equals(user.getUserName())) {
@@ -32,6 +45,11 @@ public class AllUsers implements Iterable<User> {
     }
   }
 
+  /**
+   * Henter ut alle brukere inneholdt i dette objektet.
+
+   * @return    en kopi av objektets users
+   */
   public Collection<User> getAllUsers() {
     Collection<User> copy = new ArrayList<>();
     for (User u : users) {
@@ -40,6 +58,13 @@ public class AllUsers implements Iterable<User> {
     return copy;
   }
 
+  /**
+   * Henter ut en bruker på parameterene.
+
+   * @param name    brukernavn
+   * @param pass    brukernavn
+   * @return    brukeren, hvis den eksisterer. Null hvis ikke. 
+   */
   public User getUser(String name, String pass) {
     for (User user : users) {
       if (user.getUserName().equals(name) && user.getPassword().equals(pass)) {
@@ -49,10 +74,13 @@ public class AllUsers implements Iterable<User> {
     return null;
   }
 
-  public void setUsers(Collection<User> users) {
-    this.users = users;
-  }
 
+  /**
+   * Vil hente ut en spesifik bruker basert på brukernavn.
+
+   * @param username    brukernavn
+   * @return    brukeren, hvis den eksisterer. Null hvis ikke. 
+   */
   public User getUser(String username) {
     for (User user : users) {
       if (user.getUserName().equals(username)) {
@@ -62,11 +90,14 @@ public class AllUsers implements Iterable<User> {
     return null;
   }
 
-  @Override
-  public Iterator<User> iterator() {
-    return users.iterator();
-  }
+  /**
+   * Sjekker om bruker med følgende parameter er 
+   * en eksisterende bruker.
 
+   * @param username    brukernavn 
+   * @param password    passord
+   * @return    True hvis brukeren er inneholdt i dette objektet.
+   */
   public boolean isUser(String username, String password) {
     for (User user : users) {
       if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
@@ -74,6 +105,15 @@ public class AllUsers implements Iterable<User> {
       }
     }
     return false;
+  }
+
+  public void setUsers(Collection<User> users) {
+    this.users = users;
+  }
+
+  @Override
+  public Iterator<User> iterator() {
+    return users.iterator();
   }
 
 }

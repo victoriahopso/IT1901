@@ -1,22 +1,29 @@
 @startuml
+actor Person
+Person-> "~#submitButton: \nButton" as submitButton: click
 
-actor User
-User -> "~#submitButton: Button" as submitButton: click
-submitButton -> MyMoviesController: handleSubmit()
+submitButton -> MyMoveisController : handleSubmit()
+
+MyMoveisController -> "~#name: \nTextField" as name: getText()
+MyMoveisController -> "~#rating: \ncombobox" as rating: getValue()
+MyMoveisController -> "~#genre: \ncomboBox" as genre: getValue()
+
+MyMoveisController -> User: addMovie(Film)
+
+MyMoveisController -> RemoteUserAccess: updateUser()
+MyMoveisController -> MyMoveisController: submitted()
+
+RemoteUserAccess -> ObjectMapper: writeValueAsString
+ObjectMapper --> RemoteUserAccess: a JSON string
 
 
-MyMoviesController -> "~#name: TextField" as name: getText()
-MyMoviesController -> "~#rating: combobox" as rating: getValue()
-MyMoviesController -> "~#genre: comboBox" as genre: getValue()
-MyMoviesController -> MyMovies: addMovie(Film)
+RemoteUserAccess -> AllUsersController: HTTP PUT "/" \n-> updateUser
 
+AllUsersController -> AllUsersService: getAllUsers()
 
-genre -> MyMoviesController: handleSubmit()
-rating -> MyMoviesController: handleSubmit()
-name -> MyMoviesController: handleSubmit()
-MyMoviesController -> MyMovies: getMyMovies()
-"~#showMyRegisteredMovies: Button" -> MyMoviesController: generateList(ActionEvent)
-"~#ok: Button" as ok -> MyMoviesController: generateList(ActionEvent)
-User -> ok: click
+AllUsersController -> AllUsers: getUser(username)
+AllUsersController -> RemoteUserAccess: updateUser(user)
+AllUsersController --> RemoteUserAccess: ResponseEntity<>(String, HttpStatus)
 
+RemoteUserAccess -> AllUsers: updateUser(user)
 @enduml

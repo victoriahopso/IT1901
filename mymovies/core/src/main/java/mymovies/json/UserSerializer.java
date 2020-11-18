@@ -1,18 +1,17 @@
 package mymovies.json;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
+import java.io.IOException;
 import mymovies.core.Film;
 import mymovies.core.User;
 
 public class UserSerializer extends JsonSerializer<User> {
 
   @Override
-  public void serialize(User user, JsonGenerator gen, SerializerProvider prov) throws IOException {
+    public void serialize(User user, JsonGenerator gen, SerializerProvider prov) 
+        throws IOException {
     gen.writeStartObject();
     gen.writeStringField("username", user.getUserName());
     gen.writeStringField("password", user.getPassword());
@@ -22,6 +21,5 @@ public class UserSerializer extends JsonSerializer<User> {
     }
     gen.writeEndArray();
     gen.writeEndObject();
-
   }
 }

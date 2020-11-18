@@ -1,8 +1,8 @@
 package mymovies.restserver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import org.springframework.stereotype.Service;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
