@@ -5,16 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import mymovies.core.AllUsers;
-import mymovies.restserver.AllUsersService;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 class AllUsersServiceTest{
-/*
+
   @MockBean
   private AllUsers allUsers;
 
@@ -33,12 +30,11 @@ class AllUsersServiceTest{
     assertEquals(allUsersService.getAllUsers(), test);
   }
 
-  //Uten parameter så skal den retunere en AllUser objekt som er tomt
+  //Uten parameter så skal den retunere et AllUser objekt som er tomt
   @Test
   public void AllUsersServiceWithoutParameterTest(){
     AllUsersService test = new AllUsersService();
     assertNotNull(test);
     assertEquals(test.getAllUsers().getAllUsers().size(), 0);
   }
-  */
 }
