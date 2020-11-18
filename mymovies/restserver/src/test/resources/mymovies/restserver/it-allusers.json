@@ -1,7 +1,7 @@
 {
   "allUsers" : [ {
     "username" : "testUser",
-    "password" : "passord",
+    "password" : "password",
     "myMovies" : [ ]
   }, {
     "username" : "testUser2",

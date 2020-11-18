@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Paths;
 import mymovies.core.AllUsers;
-import mymovies.core.Film;
 import mymovies.core.ReadWrite;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
@@ -33,7 +32,7 @@ public class AllUsersIntegrationTest {
   private MockMvc mvc;
 
   private AllUsers all = new AllUsers();
-  private User user1 = new User("testUser", "passord");
+  private User user1 = new User("testUser", "password");
   private User user2 = new User("testUser2", "testPassword2");
   private ObjectMapper mapper = new ObjectMapper().registerModule(new UsersModule());
   private UsersPersistence persistence = new UsersPersistence();
@@ -85,8 +84,6 @@ public class AllUsersIntegrationTest {
   
   @Test
   public void putUserTest() {
-    Film film = new Film("Title", "genre", 1);
-    user1.addMovie(film);
     try {
       testPutUser(user1);
     } catch (Exception e) {
@@ -100,11 +97,11 @@ public class AllUsersIntegrationTest {
         .perform(MockMvcRequestBuilders.get(uri + user.getUserName()).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
     System.out.println("Result: " + result.toString());
-
-    System.out.println(result.getResponse().getContentAsString());
+    
     User us = mapper.readValue(result.getResponse().getContentAsString(), User.class);
     assertNotNull(us);
     assertEquals("testUser", us.getUserName());
+    assertEquals("password", us.getPassword());
   }
 
   private void testPostUser(User user) throws Exception {
