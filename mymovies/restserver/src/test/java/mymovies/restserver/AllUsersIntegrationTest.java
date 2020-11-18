@@ -21,13 +21,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import mymovies.core.AllUsers;
+import mymovies.core.Film;
 import mymovies.core.RW;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
 import mymovies.json.UsersPersistence;
 
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {AllUsersController.class, AllUsersService.class})
+@ContextConfiguration(classes = {AllUsersController.class, AllUserServiceForTesting.class, AllUsersApplication.class})
 @WebMvcTest
 public class AllUsersIntegrationTest {
 
@@ -35,7 +36,7 @@ public class AllUsersIntegrationTest {
   private MockMvc mvc;
 
   AllUsers all = new AllUsers();
-  User user1 = new User("testUser", "testPassword");
+  User user1 = new User("testUser", "passord");
   User user2 = new User("testUser2", "testPassword2");
   ObjectMapper mapper = new ObjectMapper().registerModule(new UsersModule());
   UsersPersistence persistence = new UsersPersistence();
@@ -43,36 +44,23 @@ public class AllUsersIntegrationTest {
 
   private final static String pathStarter = "/workspace/gr2003/mymovies/restserver/src/test/resources/mymovies/restserver/";
   private final String userPath = Paths.get(pathStarter + "it-allusers.json").toString();
+  private final String uri = "http://localhost:8080/restserver/mymovies/";
 
-  //Kjører før hver test
   @BeforeEach
   public void setUp() throws IOException {
-    all = new AllUsers();
-    user1 = new User("testUser", "testPassword");
     all.addUser(user1);
+    all.addUser(user2);
     persistence.write(all, rw.createWriter(userPath));
-  }
-
-  // Skriver over allUsers-objektet med ett nytt tomt
-  @AfterEach
-  public void deleteTestUser() throws IOException {
-    all.getAllUsers().stream().filter(user -> user.getUserName().equals(user1.getUserName())).findAny().orElse(null);
-    persistence.write(new AllUsers(), rw.createWriter(userPath));
   }
 
   @Test
   public void postUser() throws IOException {
     try {
       testPostUser(user2);
-      all = persistence.read(rw.createReader(userPath));
     } catch (Exception e) {
       fail("Couldn't post user");
       e.printStackTrace();
     }
-
-    Collection<User> users = all.getAllUsers();
-    users.remove(users.stream().filter(user -> user.equals(user2)).findAny().orElse(null));
-    persistence.write(all, rw.createWriter(userPath));
   }
 
   @Test
@@ -86,49 +74,51 @@ public class AllUsersIntegrationTest {
   }
 
   @Test
+  public void postUserTest() {
+    try {
+      testPostUser(user1);
+    } catch (Exception e) {
+      fail("Could not change user: testUser");
+      e.printStackTrace();
+    } 
+  }
+  
+  @Test
   public void putUserTest() {
+    Film film = new Film("Title", "genre", 1);
+    user1.addMovie(film);
     try {
       testPutUser(user1);
     } catch (Exception e) {
-      fail("Could not change user: testUser");
-    }
-  }
-
-  /*
-  @Test
-  public void getAllUsers() {
-    try {
-      assertEquals(all, persistence.read(rw.createReader(userPath)));
-    } catch (Exception e) {
       fail("Couldn't read allUsers from file");
+      e.printStackTrace();
     }
   }
-  */
 
   private void testGetUser(User user) throws Exception {
     MvcResult result = mvc
-        .perform(MockMvcRequestBuilders.get("restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
-            .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+        .perform(MockMvcRequestBuilders.get(uri + user.getUserName()).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
     System.out.println("Result: " + result.toString());
 
-    byte[] resultUserByte = result.getResponse().getContentAsByteArray();
-    String resultUser = new String(resultUserByte, StandardCharsets.UTF_8);
-    assertNotNull(resultUser);
-    assertEquals(user, mapper.readValue(rw.createReader(userPath), AllUsers.class));
+    System.out.println(result.getResponse().getContentAsString());
+    User us = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+    System.out.println(us);
+    assertNotNull(us);
+    assertEquals("testUser", us.getUserName());
   }
 
   private void testPostUser(User user) throws Exception {
     MvcResult result = mvc
-        .perform(MockMvcRequestBuilders.post("restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
+        .perform(MockMvcRequestBuilders.post("http://localhost:8080/restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
             .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk()).andReturn();
+        .andExpect(status().isCreated()).andReturn();
     System.out.println("Result: " + result.toString());
   }
 
   private void testPutUser(User user) throws Exception {
     MvcResult result = mvc
-        .perform(MockMvcRequestBuilders.put("restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
+        .perform(MockMvcRequestBuilders.put("http://localhost:8080/restserver/mymovies/" + user.getUserName()).content(mapper.writeValueAsString(user))
             .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
     System.out.println("Result: " + result.toString());

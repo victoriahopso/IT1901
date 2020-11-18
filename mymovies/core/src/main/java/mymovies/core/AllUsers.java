@@ -23,6 +23,7 @@ public class AllUsers implements Iterable<User> {
     return user;
   }
 
+
   public void updateUser(User user) {
     for (User user2 : getAllUsers()) {
       if (user2.getUserName().equals(user.getUserName())) {

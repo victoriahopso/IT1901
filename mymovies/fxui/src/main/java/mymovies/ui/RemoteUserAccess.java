@@ -18,9 +18,9 @@ import mymovies.json.UsersModule;
 public class RemoteUserAccess {
 
   private AllUsers allUsers;
-  private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
+  private static final URI uri = URI.create("http://localhost:8080/restserver/mymovies/");
   private ObjectMapper objectMapper;
-  // RW rw = new RW();
+
 
   public RemoteUserAccess() {
     this.objectMapper = new ObjectMapper().registerModule(new UsersModule());

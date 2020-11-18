@@ -32,9 +32,6 @@ public class AllUsersController {
     }
   }
 
-  // Hente ut bruker med "username"
-  // @RequestMapping(value = "/username", produces =
-  // MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
   @GetMapping(path = "/{username}")
   public User getUser(@PathVariable("username") String username) {
     User user = getAllUsers().getUser(username);
@@ -42,10 +39,6 @@ public class AllUsersController {
     return user;
   }
 
-  // Oppdaterer en allerede eksisterende bruker
-  // @RequestMapping(value = "/username", produces =
-  // MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, consumes =
-  // MediaType.APPLICATION_JSON_VALUE)
   @PutMapping("/{username}")
   public ResponseEntity<Object> updateUser(@PathVariable("username") String username, @RequestBody User user) {
     System.out.println("PUT: " + user);
@@ -53,10 +46,6 @@ public class AllUsersController {
     return new ResponseEntity<>("Bruker endret", HttpStatus.OK);
   }
 
-  // Legger til en ny bruker
-  // @RequestMapping(value = "/username", produces =
-  // MediaType.APPLICATION_JSON_VALUE, consumes =
-  // MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
   @PostMapping(path = "/{username}")
   public ResponseEntity<Object> addUser(@PathVariable("username") String username, @RequestBody User user) {
     System.out.println("POST: " + user);
