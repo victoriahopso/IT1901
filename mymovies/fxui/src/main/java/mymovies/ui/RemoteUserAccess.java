@@ -9,6 +9,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import mymovies.core.AllUsers;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
@@ -16,8 +19,9 @@ import mymovies.json.UsersModule;
 public class RemoteUserAccess implements UserAccess {
 
   private AllUsers allUsers;
-  private static final URI uri = URI.create("http://localhost:8080/restserver/movies/");
+  private static final URI uri = URI.create("http://localhost:8080/restserver/mymovies/");
   private ObjectMapper objectMapper;
+
 
   public RemoteUserAccess() {
     this.objectMapper = new ObjectMapper().registerModule(new UsersModule());

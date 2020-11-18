@@ -32,10 +32,6 @@ public class UsersPersistence {
   public AllUsers read(Reader reader) {
     try {
       return mapper.readValue(reader, AllUsers.class);
-    } catch (JsonParseException e) {
-      e.printStackTrace();
-    } catch (JsonMappingException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -53,10 +49,6 @@ public class UsersPersistence {
   public void write(AllUsers allUsers, Writer writer) {
     try {
       mapper.writerWithDefaultPrettyPrinter().writeValue(writer, allUsers);
-    } catch (JsonGenerationException e) {
-      e.printStackTrace();
-    } catch (JsonMappingException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }

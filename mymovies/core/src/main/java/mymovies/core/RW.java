@@ -1,14 +1,13 @@
 package mymovies.core;
 
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 public class RW {
 
@@ -23,14 +22,17 @@ public class RW {
     return null;
   }
 
-  public Writer createWriter(String userPath) {
-    Path path = Paths.get(System.getProperty("user.home"), userPath);
+  public OutputStreamWriter createWriter(String file) {
     try {
-      Writer writer = new FileWriter(path.toFile(), StandardCharsets.UTF_8);
+      FileOutputStream fileStream = new FileOutputStream(file);
+      OutputStreamWriter writer = new OutputStreamWriter(fileStream, "UTF-8");
       return writer;
-    } catch (IOException e) {
-      System.err.println("Klarte ikke å skrive til hjemmeområde ved " + userPath);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
     }
+
     return null;
   }
 }
