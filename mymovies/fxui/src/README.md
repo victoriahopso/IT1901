@@ -6,5 +6,5 @@ for å kunne teste GUI uavhengig av serveren. RemoteUserAccess er, ved kjøring 
 Under *test* ligger testkode for ovennevnte. 
 
 
-## Skjermbilder av GUI:
-https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukeregrensesnitt,-skjermbiler
+## Se lenke:
+[Skjermbilder av GUI](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukeregrensesnitt,-skjermbiler)
