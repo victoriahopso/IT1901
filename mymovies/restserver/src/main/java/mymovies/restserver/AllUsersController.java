@@ -55,7 +55,6 @@ public class AllUsersController {
   @PutMapping("/{username}")
   public ResponseEntity<Object> 
         updateUser(@PathVariable("username") String username, @RequestBody User user) {
-    System.out.println("PUT: " + user);
     getAllUsers().getUser(username).updateUser(user);
     return new ResponseEntity<>("Bruker endret", HttpStatus.OK);
   }
@@ -70,7 +69,6 @@ public class AllUsersController {
   @PostMapping(path = "/{username}")
   public ResponseEntity<Object> 
           addUser(@PathVariable("username") String username, @RequestBody User user) {
-    System.out.println("POST: " + user);
     getAllUsers().addUser(user);
     return new ResponseEntity<>("Bruker lagt til", HttpStatus.CREATED);
   }

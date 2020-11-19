@@ -23,6 +23,14 @@ public class AllUsersDeserializer extends JsonDeserializer<AllUsers> {
     return deserialize((JsonNode) treeNode);
   }
 
+  /**
+   * Deserialiserer fra json til et AllUsers-objekt.
+
+   * @param jsonNode    castes  til arraynode som kan brukes
+   *     for å deserialisere et AllUsers-object
+   * @return
+   *     allUsers ombjekt hvis jsonformatet kan deserialiseres, null hvis ikke. 
+   */
   public AllUsers deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode) {
       ObjectNode objectNode = (ObjectNode) jsonNode;
@@ -40,5 +48,4 @@ public class AllUsersDeserializer extends JsonDeserializer<AllUsers> {
     }
     return null;
   }
-
 }

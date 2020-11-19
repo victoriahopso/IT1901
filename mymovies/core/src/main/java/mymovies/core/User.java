@@ -34,14 +34,6 @@ public class User {
     return copy;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
   public void setMyMovies(Collection<Film> col) {
     this.myMovies = col;
   }
@@ -53,11 +45,11 @@ public class User {
   }
 
   private boolean validUserName(String userName) {
-    return userName != null;
+    return userName.length() >= 2;
   }
   
   private boolean validPassword(String password) {
-    return password != null;
+    return password.length() >= 8;
   }
 
   public String getUserName() {

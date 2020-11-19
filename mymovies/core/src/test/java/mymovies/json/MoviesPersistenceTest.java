@@ -3,7 +3,10 @@ package mymovies.json;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import mymovies.core.RW;
+import mymovies.core.ReadWrite;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
@@ -16,7 +19,7 @@ import mymovies.core.User;
 public class MoviesPersistenceTest {
 
   private UsersPersistence userPersistence = new UsersPersistence();
-  private RW rw = new RW();
+  private ReadWrite rw = new ReadWrite();
 
   private final static String pathStarter = "/workspace/gr2003/mymovies/core/src/test/resources/mymovies/json/";
   private final String userPath = Paths.get(pathStarter + "persistence-test.json").toString();
@@ -38,8 +41,16 @@ public class MoviesPersistenceTest {
     user1.addMovie(film1);
     user2.addMovie(film2);
 
-    userPersistence.write(allUsers, rw.createWriter(userPath));
-    allUsersComparison = userPersistence.read(rw.createReader(userPath));
+    InputStreamReader reader = rw.createReader(userPath);
+    OutputStreamWriter writer = rw.createWriter(userPath);
+    userPersistence.write(allUsers, writer);
+    allUsersComparison = userPersistence.read(reader);
+    try {
+      writer.close();
+      reader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     Iterator<User> it = allUsers.iterator();
     Iterator<User> it1 = allUsersComparison.iterator();

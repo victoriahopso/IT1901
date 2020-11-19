@@ -20,12 +20,12 @@ public class UserTest {
     User user = new User("name2", "password2");
     Film film = new Film("Shrek", "romantic", 6);
     user.addMovie(film);
-    assertEquals(user.getMyMovies().iterator().next().getName(), film.getName());
-    assertEquals(user.getMyMovies().iterator().next().getGenre(), film.getGenre());
-    assertEquals(user.getMyMovies().iterator().next().getRating(), film.getRating());
+    assertEquals("Shrek", user.getMyMovies().iterator().next().getName());
+    assertEquals("romantic", user.getMyMovies().iterator().next().getGenre());
+    assertEquals(6, user.getMyMovies().iterator().next().getRating());
 
     user.addMovie(film);
-    assertEquals(user.getMyMovies().size(), 1);
+    assertEquals(1, user.getMyMovies().size());
   }
 
   @Test
@@ -34,9 +34,9 @@ public class UserTest {
     Film film = new Film("Shrek", "romantic", 6);
     user.addMovie(film);
 
-    assertEquals(user.getMyMovies().iterator().next().getName(), film.getName());
-    assertEquals(user.getMyMovies().iterator().next().getGenre(), film.getGenre());
-    assertEquals(user.getMyMovies().iterator().next().getRating(), film.getRating());
+    assertEquals("Shrek", user.getMyMovies().iterator().next().getName());
+    assertEquals("romantic", user.getMyMovies().iterator().next().getGenre());
+    assertEquals(6, user.getMyMovies().iterator().next().getRating());
 
     user.removeMovie(film);
     assertTrue(user.getMyMovies().isEmpty());
@@ -52,8 +52,8 @@ public class UserTest {
     user.addMovie(film1);
 
     user.updateUser(user2);
-    assertEquals(user.getUserName(), user2.getUserName());
-    assertEquals(user.getPassword(), user2.getPassword());
+    assertEquals("name2", user.getUserName());
+    assertEquals("password2", user.getPassword());
     assertTrue(user.getMyMovies().isEmpty());
   }
 
@@ -77,8 +77,8 @@ public class UserTest {
     Iterator<Film> it1 = result.iterator();
     Iterator<Film> it2 = user.getMyMovies().iterator();
 
-    assertEquals(it1.next().getName(), it2.next().getName());
-    assertEquals(it1.next().getGenre(), it2.next().getGenre());
-    assertEquals(it1.next().getRating(), it2.next().getRating());
+    assertEquals(it2.next().getName(), it1.next().getName());
+    assertEquals(it2.next().getGenre(), it1.next().getGenre());
+    assertEquals(it2.next().getRating(), it1.next().getRating());
   }
 }

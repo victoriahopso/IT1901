@@ -10,7 +10,7 @@ import mymovies.core.User;
 
 public class MockUserAccess implements UserAccess {
 
-  AllUsers allUsers = new AllUsers();
+  protected AllUsers allUsers = new AllUsers();
 
   @Override
   public boolean isUser(String username, String password) {
@@ -18,7 +18,7 @@ public class MockUserAccess implements UserAccess {
   }
 
   @Override
-    public User getUser(String username) {
+  public User getUser(String username) {
     return allUsers.getUser(username);
   }
 
@@ -28,12 +28,12 @@ public class MockUserAccess implements UserAccess {
   }
 
   @Override
-    public void updateUser(User user) {
+  public void updateUser(User user) {
     allUsers.addUser(user);
   }
 
   @Override
-    public boolean usernameTaken(String username) {
+  public boolean usernameTaken(String username) {
     for (User user : allUsers) {
       if (user.getUserName().equals(username)) {
         return true;

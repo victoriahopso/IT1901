@@ -13,11 +13,4 @@ public class FilmTest {
     assertEquals("genre", film.getGenre());
     assertEquals(5, film.getRating());
   }
-
-  @Test
-  public void testToString() {
-    Film film = new Film("testname", "genre", 5);
-    assertEquals("Film: testname, Genre: genre, Rating: 5", film.toString());
-  }
-
 }

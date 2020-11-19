@@ -20,29 +20,29 @@ import mymovies.core.User;
 public class LogInController {
 
   @FXML
-    Button signIn;
+  Button signIn;
   @FXML
-    Button signUp;
+  Button signUp;
   @FXML
-    TextField siUsername;
+  TextField siUsername;
   @FXML
-    TextField suUsername;
+  TextField suUsername;
   @FXML
-    PasswordField siPassword;
+  PasswordField siPassword;
   @FXML
-    PasswordField suPassword;
+  PasswordField suPassword;
   @FXML
-    PasswordField confPassword;
+  PasswordField confPassword;
 
-  UserAccess access = new RemoteUserAccess();
-  User user;
+  protected UserAccess access = new RemoteUserAccess();
+  protected User user;
 
   /**
    * Sørger for at knappene signIn og signUp er disabled så lenge ikke ikke
    * alle feltene er fyllt inn.
    */
   @FXML
-    public void initialize() {
+  public void initialize() {
     signIn.disableProperty().bind(siUsername.textProperty().isEmpty()
           .or(siPassword.textProperty().isEmpty()));
     signUp.disableProperty().bind(suUsername.textProperty().isEmpty()
@@ -61,7 +61,7 @@ public class LogInController {
     *     Kaster unntak hvis event er null (via logIn)
     */
   @FXML
-    public void handleSignUp(ActionEvent event) throws IOException {
+  public void handleSignUp(ActionEvent event) throws IOException {
     if (suUsername.getText().length() >= 2) {  
       if (suPassword.getText().equals(confPassword.getText())) {
         if (suPassword.getText().length() >= 8) {
@@ -105,7 +105,7 @@ public class LogInController {
     *     Kaster unntak hvis event er null (via logIn).
     */
   @FXML
-    public void handleSignIn(ActionEvent event) throws IOException {
+  public void handleSignIn(ActionEvent event) throws IOException {
     if (access.isUser(siUsername.getText(), siPassword.getText())) {
       this.user = access.getUser(siUsername.getText());
       logIn(event);
@@ -125,7 +125,7 @@ public class LogInController {
     *     Kaster unntak hvis sxmlLoader ikke klarer å loade.
     */ 
   @FXML
-    public void logIn(ActionEvent event) throws IOException {
+  public void logIn(ActionEvent event) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyMovies.fxml"));
     Stage myMoviesWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
     Parent root = (Parent) fxmlLoader.load();
@@ -145,7 +145,7 @@ public class LogInController {
     *     fra type feil.
     */
   @FXML
-    public void logInFailour(String message) {
+  public void logInFailour(String message) {
     Button ok = new Button("Ok");
     ok.setId("ok");
     ok.setScaleX(1);
@@ -171,5 +171,4 @@ public class LogInController {
       stage.close();
     });
   }
-
 }

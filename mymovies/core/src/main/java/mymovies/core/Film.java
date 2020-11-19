@@ -2,9 +2,9 @@ package mymovies.core;
 
 public class Film {
 
-  private String name;
-  private String genre;
-  private int rating;
+  private final String name;
+  private final String genre;
+  private final int rating;
 
   /**
      * Konstruktør som tar inn informasjon om film_objektet.
@@ -19,16 +19,9 @@ public class Film {
     this.rating = rating;
   }
 
-  public void setGenre(String genre) {
-    this.genre = genre;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setRating(int rating) {
-    this.rating = rating;
+  public String toString() {
+    return "Film: " + this.name + ", Genre: " + this.genre 
+            + ", Rating: " + Integer.toString(this.rating);
   }
 
   public String getName() {
@@ -42,15 +35,4 @@ public class Film {
   public int getRating() {
     return this.rating;
   }
-
-  public String toString() {
-    return "Film: " + this.name + ", Genre: " + this.genre 
-            + ", Rating: " + Integer.toString(this.rating);
-  }
-
-  public String displayText() {
-    return "Film: " + this.name + ", Genre: " + this.genre 
-            + ", Rating: " + Integer.toString(this.rating);
-  }
-
 }

@@ -38,22 +38,22 @@ public class MyMoveisController {
   protected UserAccess access;
 
   @FXML
-    Button submit;
+  Button submit;
   @FXML
-    ComboBox<String> rating;
+  ComboBox<String> rating;
   @FXML
-    ComboBox<String> genre;
+  ComboBox<String> genre;
   @FXML
-    TextField title;
+  TextField title;
   @FXML
-    Button showMovies;
+  Button showMovies;
 
   /**
      * Fyller comboBoxene med verdiene fra ratings og genres. Sørger for at
      * {@link #submit} er disabled så lenge ikke alle 3 inputfeltene er fyllt ut.
      */
   @FXML
-    public void initialize() {
+  public void initialize() {
     genre.setItems(genres);
     rating.setItems(ratings);
     submit.disableProperty().bind(
@@ -72,9 +72,7 @@ public class MyMoveisController {
      * container-objektet myMovies. Skriver myMovies til jsonfil.
      */
   @FXML
-    private void handleSubmit() {
-    System.out.println(this.user);
-    System.out.println(this.user.getUserName());
+  private void handleSubmit() {
     Film film = new Film(title.getText(), genre.getValue(), Integer.parseInt(rating.getValue()));
     user.addMovie(film);
     access.updateUser(user);
@@ -82,7 +80,7 @@ public class MyMoveisController {
   }
 
   @FXML
-    private void exitApp(ActionEvent event) {
+  private void exitApp(ActionEvent event) {
     System.exit(0);
   }
 
@@ -102,7 +100,7 @@ public class MyMoveisController {
    */
   @SuppressWarnings("unchecked")
   @FXML
-    public void generateList() {
+  public void generateList() {
     moviesList.addAll(this.user.getMyMovies());
     table = new TableView<Film>();
     table.setId("table");
