@@ -8,10 +8,6 @@ component restserver {
 	package mymovies.restserver
 }
 
-component integrationtests{
-	package mymovies.webapp
-}
-
 component fxui {
 	package mymovies.ui
 }
@@ -24,13 +20,7 @@ component javafx {
 component jackson {
 }
 
-component jersey {
-}
-
 component springboot{
-}
-
-component jetty{
 }
 
 mymovies.json ..> jackson
@@ -41,12 +31,6 @@ mymovies.ui ..> mymovies.json
 fxui ..> javafx
 fxui ..> fxml
 
-integrationtests ..> jetty
-integrationtests ..> jersey
-integrationtests ..> springboot
-
-mymovies.webapp ..> mymovies.core
-mymovies.webapp ..> mymovies.json
 
 mymovies.restserver ..> mymovies.core
 
