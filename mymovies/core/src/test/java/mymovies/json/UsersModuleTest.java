@@ -47,23 +47,23 @@ public class UsersModuleTest {
 
   // Hjelpemetoder som sjekker at navn, sjanger og rating til en film stemmer
   // overens med det som er antatt
-  static void checkFilmer(Film film, String name, String genre, int rating) {
+  private static void checkFilmer(Film film, String name, String genre, int rating) {
     assertEquals(name, film.getName());
     assertEquals(genre, film.getGenre());
     assertEquals(rating, film.getRating());
   }
 
-  static void checkFilmer(Film film1, Film film2) {
+  private static void checkFilmer(Film film1, Film film2) {
     checkFilmer(film1, film2.getName(), film2.getGenre(), film2.getRating());
   }
 
   //Hjelpemetoder for å sjekke at brukernavn og passord stemmer overens med det som er antatt
-  static void checkCredentials(User user, String userName, String password){
+  private static void checkCredentials(User user, String userName, String password){
     assertEquals(userName, user.getUserName());
     assertEquals(password, user.getPassword());
   }
 
-  static void checkCredentials(User user1, User user2){
+  private static void checkCredentials(User user1, User user2){
     checkCredentials(user1, user2.getUserName(), user2.getPassword());
   }
   
