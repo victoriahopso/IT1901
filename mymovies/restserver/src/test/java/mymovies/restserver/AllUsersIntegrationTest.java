@@ -2,8 +2,10 @@ package mymovies.restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.file.Paths;
 import mymovies.core.AllUsers;
+import mymovies.core.Film;
 import mymovies.core.ReadWrite;
 import mymovies.core.User;
 import mymovies.json.UsersModule;
@@ -43,27 +45,20 @@ public class AllUsersIntegrationTest {
   private final String uri = "http://localhost:8080/restserver/mymovies/";
 
   @BeforeEach
-  public void setUp() throws IOException {
+  public void setUp() {
     all.addUser(user1);
     all.addUser(user2);
-    persistence.write(all, rw.createWriter(userPath));
-  }
-
-  @Test
-  public void postUser() throws IOException {
+    OutputStreamWriter writer = rw.createWriter(userPath);
+    persistence.write(all, writer);
     try {
-      testPostUser(user2);
-    } catch (Exception e) {
-      fail("Couldn't post user");
+      writer.close();
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   @Test
   public void getCorrectUserTest() {
-    all.addUser(user1);
-    all.addUser(user2);
-    persistence.write(all, rw.createWriter(userPath));
     try {
       testGetUser(user1);
     } catch (Exception e) {
@@ -77,17 +72,19 @@ public class AllUsersIntegrationTest {
     try {
       testPostUser(user1);
     } catch (Exception e) {
-      fail("Could not change user: testUser");
+      fail("Couldn't add User");
       e.printStackTrace();
     } 
   }
   
   @Test
   public void putUserTest() {
+    Film film = new Film("title", "genre", 4);
+    user1.addMovie(film);
     try {
       testPutUser(user1);
     } catch (Exception e) {
-      fail("Couldn't read allUsers from file");
+      fail("Couldn't update user");
       e.printStackTrace();
     }
   }
@@ -110,6 +107,8 @@ public class AllUsersIntegrationTest {
             .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated()).andReturn();
     System.out.println("Result: " + result.toString());
+
+    assertEquals("Bruker lagt til", result.getResponse().getContentAsString());
   }
 
   private void testPutUser(User user) throws Exception {
@@ -118,5 +117,7 @@ public class AllUsersIntegrationTest {
             .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
     System.out.println("Result: " + result.toString());
+
+    assertEquals("Bruker endret", result.getResponse().getContentAsString());
   }
 }

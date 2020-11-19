@@ -20,8 +20,8 @@ public class AllUsersTest {
 
     assertTrue(it.hasNext());
     User testUser = it.next();
-    assertEquals(testUser.getUserName(), "name1");
-    assertEquals(testUser.getPassword(), "password1");
+    assertEquals("name1", testUser.getUserName());
+    assertEquals("password1", testUser.getPassword());
   }
 
   @Test
@@ -37,8 +37,8 @@ public class AllUsersTest {
     it.next();
     User testUser = it.next();
 
-    assertEquals(testUser.getUserName(), "name");
-    assertEquals(testUser.getPassword(), "password2");
+    assertEquals("name", testUser.getUserName());
+    assertEquals("password2", testUser.getPassword());
   }
 
   @Test
@@ -55,10 +55,10 @@ public class AllUsersTest {
     assertTrue(it.hasNext());
     User testUser2 = it.next();
 
-    assertEquals(testUser1.getUserName(), "name1");
-    assertEquals(testUser1.getPassword(), "password1");
-    assertEquals(testUser2.getUserName(), "name2");
-    assertEquals(testUser2.getPassword(), "password2");
+    assertEquals("name1", testUser1.getUserName());
+    assertEquals("password1", testUser1.getPassword());
+    assertEquals("name2", testUser2.getUserName());
+    assertEquals("password2", testUser2.getPassword());
   }
 
   @Test
@@ -68,7 +68,7 @@ public class AllUsersTest {
     User user2 = new User("name2", "password2");
     all.addUser(user2);
     all.addUser(user1);
-    assertEquals(all.getUser("name1", "password1"), user1);
+    assertEquals(user1, all.getUser("name1", "password1"));
     assertNull(all.getUser("name3", "password3"));
   }
 
@@ -79,7 +79,7 @@ public class AllUsersTest {
     User user1 = new User("name1", "password1");
     all.addUser(user1);
 
-    assertEquals(all.getUser("name1"), user1);
+    assertEquals(user1, all.getUser("name1"));
     assertNull(all.getUser("name2"));
   }
 
@@ -108,11 +108,11 @@ public class AllUsersTest {
     assertTrue(it.hasNext());
     User testUser1 = it.next();
 
-    assertEquals(testUser1.getUserName(), "name1");
-    assertEquals(testUser1.getPassword(), "password1");
+    assertEquals("name1", testUser1.getUserName());
+    assertEquals("password1", testUser1.getPassword());
     assertTrue(it.hasNext());
     User testUser2 = it.next();
-    assertEquals(testUser2.getUserName(), "name2");
-    assertEquals(testUser2.getPassword(), "password2");
+    assertEquals("name2", testUser2.getUserName());
+    assertEquals("password2", testUser2.getPassword());
   }
 }

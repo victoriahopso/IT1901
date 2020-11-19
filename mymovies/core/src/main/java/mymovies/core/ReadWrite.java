@@ -1,13 +1,11 @@
 package mymovies.core;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 public class ReadWrite {
 
@@ -41,7 +39,7 @@ public class ReadWrite {
       FileOutputStream fileStream = new FileOutputStream(file);
       OutputStreamWriter writer = new OutputStreamWriter(fileStream, "UTF-8");
       return writer;
-    } catch (FileNotFoundException | UnsupportedEncodingException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return null;
