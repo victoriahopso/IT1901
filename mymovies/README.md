@@ -12,3 +12,4 @@ en film, kan brukeren velge å fjerne filmen fra listen ved å trykke på knappe
 ### For bedre oversikt, se lenker: 
 - [Brukergrensesnitt, skjermbilder](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukeregrensesnitt,-skjermbiler)
 - [Diagrammer](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Diagrammer)
+- [Brukerhistorier](https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2003/gr2003/-/wikis/Brukerhistorier)
